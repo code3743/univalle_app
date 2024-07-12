@@ -40,6 +40,7 @@ dependencies:
   cookie_jar: ^4.0.8
   flutter_riverpod: ^2.5.1
   go_router: ^14.2.0
+  html: ^0.15.4
 
 dev_dependencies:
   flutter_test:
