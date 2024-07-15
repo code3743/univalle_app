@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univalle_app/config/themes/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton(
@@ -31,7 +32,7 @@ class CustomButton extends StatelessWidget {
       height: height ?? 47,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor ?? AppColors.primaryRed,
           shape: RoundedRectangleBorder(
               borderRadius: borderRadius ?? BorderRadius.circular(10),
               side: BorderSide(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univalle_app/config/themes/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
@@ -53,7 +54,8 @@ class CustomTextFormField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.blueAccent, width: 2)),
+              borderSide:
+                  const BorderSide(color: AppColors.primaryBlue, width: 2)),
         ),
       ),
     );
