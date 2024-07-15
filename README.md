@@ -47,11 +47,13 @@ Una vez que la aplicación esté en funcionamiento, los estudiantes pueden inici
 
 ¡Las contribuciones son bienvenidas! Si deseas colaborar en el desarrollo de Univalle App, por favor sigue estos pasos:
 
-1. Haz un fork del proyecto.
-2. Crea una nueva rama con tus cambios: `git checkout -b mi-nueva-funcionalidad`
-3. Realiza los cambios necesarios y haz commit: `git commit -m 'Agregar nueva funcionalidad'`
-4. Sube los cambios a tu repositorio: `git push origin mi-nueva-funcionalidad`
-5. Crea un pull request en el repositorio original.
+- Haz un fork del proyecto.
+- Crea una nueva rama con tus cambios: git checkout -b mi-nueva-funcionalidad
+- Realiza los cambios necesarios y haz commit: git commit -m 'Agregar nueva funcionalidad'
+- Sube los cambios a tu repositorio: git push origin mi-nueva-funcionalidad
+- Crea un pull request en el repositorio original.
+
+Para más detalles sobre cómo contribuir, consulta nuestro [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Licencia
 
