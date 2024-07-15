@@ -62,5 +62,5 @@ Este proyecto está licenciado bajo la [MIT License](LICENSE).
 Si tienes alguna pregunta o sugerencia, no dudes en contactarme:
 
 - **Nombre**: Jota E. López Ramírez
-- **Correo Electrónico**: [jota.lopez@correounivalle.edu.co]
+- **Correo Electrónico**: [jota.lopez@correounivalle.edu.co](mailto:)
 - **Instagram**: [@jotalopezr](https://www.instagram.com/jotalopezr/)
