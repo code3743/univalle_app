@@ -1,4 +1,5 @@
 class Student {
+  final String token;
   final String fristName;
   final String lastName;
   final String email;
@@ -14,6 +15,7 @@ class Student {
   final String? pathToProfileImage;
 
   Student({
+    required this.token,
     required this.fristName,
     required this.lastName,
     required this.email,
