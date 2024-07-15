@@ -39,6 +39,15 @@ Sigue estos pasos para instalar y ejecutar la aplicación en tu entorno local:
    flutter run
    ```
 
+## Compilación
+
+Para compilar la aplicación y generar un archivo APK, sigue estos pasos:
+
+1. **Compila la aplicación:**
+   ```bash
+   flutter build
+   ```
+
 ## Uso
 
 Una vez que la aplicación esté en funcionamiento, los estudiantes pueden iniciar sesión con sus credenciales universitarias y acceder a todas las funcionalidades ofrecidas por Univalle App.

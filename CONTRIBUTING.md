@@ -11,7 +11,7 @@
 2. **Clona el repositorio:**
 
    ```sh
-    git remote add upstream https://github.com/code3743/univalle-app.git
+    git remote add upstream https://github.com/code3743/univalle_app.git
    ```
 
 3. **Crea una rama con tus cambios:**
@@ -31,7 +31,7 @@
 5. **Sincroniza tu rama con la rama principal del repositorio original (opcional pero recomendado):**
 
    ```sh
-   git remote add upstream https://github.com/code3743/univalle-app.git
+   git remote add upstream https://github.com/code3743/univalle_app.git
    git fetch upstream
    git merge upstream/main
    ```
@@ -62,7 +62,7 @@ Por favor, sigue estas pautas de estilo para mantener la coherencia en el códig
 
 ## Reporte de Problemas
 
-Si encuentras algún problema o tienes una sugerencia para mejorar el proyecto, por favor, abre un [issue](https://github.com/code3743/univalle-app/issues) en el repositorio.
+Si encuentras algún problema o tienes una sugerencia para mejorar el proyecto, por favor, abre un [issue](https://github.com/code3743/univalle_app/issues) en el repositorio.
 
 ## Código de Conducta
 
