@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/config/themes/app_theme.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'Univalle App',
       routerConfig: ref.watch(appRouterProvider),
+      theme: ref.watch(appThemeProvider),
     );
   }
 }
