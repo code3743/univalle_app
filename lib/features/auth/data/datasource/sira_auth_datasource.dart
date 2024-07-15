@@ -54,6 +54,10 @@ class SiraAuthDatasource implements AuthDatasource {
               .toList() ??
           [];
       final studentData = {
+        'token':
+            (await _cookieJar.loadForRequest(Uri.parse(SiraConstants.baseUrl)))
+                .first
+                .value,
         'fristName': studentDocument
                 .querySelector('input[name="per_nombre"]')
                 ?.attributes['value'] ??

@@ -1,6 +1,7 @@
 import 'package:univalle_app/features/auth/domain/entities/student.dart';
 
 class StudentModel {
+  final String token;
   final String fristName;
   final String lastName;
   final String email;
@@ -16,6 +17,7 @@ class StudentModel {
   final String? pathToProfileImage;
 
   StudentModel({
+    required this.token,
     required this.fristName,
     required this.lastName,
     required this.email,
@@ -32,6 +34,7 @@ class StudentModel {
   });
 
   Student toEntity() => Student(
+        token: token,
         fristName: fristName,
         lastName: lastName,
         email: email,
@@ -48,6 +51,7 @@ class StudentModel {
       );
 
   factory StudentModel.fromEntity(Student student) => StudentModel(
+        token: student.token,
         fristName: student.fristName,
         lastName: student.lastName,
         email: student.email,
@@ -64,6 +68,7 @@ class StudentModel {
       );
 
   factory StudentModel.fromJson(Map<String, dynamic> json) => StudentModel(
+        token: json['token'],
         fristName: json['fristName'],
         lastName: json['lastName'],
         email: json['email'],
