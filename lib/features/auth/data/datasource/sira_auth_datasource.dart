@@ -5,7 +5,9 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:univalle_app/core/constants/sira_constants.dart';
+import 'package:univalle_app/core/errors/handle_sira_errors.dart';
 import 'package:univalle_app/core/errors/sira_exception.dart';
+import 'package:univalle_app/core/providers/shared_preferences_provider.dart';
 import 'package:univalle_app/features/auth/data/models/student_model.dart';
 import 'package:univalle_app/features/auth/domain/datasources/auth_datasource.dart';
 import 'package:univalle_app/features/auth/domain/entities/student.dart';
@@ -14,7 +16,8 @@ class SiraAuthDatasource implements AuthDatasource {
   final _dio = Dio();
   final _cookieJar = CookieJar();
   late Student _student;
-  SiraAuthDatasource() {
+  final SharedStudentUtility _sharedStudentUtility;
+  SiraAuthDatasource(this._sharedStudentUtility) {
     _dio
       ..interceptors.add(CookieManager(_cookieJar))
       ..options.contentType = 'application/x-www-form-urlencoded'
@@ -53,69 +56,73 @@ class SiraAuthDatasource implements AuthDatasource {
               .map((e) => e.split(':')[1].trim())
               .toList() ??
           [];
-      final studentData = {
-        'token':
-            (await _cookieJar.loadForRequest(Uri.parse(SiraConstants.baseUrl)))
-                .first
-                .value,
-        'fristName': studentDocument
-                .querySelector('input[name="per_nombre"]')
-                ?.attributes['value'] ??
-            '',
-        'lastName': studentDocument
-                .querySelector('input[name="per_apellido"]')
-                ?.attributes['value'] ??
-            '',
-        'email': studentDocument
-                .querySelector('input[name="per_email_institucional"]')
-                ?.attributes['value'] ??
-            '',
-        'documentId': studentDocument
-                .querySelector('input[name="per_doc_ide_numero"]')
-                ?.attributes['value'] ??
-            '',
-        'password': password,
-        'average': double.tryParse(
-                rantingDocument.querySelector('.error > font')?.text.trim() ??
-                    '') ??
-            0,
-        'studentId': dataRanting[0].split(' -- ')[0],
-        'programId': dataRanting[2].split('-')[0],
-        'campus': dataRanting[2].split('-')[1],
-        'programName': dataRanting[2].split('-')[3],
-        'accumulatedCredits': int.tryParse(rantingDocument
-                .querySelectorAll(
-                    'td[title="Acumulado: Número de Créditos Aprobados Acumulados"]')
-                .last
-                .text
-                .trim()) ??
-            0,
-        'studentFines': 0,
-      };
-      return StudentModel.fromJson(studentData).toEntity();
-    } on DioException catch (dioError) {
-      switch (dioError.type) {
-        case DioExceptionType.badCertificate:
-          throw SiraException('Certificado no válido');
-        case DioExceptionType.connectionTimeout:
-          throw SiraException('Tiempo de conexión agotado');
-        case DioExceptionType.badResponse:
-          throw SiraException('Respuesta inesperada');
-        case DioExceptionType.cancel:
-          throw SiraException('Petición cancelada');
-        case DioExceptionType.connectionError:
-          throw SiraException('Error de conexión');
-        case DioExceptionType.sendTimeout:
-          throw SiraException('Tiempo de envío agotado');
-        case DioExceptionType.receiveTimeout:
-          throw SiraException('Tiempo de recepción agotado');
-        default:
-          throw SiraException('Error desconocido');
-      }
-    } on SiraException {
-      rethrow;
+      final studentModel = StudentModel(
+          token: (await _cookieJar.loadForRequest(Uri.parse(SiraConstants.baseUrl)))
+              .first
+              .value,
+          fristName: studentDocument
+                  .querySelector('input[name="per_nombre"]')
+                  ?.attributes['value'] ??
+              '',
+          lastName: studentDocument
+                  .querySelector('input[name="per_apellido"]')
+                  ?.attributes['value'] ??
+              '',
+          email: studentDocument
+                  .querySelector('input[name="per_email_institucional"]')
+                  ?.attributes['value'] ??
+              '',
+          documentId: studentDocument
+                  .querySelector('input[name="per_doc_ide_numero"]')
+                  ?.attributes['value'] ??
+              '',
+          password: password,
+          average:
+              double.tryParse(rantingDocument.querySelector('.error > font')?.text.trim() ?? '') ??
+                  0,
+          studentId: dataRanting[0].split(' -- ')[0],
+          programId: dataRanting[2].split('-')[0],
+          campus: dataRanting[2].split('-')[1],
+          programName: dataRanting[2].split('-')[3],
+          accumulatedCredits:
+              int.tryParse(rantingDocument.querySelectorAll('td[title="Acumulado: Número de Créditos Aprobados Acumulados"]').last.text.trim()) ?? 0,
+          studentFines: await _getStudentFines(code, dataRanting[2].split('-')[0]));
+          
+      _sharedStudentUtility.saveStudentData(
+          studentModel.token, studentModel.studentId, studentModel.password);
+      return studentModel.toEntity();
     } catch (e) {
-      throw SiraException('Error desconocido: $e');
+      handleSiraError(e);
+      rethrow;
+    }
+  }
+
+  Future<int> _getStudentFines(String code, String program) async {
+    try {
+      final response = await _dio
+          .post(SiraConstants.baseUrl + SiraConstants.finesPath, data: {
+        'est_codigo': code,
+        'pra_codigo': program,
+        'accion': 'ConsultarDeudasPublico',
+        'boton': 'Buscar Deuda'
+      });
+      if (response.statusCode != 200) {
+        throw SiraException('No se pudo obtener la información del estudiante');
+      }
+      final document = parse(latin1.decode(response.data));
+
+      if (document.querySelector('.error')?.text.contains('NO TIENE DEUDAS') ??
+          false) {
+        return 0;
+      }
+      return (document
+                  .querySelector('table[width=80%]')
+                  ?.querySelectorAll('tr')
+                  .length ??
+              1) -
+          1;
+    } catch (e) {
+      return 0;
     }
   }
 
@@ -152,29 +159,8 @@ class SiraAuthDatasource implements AuthDatasource {
         throw SiraException(error);
       }
       _student = await _getStudent(user.split('-')[0], password);
-    } on DioException catch (dioError) {
-      switch (dioError.type) {
-        case DioExceptionType.badCertificate:
-          throw SiraException('Certificado no válido');
-        case DioExceptionType.connectionTimeout:
-          throw SiraException('Tiempo de conexión agotado');
-        case DioExceptionType.badResponse:
-          throw SiraException('Respuesta inesperada');
-        case DioExceptionType.cancel:
-          throw SiraException('Petición cancelada');
-        case DioExceptionType.connectionError:
-          throw SiraException('Error de conexión');
-        case DioExceptionType.sendTimeout:
-          throw SiraException('Tiempo de envío agotado');
-        case DioExceptionType.receiveTimeout:
-          throw SiraException('Tiempo de recepción agotado');
-        default:
-          throw SiraException('Error desconocido');
-      }
-    } on SiraException {
-      rethrow;
     } catch (e) {
-      throw SiraException('Error desconocido $e');
+      handleSiraError(e);
     }
   }
 
@@ -183,32 +169,24 @@ class SiraAuthDatasource implements AuthDatasource {
     try {
       await _dio.get(SiraConstants.baseUrl + SiraConstants.logoutPath);
       await _cookieJar.deleteAll();
-    } on DioException catch (dioError) {
-      switch (dioError.type) {
-        case DioExceptionType.badCertificate:
-          throw SiraException('Certificado no válido');
-        case DioExceptionType.connectionTimeout:
-          throw SiraException('Tiempo de conexión agotado');
-        case DioExceptionType.badResponse:
-          throw SiraException('Respuesta inesperada');
-        case DioExceptionType.cancel:
-          throw SiraException('Petición cancelada');
-        case DioExceptionType.connectionError:
-          throw SiraException('Error de conexión');
-        case DioExceptionType.sendTimeout:
-          throw SiraException('Tiempo de envío agotado');
-        case DioExceptionType.receiveTimeout:
-          throw SiraException('Tiempo de recepción agotado');
-        default:
-          throw SiraException('Error desconocido');
-      }
     } catch (e) {
-      throw SiraException('Error desconocido');
+      handleSiraError(e);
     }
   }
 
   @override
   Future<Student> getStudent() {
     return Future.value(_student);
+  }
+
+  @override
+  Future<bool> isLogged() async {
+    final studentId = _sharedStudentUtility.getStudentId();
+    final password = _sharedStudentUtility.getPassword();
+    if (studentId != null && password != null) {
+      await login(studentId.substring(2), password);
+      return Future.value(true);
+    }
+    return Future.value(false);
   }
 }

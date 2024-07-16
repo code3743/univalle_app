@@ -21,4 +21,9 @@ class SiraAuthRepositoryImpl implements AuthRepository {
   Future<Student> getStudent() async {
     return _authDatasource.getStudent();
   }
+
+  @override
+  Future<bool> isLogged() async {
+    return _authDatasource.isLogged();
+  }
 }
