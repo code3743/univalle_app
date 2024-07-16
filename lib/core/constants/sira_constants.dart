@@ -5,4 +5,6 @@ class SiraConstants {
       '/paquetes/inicioestudiante/index.php?accion=Inicio';
   static const String studentPath = '/paquetes/tablaMaestro/persona/index.php';
   static const String rantingPath = '/paquetes/academica/index.php';
+  static const String finesPath =
+      '/paquetes/tablaMaestro/deuda/index_publico.php?accion=desplegarFormaConsultaPublica';
 }
