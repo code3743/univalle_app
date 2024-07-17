@@ -104,12 +104,11 @@ class GradesOverview extends StatelessWidget {
           Positioned(
             top: 10,
             left: 180,
-            child: Container(
+            child: SizedBox(
               height: 40,
               width: 40,
-              decoration: const BoxDecoration(
-                color: AppColors.orange,
-              ),
+              child:
+                  Image.asset('assets/img/uv_ardilla.png', fit: BoxFit.contain),
             ),
           ),
       ],
