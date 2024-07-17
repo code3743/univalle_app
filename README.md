@@ -14,6 +14,10 @@ Univalle App reúne varios servicios esenciales en una interfaz amigable y optim
 - Ver su carnet estudiantil digital.
 - Acceder a enlaces de interés relacionados con la universidad.
 
+## Visión a Futuro
+
+Lo ideal es que toda la lógica de la aplicación resida en el backend, permitiendo que la aplicación se enfoque únicamente en mostrar la información. Esto no solo reduciría el tamaño de la aplicación y facilitaría la división de responsabilidades, sino que también eliminaría la dependencia de terceros y mejoraría la mantenibilidad del sistema. Actualmente, la aplicación se encarga de realizar el web scraping y presentar la información. Sin embargo, en el futuro se espera desarrollar un backend robusto que gestione toda la lógica de negocio.
+
 ## Tecnologías Utilizadas
 
 - **Flutter**: Framework para desarrollo de aplicaciones móviles multiplataforma.
