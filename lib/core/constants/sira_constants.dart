@@ -8,4 +8,6 @@ class SiraConstants {
   static const String finesPath =
       '/paquetes/tablaMaestro/deuda/index_publico.php?accion=desplegarFormaConsultaPublica';
   static const String tabulatedPath = '/paquetes/matricula/index_publico.php';
+  static const String resolutionPath =
+      '/paquetes/resolucionporprograma/index.php';
 }
