@@ -22,7 +22,7 @@ class SubjectCard extends StatelessWidget {
               style: TextStyle(
                   color: subject.isEnabled
                       ? AppColors.blue
-                      : subject.grade < 3
+                      : !subject.isApproved
                           ? AppColors.orange
                           : AppColors.green,
                   fontSize: 24,
