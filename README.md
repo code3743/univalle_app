@@ -2,6 +2,9 @@
 
 ¡Bienvenido a Univalle App! Esta aplicación móvil ha sido desarrollada para mejorar la experiencia de los estudiantes de la Universidad del Valle, proporcionando acceso fácil y rápido a diversos servicios universitarios desde sus dispositivos móviles.
 
+>[!IMPORTANT]
+> Esta proyecto se encuentra en fase de desarrollo
+
 ## Descripción
 
 Univalle App reúne varios servicios esenciales en una interfaz amigable y optimizada para móviles. Gracias a esta aplicación, los estudiantes pueden:
