@@ -20,9 +20,12 @@ class Header extends StatelessWidget {
               color: AppColors.white,
             ),
           ),
-          SvgPicture.asset(
-            'assets/svg/logo.svg',
-            height: 40,
+          Hero(
+            tag: 'uv_logo',
+            child: SvgPicture.asset(
+              'assets/svg/logo.svg',
+              height: 40,
+            ),
           ),
         ],
       ),
