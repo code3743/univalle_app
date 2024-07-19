@@ -6,6 +6,6 @@ class SiraException implements Exception {
 
   @override
   String toString() {
-    return 'SiraExecption: $message';
+    return message;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
+import 'package:univalle_app/config/themes/app_colors.dart';
 
 final dialogHandlerProvider = Provider.autoDispose<DialogHandler>((ref) {
   final context =
@@ -20,21 +20,19 @@ class DialogHandler {
 
   DialogHandler(this.context);
 
-  void showAlertDialog(String title, Widget content) {
+  void showAlertDialog(String title, Widget content, {TextStyle? textStyle}) {
     showDialog(
-      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
+          title: Text(title,
+              textAlign: TextAlign.center,
+              style: textStyle ??
+                  const TextStyle(color: AppColors.primaryBlue, fontSize: 18)),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          clipBehavior: Clip.antiAlias,
           content: content,
-          actions: [
-            TextButton(
-                onPressed: () {
-                  context.pop();
-                },
-                child: const Text('OK'))
-          ],
         );
       },
     );
