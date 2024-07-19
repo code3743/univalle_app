@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
+import 'package:univalle_app/core/utils/validate.dart';
+
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,14 +17,31 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primaryRed,
-        onPressed: () {},
-        child: const Icon(
-          Icons.notifications_rounded,
-          color: AppColors.white,
-        ),
-      ),
+      floatingActionButton: Consumer(builder: (context, ref, _) {
+        return FloatingActionButton(
+          backgroundColor: AppColors.primaryRed,
+          onPressed: () {
+            ref.read(dialogHandlerProvider).showAlertDialog(
+                '¿Cómo ingresar?',
+                Column(mainAxisSize: MainAxisSize.min, children: [
+                  const Text(
+                      'Utiliza tu código de estudiante y contraseña para acceder a todas las funcionalidades que tenemos para ti.',
+                      textAlign: TextAlign.center),
+                  const Text(
+                      'Si prefieres, puedes ingresar como invitado y explorar nuestra aplicación.',
+                      textAlign: TextAlign.center),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                      height: 200,
+                      child: Image.asset('assets/img/uv_ardilla.png'))
+                ]));
+          },
+          child: const Icon(
+            Icons.notifications_rounded,
+            color: AppColors.white,
+          ),
+        );
+      }),
       body: SafeArea(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -37,7 +59,9 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const _AuthForm(),
+                _AuthForm(
+                  _formKey,
+                ),
               ],
             ),
           ),
@@ -48,7 +72,8 @@ class LoginScreen extends StatelessWidget {
 }
 
 class _AuthForm extends StatelessWidget {
-  const _AuthForm();
+  const _AuthForm(this.formKey);
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -56,60 +81,76 @@ class _AuthForm extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: 0.9,
       child: Form(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CustomTextFormField(
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              prefixIcon: Icon(Icons.person_rounded),
-              suffixIcon: SizedBox(),
-              hintText: 'Usuario',
-            ),
-            const SizedBox(height: 10),
-            ValueListenableBuilder(
-              valueListenable: isObscure,
-              builder: (_, value, __) {
-                return CustomTextFormField(
-                  textAlign: TextAlign.center,
-                  prefixIcon: const Icon(Icons.lock_rounded),
-                  suffixIcon: IconButton(
-                    icon: Icon(!value
-                        ? Icons.visibility_off_rounded
-                        : Icons.visibility_rounded),
-                    onPressed: () => isObscure.value = !value,
-                  ),
-                  hintText: 'Contraseña',
-                  obscureText: value,
-                );
-              },
-            ),
-            const SizedBox(height: 10),
-            CustomButton(
-              text: 'Iniciar sesión',
-              onPressed: () {},
-            ),
-            const SizedBox(height: 10),
-            CustomButton(
-              text: 'Invitado',
-              onPressed: () {},
-              backgroundColor: AppColors.white,
-              borderColor: AppColors.primaryRed,
-              borderWidth: 2,
-              textColor: AppColors.primaryRed,
-            ),
-            TextButton(
+        key: formKey,
+        child: Consumer(builder: (context, ref, _) {
+          //TODO: Implementar el inicio de sesión
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CustomTextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                prefixIcon: Icon(Icons.person_rounded),
+                suffixIcon: SizedBox(),
+                hintText: 'Usuario',
+                validator: Validate.validateStudentCode,
+              ),
+              const SizedBox(height: 10),
+              ValueListenableBuilder(
+                valueListenable: isObscure,
+                builder: (_, value, __) {
+                  return CustomTextFormField(
+                    textAlign: TextAlign.center,
+                    prefixIcon: const Icon(Icons.lock_rounded),
+                    suffixIcon: IconButton(
+                      icon: Icon(!value
+                          ? Icons.visibility_off_rounded
+                          : Icons.visibility_rounded),
+                      onPressed: () => isObscure.value = !value,
+                    ),
+                    hintText: 'Contraseña',
+                    validator: Validate.validatePassword,
+                    obscureText: value,
+                  );
+                },
+              ),
+              const SizedBox(height: 10),
+              CustomButton(
+                text: 'Iniciar sesión',
+                onPressed: () async {
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+                  try {} catch (e) {
+                    ref
+                        .read(snackBarHandlerProvider)
+                        .showSnackBar(e.toString());
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+              CustomButton(
+                text: 'Invitado',
                 onPressed: () {},
-                child: const Text(
-                  '¿Olvidaste tu contraseña?',
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: AppColors.primaryRed),
-                )),
-          ],
-        ),
+                backgroundColor: AppColors.white,
+                borderColor: AppColors.primaryRed,
+                borderWidth: 2,
+                textColor: AppColors.primaryRed,
+              ),
+              TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    '¿Olvidaste tu contraseña?',
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppColors.primaryRed,
+                        color: AppColors.primaryRed),
+                  )),
+            ],
+          );
+        }),
       ),
     );
   }
