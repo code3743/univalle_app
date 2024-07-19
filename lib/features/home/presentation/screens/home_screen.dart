@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/features/home/presentation/view/home_drawer.dart';
 import 'package:univalle_app/features/home/presentation/widgets/widgets.dart';
+
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,7 +11,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
+      key: _scaffoldKey,
+      drawer: const HomeDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColors.white,
         selectedItemColor: AppColors.primaryRed,
@@ -116,10 +120,10 @@ class _StudentProfileInfo extends StatelessWidget {
                 bottomRight: Radius.circular(35),
               ),
             ),
-            child: const Column(
+            child: Column(
               children: [
-                Header(),
-                Column(
+                Header(scaffoldKey: _scaffoldKey),
+                const Column(
                   children: [
                     ProfilePicture(isEditable: true),
                     SizedBox(

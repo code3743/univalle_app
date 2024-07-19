@@ -5,8 +5,9 @@ import 'package:univalle_app/config/themes/app_colors.dart';
 class Header extends StatelessWidget {
   const Header({
     super.key,
+    required this.scaffoldKey,
   });
-
+  final GlobalKey<ScaffoldState> scaffoldKey;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -14,7 +15,7 @@ class Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => scaffoldKey.currentState!.openDrawer(),
             icon: const Icon(
               Icons.menu,
               color: AppColors.white,
