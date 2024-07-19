@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' show GlobalKey, NavigatorState;
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/features/home/presentation/screens/home_screen.dart';
+import 'package:univalle_app/features/home/presentation/screens/check_screen.dart';
 import 'package:univalle_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
 import 'package:univalle_app/features/student_tabulate/presentation/screens/tabulate_screen.dart';
@@ -13,9 +14,14 @@ final GlobalKey<NavigatorState> _globalKey = GlobalKey<NavigatorState>();
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/home/resolution',
+    initialLocation: '/home',
     navigatorKey: _globalKey,
     routes: [
+      GoRoute(
+        path: '/check',
+        name: 'check',
+        builder: (context, state) => const CheckScreen(),
+      ),
       GoRoute(
         path: '/login',
         name: 'login',
