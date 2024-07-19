@@ -3,7 +3,7 @@ import 'package:univalle_app/features/student_tabulate/domain/entities/tabulate.
 import 'package:univalle_app/features/student_tabulate/domain/repositories/tabulate_repository.dart';
 
 class SiraTabulateRepositoryImpl implements TabulateRepository {
-  final TabulateDatasource _datasource;
+  final TabulateDataSource _datasource;
 
   SiraTabulateRepositoryImpl(this._datasource);
 

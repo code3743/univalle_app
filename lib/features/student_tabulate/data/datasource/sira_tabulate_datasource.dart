@@ -8,7 +8,7 @@ import 'package:univalle_app/core/errors/sira_exception.dart';
 import 'package:univalle_app/features/student_tabulate/domain/datasource/tabulate_datasource.dart';
 import 'package:univalle_app/features/student_tabulate/domain/entities/tabulate.dart';
 
-class SiraTabulateDatasource implements TabulateDatasource {
+class SiraTabulateDatasource implements TabulateDataSource {
   final Dio _dio = Dio();
 
   SiraTabulateDatasource() {
