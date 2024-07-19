@@ -35,9 +35,11 @@ class CheckScreen extends ConsumerWidget {
                     height: 80,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 const CircularProgressIndicator.adaptive(
                   backgroundColor: AppColors.primaryRed,
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.primaryBlue),
                 ),
               ],
             );
