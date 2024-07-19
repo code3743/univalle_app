@@ -1,5 +1,5 @@
 import 'package:univalle_app/features/program_resolution/data/models/subject_resolution_model.dart';
-import 'package:univalle_app/features/program_resolution/domain/entities/resolution.dart';
+import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
 
 class ResultCycleModel {
   final List<SubjectCycleModel> cycles;

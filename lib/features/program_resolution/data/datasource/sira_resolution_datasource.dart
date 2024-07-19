@@ -6,7 +6,7 @@ import 'package:univalle_app/core/constants/sira_constants.dart';
 import 'package:univalle_app/core/errors/handle_sira_errors.dart';
 import 'package:univalle_app/features/program_resolution/data/models/subject_cycle_model.dart';
 import 'package:univalle_app/features/program_resolution/domain/datasource/resolution_datasource.dart';
-import 'package:univalle_app/features/program_resolution/domain/entities/resolution.dart';
+import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
 
 class SiraResolutionDatasource implements ResolutionDataSource {
   final Dio _dio = Dio();
@@ -42,28 +42,31 @@ class SiraResolutionDatasource implements ResolutionDataSource {
           .sublist(2);
       for (final tr in tableRaw) {
         final row = tr.querySelectorAll('td');
-        final cycle = row[1].text.trim();
+        final cycle = int.parse(row[1].text.trim()).toString();
         final code = row[2].text.trim();
         final name = row[3].text.trim();
         final subjectType = row[4].text.trim();
         final credits = row[5].text.trim();
-        final prereqCode = row[6].text.trim();
+        final prereqCode = row[7].text.trim();
 
         if (!data.containsKey(cycle)) {
           data[cycle] = [];
         }
 
         if (data[cycle]!.any((element) => element['code'] == code)) {
-          data[cycle]!
-              .firstWhere((element) => element['code'] == code)['prerequisites']
-              .add(prereqCode);
+          if (prereqCode.isNotEmpty) {
+            data[cycle]!
+                .firstWhere(
+                    (element) => element['code'] == code)['prerequisites']
+                .add(prereqCode);
+          }
         } else {
           data[cycle]!.add({
             'code': code,
             'name': name,
             'subjectType': subjectType,
             'credits': credits,
-            'prerequisites': [prereqCode],
+            'prerequisites': prereqCode.isEmpty ? [] : [prereqCode],
           });
         }
       }
