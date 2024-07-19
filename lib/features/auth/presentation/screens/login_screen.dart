@@ -29,9 +29,12 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/svg/logo.svg',
-                  height: 80,
+                Hero(
+                  tag: 'uv_logo',
+                  child: SvgPicture.asset(
+                    'assets/svg/logo.svg',
+                    height: 80,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 const _AuthForm(),
