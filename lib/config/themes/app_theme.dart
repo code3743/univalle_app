@@ -11,6 +11,7 @@ final lightTheme = ThemeData.light().copyWith(
       color: AppColors.white,
       fontSize: 20,
     ),
+    iconTheme: IconThemeData(color: AppColors.white),
   ),
 );
 
