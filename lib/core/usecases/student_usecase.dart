@@ -29,6 +29,10 @@ class StudentUseCase {
     _student = await _authRepository.getStudent();
   }
 
+  Future<bool> isLogged() async {
+    return await _authRepository.isLogged();
+  }
+
   Future<void> logout() async {
     await _authRepository.logout();
   }
