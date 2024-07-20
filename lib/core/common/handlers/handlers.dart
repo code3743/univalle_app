@@ -55,7 +55,7 @@ class SnackBarHandler {
         ),
         animation: AnimationController(
           vsync: ScaffoldMessenger.of(context),
-          duration: const Duration(milliseconds: 500),
+          duration: const Duration(seconds: 3),
         ),
         backgroundColor: backgroundColor,
       ),

@@ -25,8 +25,12 @@ class StudentUseCase {
   );
 
   Future<void> login(String code, String password) async {
-    await _authRepository.login(code, password);
-    _student = await _authRepository.getStudent();
+    try {
+      await _authRepository.login(code, password);
+      _student = await _authRepository.getStudent();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<bool> isLogged() async {
