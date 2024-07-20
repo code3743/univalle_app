@@ -14,7 +14,7 @@ final GlobalKey<NavigatorState> _globalKey = GlobalKey<NavigatorState>();
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/check',
     navigatorKey: _globalKey,
     routes: [
       GoRoute(
