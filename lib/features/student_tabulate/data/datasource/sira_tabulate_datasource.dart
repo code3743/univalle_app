@@ -53,8 +53,7 @@ class SiraTabulateDatasource implements TabulateDataSource {
       document.querySelector('table')!.attributes['class'] = 'box';
       return Tabulate(content: document.outerHtml);
     } catch (e) {
-      handleSiraError(e);
-      rethrow;
+      throw handleSiraError(e);
     }
   }
 }

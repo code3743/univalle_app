@@ -73,8 +73,7 @@ class SiraResolutionDatasource implements ResolutionDataSource {
       final result = ResultCycleModel.fromJson(data).cycles;
       return result.map((e) => e.toEntity()).toList();
     } catch (e) {
-      handleSiraError(e);
-      rethrow;
+      throw handleSiraError(e);
     }
   }
 }
