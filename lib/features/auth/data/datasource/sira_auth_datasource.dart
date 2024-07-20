@@ -87,13 +87,12 @@ class SiraAuthDatasource implements AuthDatasource {
           accumulatedCredits:
               int.tryParse(rantingDocument.querySelectorAll('td[title="Acumulado: Número de Créditos Aprobados Acumulados"]').last.text.trim()) ?? 0,
           studentFines: await _getStudentFines(code, dataRanting[2].split('-')[0]));
-          
+
       _sharedStudentUtility.saveStudentData(
           studentModel.token, studentModel.studentId, studentModel.password);
       return studentModel.toEntity();
     } catch (e) {
-      handleSiraError(e);
-      rethrow;
+      throw handleSiraError(e);
     }
   }
 
@@ -160,7 +159,7 @@ class SiraAuthDatasource implements AuthDatasource {
       }
       _student = await _getStudent(user.split('-')[0], password);
     } catch (e) {
-      handleSiraError(e);
+      throw handleSiraError(e);
     }
   }
 
@@ -170,7 +169,7 @@ class SiraAuthDatasource implements AuthDatasource {
       await _dio.get(SiraConstants.baseUrl + SiraConstants.logoutPath);
       await _cookieJar.deleteAll();
     } catch (e) {
-      handleSiraError(e);
+      throw handleSiraError(e);
     }
   }
 

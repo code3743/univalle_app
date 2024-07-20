@@ -5,6 +5,7 @@ import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
 import 'package:univalle_app/core/utils/validate.dart';
+import 'package:univalle_app/features/auth/presentation/providers/auth_provider.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -83,71 +84,85 @@ class _AuthForm extends StatelessWidget {
       child: Form(
         key: formKey,
         child: Consumer(builder: (context, ref, _) {
-          //TODO: Implementar el inicio de sesión
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          final auth = ref.watch(authProvider);
+          final authNotifier = ref.watch(authProvider.notifier);
+          return Stack(
+            alignment: Alignment.center,
             children: [
-              const CustomTextFormField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                prefixIcon: Icon(Icons.person_rounded),
-                suffixIcon: SizedBox(),
-                hintText: 'Usuario',
-                validator: Validate.validateStudentCode,
-              ),
-              const SizedBox(height: 10),
-              ValueListenableBuilder(
-                valueListenable: isObscure,
-                builder: (_, value, __) {
-                  return CustomTextFormField(
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomTextFormField(
+                    controller: authNotifier.code,
+                    enabled: !auth,
                     textAlign: TextAlign.center,
-                    prefixIcon: const Icon(Icons.lock_rounded),
-                    suffixIcon: IconButton(
-                      icon: Icon(!value
-                          ? Icons.visibility_off_rounded
-                          : Icons.visibility_rounded),
-                      onPressed: () => isObscure.value = !value,
-                    ),
-                    hintText: 'Contraseña',
-                    validator: Validate.validatePassword,
-                    obscureText: value,
-                  );
-                },
+                    keyboardType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.person_rounded),
+                    suffixIcon: const SizedBox(),
+                    hintText: 'Usuario',
+                    validator: Validate.validateStudentCode,
+                  ),
+                  const SizedBox(height: 10),
+                  ValueListenableBuilder(
+                    valueListenable: isObscure,
+                    builder: (_, value, __) {
+                      return CustomTextFormField(
+                        enabled: !auth,
+                        controller: authNotifier.pass,
+                        textAlign: TextAlign.center,
+                        prefixIcon: const Icon(Icons.lock_rounded),
+                        suffixIcon: IconButton(
+                          icon: Icon(!value
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility_rounded),
+                          onPressed: () => isObscure.value = !value,
+                        ),
+                        hintText: 'Contraseña',
+                        validator: Validate.validatePassword,
+                        obscureText: value,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  CustomButton(
+                    text: 'Iniciar sesión',
+                    onPressed: !auth
+                        ? () async {
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            }
+                            try {
+                              await authNotifier.login();
+                            } catch (e) {
+                              ref.read(snackBarHandlerProvider).showSnackBar(
+                                    e.toString(),
+                                  );
+                            }
+                          }
+                        : null,
+                  ),
+                  const SizedBox(height: 10),
+                  CustomButton(
+                    text: 'Invitado',
+                    onPressed: !auth ? () {} : null,
+                    backgroundColor: AppColors.white,
+                    borderColor: AppColors.primaryRed,
+                    borderWidth: 2,
+                    textColor: AppColors.primaryRed,
+                  ),
+                  TextButton(
+                      onPressed: !auth ? () {} : null,
+                      child: const Text(
+                        '¿Olvidaste tu contraseña?',
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.primaryRed,
+                            color: AppColors.primaryRed),
+                      )),
+                ],
               ),
-              const SizedBox(height: 10),
-              CustomButton(
-                text: 'Iniciar sesión',
-                onPressed: () async {
-                  if (!formKey.currentState!.validate()) {
-                    return;
-                  }
-                  try {} catch (e) {
-                    ref
-                        .read(snackBarHandlerProvider)
-                        .showSnackBar(e.toString());
-                  }
-                },
-              ),
-              const SizedBox(height: 10),
-              CustomButton(
-                text: 'Invitado',
-                onPressed: () {},
-                backgroundColor: AppColors.white,
-                borderColor: AppColors.primaryRed,
-                borderWidth: 2,
-                textColor: AppColors.primaryRed,
-              ),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    '¿Olvidaste tu contraseña?',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.primaryRed,
-                        color: AppColors.primaryRed),
-                  )),
             ],
           );
         }),
