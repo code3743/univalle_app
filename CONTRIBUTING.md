@@ -6,45 +6,51 @@
 
 1. **Haz un fork del proyecto:**
 
-   Haz un fork de este repositorio haciendo clic en el botón "Fork" en la parte superior de la página.
+   Haz un fork de este repositorio haciendo clic en el botón "Fork" en la parte superior de la página. Esto creará una copia de este repositorio en tu cuenta de GitHub.
 
 2. **Clona el repositorio:**
 
-   ```sh
-    git remote add upstream https://github.com/code3743/univalle_app.git
-   ```
-
-3. **Crea una rama con tus cambios:**
+   Clona el repositorio a tu máquina local utilizando el siguiente comando:
 
    ```sh
-   git checkout -b mi-nueva-funcionalidad
+   git clone https://github.com/tu_usuario/univalle_app.git
    ```
 
-4. **Realiza los cambios necesarios y haz commit:**
+3. **Crea una rama:**
 
-   Asegúrate de escribir mensajes de commit claros y concisos.
+   Crea una nueva rama para trabajar en tu contribución:
 
    ```sh
-   git commit -m 'Agregar nueva funcionalidad'
+   git checkout -b nombre-de-tu-rama
    ```
 
-5. **Sincroniza tu rama con la rama principal del repositorio original (opcional pero recomendado):**
+4. **Realiza tus cambios:**
+
+   Realiza los cambios necesarios en el código, documentación, assets o cualquier otra área en la que estés contribuyendo.
+
+5. **Commit y push:**
+
+   Haz commit de tus cambios y empújalos a tu fork:
 
    ```sh
-   git remote add upstream https://github.com/code3743/univalle_app.git
-   git fetch upstream
-   git merge upstream/main
+   git add .
+   git commit -m "Descripción de los cambios"
+   git push origin nombre-de-tu-rama
    ```
 
-6. **Sube los cambios a tu repositorio:**
+6. **Abre un pull request:**
 
-   ```sh
-   git push origin mi-nueva-funcionalidad
-   ```
+   Desde tu fork en GitHub, abre un pull request a la rama principal de este repositorio. Asegúrate de describir claramente los cambios que has realizado.
 
-7. **Crea un pull request:**
+## Tipos de Contribuciones Aceptadas
 
-   Ve al repositorio original y crea un pull request desde tu rama.
+Apreciamos todo tipo de contribuciones al proyecto, incluyendo pero no limitándose a:
+
+- **Código:** Nuevas funcionalidades, mejoras y corrección de errores.
+- **Documentación:** Mejoras y actualizaciones en la documentación.
+- **Assets/Recursos:** Imágenes, iconos, y otros recursos visuales.
+- **Revisión de Texto:** Corrección de errores tipográficos, gramaticales y de estilo en la documentación y en la aplicación.
+- **Sugerencias:** Propuestas de nuevas funcionalidades o mejoras a las existentes.
 
 ## Guía de Estilo
 
