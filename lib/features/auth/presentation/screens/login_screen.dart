@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
@@ -135,6 +136,7 @@ class _AuthForm extends StatelessWidget {
                             }
                             try {
                               await authNotifier.login();
+                              ref.read(appRouterProvider).go('/home');
                             } catch (e) {
                               ref.read(snackBarHandlerProvider).showSnackBar(
                                     e.toString(),
