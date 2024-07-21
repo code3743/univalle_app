@@ -89,7 +89,7 @@ class SiraAuthDatasource implements AuthDatasource {
           studentFines: await _getStudentFines(code, dataRanting[2].split('-')[0]));
 
       _sharedStudentUtility.saveStudentData(
-          studentModel.token, studentModel.studentId, studentModel.password);
+          studentModel.token, '${studentModel.studentId.substring(2)}-${studentModel.programId}', studentModel.password);
       return studentModel.toEntity();
     } catch (e) {
       throw handleSiraError(e);
@@ -130,10 +130,6 @@ class SiraAuthDatasource implements AuthDatasource {
     try {
       if (user.isEmpty || password.isEmpty) {
         throw SiraException('Usuario y contraseña son requeridos');
-      }
-
-      if (!RegExp(r'^\d+-\d+').hasMatch(user)) {
-        throw SiraException('Usuario no válido');
       }
 
       final response = await _dio.post(SiraConstants.baseUrl,
