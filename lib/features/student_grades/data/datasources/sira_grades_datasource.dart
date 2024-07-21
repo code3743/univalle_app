@@ -49,9 +49,11 @@ class SiraGradesDatasource implements GradesDataSource {
         for (final subject in tableSubjects) {
           if (subject.querySelectorAll('td').length != 11) continue;
           final subjectData = subject.querySelectorAll('td');
+
           final code = subjectData[0].text.trim();
           final group = subjectData[1].text.trim();
           final name = subjectData[3].text.trim();
+          if (name == 'ASIGNATURA') continue;
           final credits = subjectData[7].text.trim();
           String grade = subjectData[8].text.trim();
           final isEnable = subjectData[9].text.trim().isNotEmpty;
