@@ -14,6 +14,7 @@ class StudentGradesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final studentGrade = ref.watch(studentGradesProvider);
     final studentGradeNotifier = ref.read(studentGradesProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calificaciones'),
@@ -41,7 +42,10 @@ class StudentGradesScreen extends ConsumerWidget {
               )
             : Column(
                 children: [
-                  PeriodGradesList(periods: studentGradeNotifier.periods),
+                  PeriodGradesList(
+                    periods: studentGradeNotifier.periods,
+                    onPeriodSelected: studentGradeNotifier.filterGrades,
+                  ),
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 
+final ValueNotifier<int> _selectedPeriod = ValueNotifier<int>(0);
+
 class PeriodGradesList extends StatelessWidget {
   const PeriodGradesList({
     super.key,
     required this.periods,
+    required this.onPeriodSelected,
   });
   final List<String> periods;
+  final ValueChanged<String> onPeriodSelected;
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<int> selectedPeriod = ValueNotifier<int>(0);
     return SizedBox(
       width: double.infinity,
       height: 90,
@@ -33,12 +36,13 @@ class PeriodGradesList extends StatelessWidget {
               itemCount: periods.length,
               itemBuilder: (context, index) {
                 return ValueListenableBuilder(
-                    valueListenable: selectedPeriod,
+                    valueListenable: _selectedPeriod,
                     builder: (_, value, __) {
                       return PeriodItem(
                         title: periods[index],
                         onTap: () {
-                          selectedPeriod.value = index;
+                          _selectedPeriod.value = index;
+                          onPeriodSelected(periods[index]);
                         },
                         selected: value == index,
                       );
