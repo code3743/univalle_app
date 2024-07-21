@@ -124,8 +124,7 @@ class _StudentProfileInfo extends ConsumerWidget {
                       height: 10,
                     ),
                     Text(
-                      student.fristName.split('')[0] +
-                          student.lastName.split('')[0],
+                      '${student.fristName.split(' ')[0]} ${student.lastName.split(' ')[0]}',
                       style: const TextStyle(
                         color: AppColors.white,
                         fontSize: 22,
