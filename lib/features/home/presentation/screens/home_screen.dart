@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/home/presentation/view/home_drawer.dart';
+import 'package:univalle_app/features/home/presentation/widgets/custom_navigation_bar.dart';
 import 'package:univalle_app/features/home/presentation/widgets/widgets.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -13,24 +17,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       drawer: const HomeDrawer(),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.white,
-        selectedItemColor: AppColors.primaryRed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded),
-            label: 'Inicio',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_rounded),
-            label: 'Asignaturas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_rounded),
-            label: 'Novedades',
-          ),
-        ],
-      ),
+      bottomNavigationBar: const CustomNavigationBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -43,12 +30,16 @@ class HomeScreen extends StatelessWidget {
               children: [
                 ItemService(
                   title: 'Calificaciones',
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/home/student-grades');
+                  },
                   icon: 'assets/svg/calificacion.svg',
                 ),
                 ItemService(
                   title: 'Tabulado',
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/home/tabulate');
+                  },
                   icon: 'assets/svg/tabulado.svg',
                 ),
               ],
@@ -79,7 +70,9 @@ class HomeScreen extends StatelessWidget {
               children: [
                 ItemService(
                   title: 'Resolución',
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/home/resolution');
+                  },
                   icon: 'assets/svg/resolucion.svg',
                 ),
                 ItemService(
@@ -99,12 +92,13 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _StudentProfileInfo extends StatelessWidget {
+class _StudentProfileInfo extends ConsumerWidget {
   const _StudentProfileInfo();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
+    final student = ref.watch(studentUseCasesProvider).getStudent();
     return SizedBox(
       width: size.width,
       height: 400,
@@ -123,37 +117,38 @@ class _StudentProfileInfo extends StatelessWidget {
             child: Column(
               children: [
                 Header(scaffoldKey: _scaffoldKey),
-                const Column(
+                Column(
                   children: [
-                    ProfilePicture(isEditable: true),
-                    SizedBox(
+                    const ProfilePicture(isEditable: true),
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      'Angie Tabares',
-                      style: TextStyle(
+                      student.fristName.split('')[0] +
+                          student.lastName.split('')[0],
+                      style: const TextStyle(
                         color: AppColors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
-                      'LICENCIATURA EN HISTORIA',
-                      style: TextStyle(
+                      student.programName,
+                      style: const TextStyle(
                         color: AppColors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Text('1640614',
-                        style: TextStyle(
+                    Text(student.studentId.substring(2),
+                        style: const TextStyle(
                           color: AppColors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                         )),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 )
               ],
@@ -164,24 +159,24 @@ class _StudentProfileInfo extends StatelessWidget {
             child: SizedBox(
               width: size.width,
               height: 105,
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AboutItem(
                     title: 'Promedio',
-                    value: '4.6',
+                    value: student.average.toString(),
                     color: AppColors.orange,
                     icon: 'assets/svg/promedio.svg',
                   ),
                   AboutItem(
                     title: 'Créditos',
-                    value: '120',
+                    value: student.accumulatedCredits.toString(),
                     color: AppColors.green,
                     icon: 'assets/svg/creditos.svg',
                   ),
                   AboutItem(
                     title: 'Dedudas',
-                    value: '0',
+                    value: student.studentFines.toString(),
                     color: AppColors.blue,
                     icon: 'assets/svg/deudas.svg',
                   ),
