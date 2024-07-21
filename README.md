@@ -52,8 +52,11 @@ Para compilar la aplicación y generar un archivo APK, sigue estos pasos:
 
 1. **Compila la aplicación:**
    ```bash
-   flutter build
+   flutter build apk --split-per-abi
    ```
+
+>[!NOTE]
+>para más información sobre la compilación de la aplicación, consulta la [documentación oficial de Flutter](https://docs.flutter.dev/deployment/android).
 
 ## Uso
 
