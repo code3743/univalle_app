@@ -1,4 +1,4 @@
-import 'package:univalle_app/core/entities/student.dart';
+import 'package:univalle_app/core/domain/entities/student.dart';
 
 abstract class AuthDatasource {
   Future<void> login(String user, String password);

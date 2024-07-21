@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/core/providers/shared_preferences_provider.dart';
-import 'package:univalle_app/core/usecases/student_usecase.dart';
+import 'package:univalle_app/core/domain/usecases/student_usecase.dart';
 import 'package:univalle_app/features/auth/data/datasource/sira_auth_datasource.dart';
 import 'package:univalle_app/features/auth/data/repositories/sira_auth_repository_impl.dart';
 import 'package:univalle_app/features/program_resolution/data/datasource/sira_resolution_datasource.dart';

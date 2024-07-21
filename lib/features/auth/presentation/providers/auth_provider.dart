@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show TextEditingController;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
-import 'package:univalle_app/core/usecases/student_usecase.dart';
+import 'package:univalle_app/core/domain/usecases/student_usecase.dart';
 
 final authProvider =
     StateNotifierProvider.autoDispose<AuthProvider, bool>((ref) {

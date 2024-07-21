@@ -10,7 +10,7 @@ import 'package:univalle_app/core/errors/sira_exception.dart';
 import 'package:univalle_app/core/providers/shared_preferences_provider.dart';
 import 'package:univalle_app/features/auth/data/models/student_model.dart';
 import 'package:univalle_app/features/auth/domain/datasources/auth_datasource.dart';
-import 'package:univalle_app/core/entities/student.dart';
+import 'package:univalle_app/core/domain/entities/student.dart';
 
 class SiraAuthDatasource implements AuthDatasource {
   final _dio = Dio();
