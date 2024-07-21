@@ -10,7 +10,7 @@ import 'package:univalle_app/core/errors/sira_exception.dart';
 import 'package:univalle_app/core/providers/shared_preferences_provider.dart';
 import 'package:univalle_app/features/auth/data/models/student_model.dart';
 import 'package:univalle_app/features/auth/domain/datasources/auth_datasource.dart';
-import 'package:univalle_app/features/auth/domain/entities/student.dart';
+import 'package:univalle_app/core/entities/student.dart';
 
 class SiraAuthDatasource implements AuthDatasource {
   final _dio = Dio();
@@ -89,7 +89,9 @@ class SiraAuthDatasource implements AuthDatasource {
           studentFines: await _getStudentFines(code, dataRanting[2].split('-')[0]));
 
       _sharedStudentUtility.saveStudentData(
-          studentModel.token, '${studentModel.studentId.substring(2)}-${studentModel.programId}', studentModel.password);
+          studentModel.token,
+          '${studentModel.studentId.substring(2)}-${studentModel.programId}',
+          studentModel.password);
       return studentModel.toEntity();
     } catch (e) {
       throw handleSiraError(e);

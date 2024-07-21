@@ -1,4 +1,4 @@
-import 'package:univalle_app/features/auth/domain/entities/student.dart';
+import 'package:univalle_app/core/entities/student.dart';
 
 class StudentModel {
   final String token;

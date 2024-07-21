@@ -1,5 +1,5 @@
 import 'package:univalle_app/features/auth/domain/datasources/auth_datasource.dart';
-import 'package:univalle_app/features/auth/domain/entities/student.dart';
+import 'package:univalle_app/core/entities/student.dart';
 import 'package:univalle_app/features/auth/domain/repositories/auth_repository.dart';
 
 class SiraAuthRepositoryImpl implements AuthRepository {
