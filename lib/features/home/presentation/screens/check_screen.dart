@@ -23,6 +23,7 @@ class CheckScreen extends ConsumerWidget {
                   () => context.go(snapshot.data! ? '/home' : '/login'));
             }
             if (snapshot.hasError) {
+              print(snapshot.error);
               Future.microtask(() => context.go('/login'));
             }
             return Column(
