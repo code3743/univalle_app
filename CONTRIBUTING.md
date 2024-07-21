@@ -66,4 +66,4 @@ Si encuentras algún problema o tienes una sugerencia para mejorar el proyecto, 
 
 ## Código de Conducta
 
-Esperamos que todos los contribuyentes sigan nuestro [Código de Conducta](CODE_OF_CONDUCT). Sé respetuoso y considera a los demás.
+Esperamos que todos los contribuyentes sigan nuestro [Código de Conducta](CODE_OF_CONDUCT.md). Sé respetuoso y considera a los demás.
