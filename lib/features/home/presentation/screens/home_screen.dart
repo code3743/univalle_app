@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/core/common/widgets/profile_picture.dart';
 import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/home/presentation/view/home_drawer.dart';
 import 'package:univalle_app/features/home/presentation/widgets/custom_navigation_bar.dart';
@@ -57,7 +58,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ItemService(
                   title: 'Carné digital',
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/home/digital-card');
+                  },
                   icon: 'assets/svg/carne_digital.svg',
                 ),
               ],
