@@ -181,7 +181,7 @@ class SiraAuthDatasource implements AuthDatasource {
     final studentId = _sharedStudentUtility.getStudentId();
     final password = _sharedStudentUtility.getPassword();
     if (studentId != null && password != null) {
-      await login(studentId.substring(2), password);
+      await login(studentId, password);
       return Future.value(true);
     }
     return Future.value(false);
