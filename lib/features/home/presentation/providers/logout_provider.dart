@@ -10,7 +10,6 @@ final logoutProvider = Provider.autoDispose<void>((ref) async {
   await studentUseCase.logout();
   ref.invalidate(studentGradesProvider);
   ref.invalidate(studentTabulateProvider);
-  ref.invalidate(studentUseCasesProvider);
   await ref.read(sharedUtilityProvider).clearStudentData();
   ref.read(appRouterProvider).go('/login');
   return;
