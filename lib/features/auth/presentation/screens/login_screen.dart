@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
+import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
 import 'package:univalle_app/core/utils/validate.dart';
 import 'package:univalle_app/features/auth/presentation/providers/auth_provider.dart';
@@ -165,6 +166,12 @@ class _AuthForm extends StatelessWidget {
                       )),
                 ],
               ),
+              if (auth)
+                Positioned.fill(
+                  child: Container(
+                      color: AppColors.white.withOpacity(0.5),
+                      child: const Loading(text: 'Cargando...')),
+                ),
             ],
           );
         }),
