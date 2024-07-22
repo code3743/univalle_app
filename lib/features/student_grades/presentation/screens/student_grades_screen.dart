@@ -58,7 +58,7 @@ class StudentGradesScreen extends StatelessWidget {
                   itemCount: studentGrade.length,
                 );
               }),
-            )
+            ),
           ],
         ),
       ),

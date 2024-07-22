@@ -25,15 +25,24 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
 
   Future<void> getGrades() async {
     try {
-      state = await _ref.read(_gradesProvider.future);
-      for (var element in state!) {
+      final grades = await _ref.read(_gradesProvider.future);
+      for (var element in grades) {
         periods.add(element.period);
       }
+      state = grades;
     } catch (e) {
-      _ref.read(snackBarHandlerProvider).showSnackBar(e.toString());
+      _ref
+          .read(snackBarHandlerProvider)
+          .showSnackBar(e.toString() + ' - StudentGradesNotifier');
       _ref.read(appRouterProvider).pop();
       dispose();
     }
+  }
+
+  @override
+  void dispose() {
+    _ref.invalidate(_gradesProvider);
+    super.dispose();
   }
 
   void filterGrades(int index) async {
