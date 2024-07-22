@@ -25,7 +25,6 @@ class TabulateScreen extends StatelessWidget {
                           controller: snapshot.data!,
                         );
                       }
-
                       return const Loading(text: 'Cargando tabulado...');
                     }))));
   }

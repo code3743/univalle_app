@@ -6,14 +6,16 @@ import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
 
 final studentTabulateProvider = FutureProvider<WebViewController>((ref) async {
   final studentUseCase = ref.watch(studentUseCasesProvider);
-  final controller = WebViewController();
-  await controller.enableZoom(true);
+
   try {
+    final controller = WebViewController();
+    await controller.enableZoom(true);
     final tabulate = await studentUseCase.getTabulate();
     await controller.loadHtmlString(tabulate.content);
+    return controller;
   } catch (e) {
     ref.read(snackBarHandlerProvider).showSnackBar(e.toString());
     ref.read(appRouterProvider).pop();
+    rethrow;
   }
-  return controller;
 });
