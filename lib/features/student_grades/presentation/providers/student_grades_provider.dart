@@ -35,12 +35,12 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
     }
   }
 
-  void filterGrades(String period) async {
-    if (period == 'Todos') {
+  void filterGrades(int index) async {
+    if (index == 0) {
       state = await _ref.read(_gradesProvider.future);
     } else {
       final grades = await _ref.read(_gradesProvider.future);
-      state = grades.where((element) => element.period == period).toList();
+      state = [grades[index - 1]];
     }
   }
 }

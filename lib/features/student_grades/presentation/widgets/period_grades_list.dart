@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
-
-final ValueNotifier<int> _selectedPeriod = ValueNotifier<int>(0);
+import 'package:univalle_app/features/student_grades/presentation/providers/student_grades_provider.dart';
 
 class PeriodGradesList extends StatelessWidget {
   const PeriodGradesList({
     super.key,
-    required this.periods,
-    required this.onPeriodSelected,
   });
-  final List<String> periods;
-  final ValueChanged<String> onPeriodSelected;
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<int> selectedPeriod = ValueNotifier<int>(0);
     return SizedBox(
       width: double.infinity,
       height: 90,
@@ -31,24 +28,28 @@ class PeriodGradesList extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             height: 50,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: periods.length,
-              itemBuilder: (context, index) {
-                return ValueListenableBuilder(
-                    valueListenable: _selectedPeriod,
-                    builder: (_, value, __) {
-                      return PeriodItem(
-                        title: periods[index],
-                        onTap: () {
-                          _selectedPeriod.value = index;
-                          onPeriodSelected(periods[index]);
-                        },
-                        selected: value == index,
-                      );
-                    });
-              },
-            ),
+            child: Consumer(builder: (_, ref, __) {
+              final studentGradeNotifier =
+                  ref.read(studentGradesProvider.notifier);
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: studentGradeNotifier.periods.length,
+                itemBuilder: (context, index) {
+                  return ValueListenableBuilder(
+                      valueListenable: selectedPeriod,
+                      builder: (_, value, __) {
+                        return PeriodItem(
+                          title: studentGradeNotifier.periods[index],
+                          onTap: () {
+                            selectedPeriod.value = index;
+                            studentGradeNotifier.filterGrades(index);
+                          },
+                          selected: value == index,
+                        );
+                      });
+                },
+              );
+            }),
           ),
         ],
       ),
