@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key});
@@ -70,13 +73,18 @@ class HomeDrawer extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            ListTile(
-              iconColor: AppColors.primaryRed,
-              textColor: AppColors.primaryRed,
-              leading: const Icon(Icons.exit_to_app),
-              title: const Text('Cerrar Sesión'),
-              onTap: () {},
-            ),
+            Consumer(builder: (_, ref, __) {
+              return ListTile(
+                iconColor: AppColors.primaryRed,
+                textColor: AppColors.primaryRed,
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Cerrar Sesión'),
+                onTap: () async {
+                  await ref.read(studentUseCasesProvider).logout();
+                  ref.read(appRouterProvider).go('/login');
+                },
+              );
+            }),
             ListTile(
               iconColor: AppColors.primaryBlue,
               textColor: AppColors.primaryBlue,
