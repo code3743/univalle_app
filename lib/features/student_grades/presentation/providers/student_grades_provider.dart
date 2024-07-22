@@ -31,9 +31,7 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
       }
       state = grades;
     } catch (e) {
-      _ref
-          .read(snackBarHandlerProvider)
-          .showSnackBar(e.toString() + ' - StudentGradesNotifier');
+      _ref.read(snackBarHandlerProvider).showSnackBar(e.toString());
       _ref.read(appRouterProvider).pop();
       dispose();
     }
