@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' show GlobalKey, NavigatorState;
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/features/digital_card/presentation/screens/digital_card_screen.dart';
 import 'package:univalle_app/features/home/presentation/screens/home_screen.dart';
 import 'package:univalle_app/features/home/presentation/screens/check_screen.dart';
 import 'package:univalle_app/features/auth/presentation/screens/login_screen.dart';
@@ -55,6 +56,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                         return DetailSemesterScreen(subjectCycle: subjectCycle);
                       })
                 ]),
+            GoRoute(
+              path: 'digital-card',
+              name: 'digital-card',
+              builder: (context, state) => const DigitalCardScreen(),
+            ),
           ]),
     ],
   );
