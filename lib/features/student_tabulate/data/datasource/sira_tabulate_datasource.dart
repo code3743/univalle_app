@@ -39,18 +39,18 @@ class SiraTabulateDatasource implements TabulateDataSource {
           .decode(response.data)
           .replaceAll('href="/sra/', 'href="https://sira.univalle.edu.co/sra/')
           .replaceAll('src="/sra/', 'src="https://sira.univalle.edu.co/sra/');
-      final document = parse(content
-          .replaceAll('<head>', '')
-          .replaceAll('</head>',
-              '<head><style>body, html {height: 100%; margin: 0;display: flex;justify-content: center;align-items: center;}.box {width: 100%;transform: scale(1.5);}</style> </head>')
-          .replaceAll('width="600"', ''));
+      final document = parse(content.replaceAll('<head>', '').replaceAll(
+          '</head>',
+          '<head><style>body, html {height: 100%; margin: 0;display: flex;justify-content: center;align-items: center;} .box{width: 90%;transform: scale(1.1);}</style> </head>'));
       if (document.querySelector('img[name="logoUV"]') == null) {
         throw SiraException('Tabulado no disponible');
       }
       document.querySelector('noscript')?.remove();
-      document.querySelector('a')!.remove();
+      document.querySelector('a')?.remove();
       document.querySelector('table')?.remove();
       document.querySelector('table')!.attributes['class'] = 'box';
+      document.querySelector('table')!.attributes.remove('width');
+
       return Tabulate(content: document.outerHtml);
     } catch (e) {
       throw handleSiraError(e);

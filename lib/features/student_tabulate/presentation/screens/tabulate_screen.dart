@@ -28,12 +28,6 @@ class TabulateScreen extends StatelessWidget {
                         );
                       }
 
-                      if (snapshot.hasError) {
-                        ref
-                            .read(snackBarHandlerProvider)
-                            .showSnackBar(snapshot.error.toString());
-                        Future.microtask(() => context.pop());
-                      }
                       return const Loading(text: 'Cargando tabulado...');
                     }))));
   }
