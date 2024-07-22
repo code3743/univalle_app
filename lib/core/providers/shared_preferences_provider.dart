@@ -31,4 +31,10 @@ class SharedStudentUtility {
     await _sharedPreferences.setString('studentId', studentId);
     await _sharedPreferences.setString('password', password);
   }
+
+  Future<void> clearStudentData() async {
+    await _sharedPreferences.remove('token');
+    await _sharedPreferences.remove('studentId');
+    await _sharedPreferences.remove('password');
+  }
 }
