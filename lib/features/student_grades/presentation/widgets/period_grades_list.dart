@@ -10,7 +10,6 @@ class PeriodGradesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<int> selectedPeriod = ValueNotifier<int>(0);
     return SizedBox(
       width: double.infinity,
       height: 90,
@@ -30,7 +29,9 @@ class PeriodGradesList extends StatelessWidget {
             height: 50,
             child: Consumer(builder: (_, ref, __) {
               final studentGradeNotifier =
-                  ref.read(studentGradesProvider.notifier);
+                  ref.watch(studentGradesProvider.notifier);
+              final ValueNotifier<int> selectedPeriod =
+                  ValueNotifier<int>(studentGradeNotifier.selectedPeriod);
               return ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: studentGradeNotifier.periods.length,
