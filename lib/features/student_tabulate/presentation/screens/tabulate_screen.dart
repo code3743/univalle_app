@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/features/student_tabulate/presentation/providers/student_tabulate_provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class TabulateScreen extends StatelessWidget {
   const TabulateScreen({super.key});
