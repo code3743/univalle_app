@@ -66,7 +66,7 @@ class HomeDrawer extends StatelessWidget {
                             color: AppColors.primaryRed)),
                     TextSpan(
                         text:
-                            ' hecho por estudiantes, para estudiantes. ¡Únete a nosotros y contribuye al desarrollo de la comunidad universitaria!'),
+                            ' hecho por y para estudiantes. ¡Únete a nosotros y contribuye al desarrollo de la comunidad universitaria!'),
                   ],
                 ),
               ),
