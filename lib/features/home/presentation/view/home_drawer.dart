@@ -89,9 +89,8 @@ class HomeDrawer extends StatelessWidget {
               onTap: () {},
             ),
             ListTile(
-              iconColor: AppColors.primaryBlue,
               textColor: AppColors.primaryBlue,
-              leading: const Icon(Icons.privacy_tip),
+              leading: Image.asset('assets/img/github-mark.png'),
               title: const Text('GitHub'),
               onTap: () {},
             ),
