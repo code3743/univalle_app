@@ -42,9 +42,9 @@ dependencies:
   go_router: ^14.2.0
   html: ^0.15.4
   flutter_svg: ^2.0.10+1
-  barcode: ^2.2.8
   shared_preferences: ^2.2.3
   webview_flutter: ^4.8.0
+  barcode_widget: ^2.0.4
 
 dev_dependencies:
   flutter_test:
