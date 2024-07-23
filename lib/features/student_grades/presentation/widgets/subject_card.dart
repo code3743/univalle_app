@@ -12,8 +12,8 @@ class SubjectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text(subject.credits.toString(),
-          style: const TextStyle(
-              color: AppColors.primaryBlue,
+          style: TextStyle(
+              color: subject.isCanceled ? Colors.red : AppColors.primaryBlue,
               fontSize: 20,
               fontWeight: FontWeight.w500)),
       trailing: subject.isCanceled
@@ -27,7 +27,7 @@ class SubjectCard extends StatelessWidget {
                           : AppColors.green,
                   fontSize: 24,
                   fontWeight: FontWeight.bold)),
-      textColor: AppColors.grey,
+      textColor: subject.isCanceled ? Colors.red : AppColors.grey,
       title: Text(subject.name,
           style: const TextStyle(
             height: 1,
