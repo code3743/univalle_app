@@ -18,7 +18,8 @@ SiraException _handleDioException(DioException dioError) {
     case DioExceptionType.receiveTimeout:
       return SiraException('Tiempo de recepción agotado');
     default:
-      return SiraException('Error desconocido');
+      return SiraException(
+          'Error desconocido - probablemente un en los certificados de Univalle');
   }
 }
 
