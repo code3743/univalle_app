@@ -5,4 +5,5 @@ abstract class AuthDatasource {
   Future<void> logout();
   Future<Student> getStudent();
   Future<bool> isLogged();
+  Future<void> resetPassword(String user);
 }

@@ -22,6 +22,17 @@ class AuthProvider extends StateNotifier<bool> {
     super.dispose();
   }
 
+  Future<void> resetPassword() async {
+    try {
+      state = true;
+      await _studentUseCase.resetPassword(code.text);
+      state = false;
+    } catch (e) {
+      state = false;
+      rethrow;
+    }
+  }
+
   Future<void> login() async {
     try {
       state = true;

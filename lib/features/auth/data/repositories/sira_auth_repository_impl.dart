@@ -26,4 +26,9 @@ class SiraAuthRepositoryImpl implements AuthRepository {
   Future<bool> isLogged() async {
     return _authDatasource.isLogged();
   }
+
+  @override
+  Future<void> resetPassword(String user) async {
+    return _authDatasource.resetPassword(user);
+  }
 }

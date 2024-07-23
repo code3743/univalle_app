@@ -33,6 +33,10 @@ class StudentUseCase {
     }
   }
 
+  Future<void> resetPassword(String code) async {
+    await _authRepository.resetPassword(code);
+  }
+
   Future<bool> isLogged() async {
     final status = await _authRepository.isLogged();
     if (status) {

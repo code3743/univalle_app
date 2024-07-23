@@ -186,4 +186,46 @@ class SiraAuthDatasource implements AuthDatasource {
     }
     return Future.value(false);
   }
+
+  @override
+  Future<void> resetPassword(String user) async {
+    try {
+      if (user.isEmpty) {
+        throw SiraException('Usuario es requerido');
+      }
+      final response = await _dio.get(SiraConstants.resetPasswordPath,
+          options: Options(
+            responseType: ResponseType.plain,
+          ));
+
+      if (response.statusCode != 200) {
+        throw SiraException('El servidor no responde');
+      }
+      final document = parse(response.data);
+      final form = document.querySelector('form');
+      if (form == null) {
+        throw SiraException('El servicio no está disponible');
+      }
+      final token = form
+          .querySelector('input[name="parametros[_csrf_token]"]')!
+          .attributes['value'];
+
+      final responseReset = await _dio.post(SiraConstants.resetPasswordPath,
+          data: {'parametros[_csrf_token]': token, 'parametros[usuario]': user},
+          options: Options(
+            responseType: ResponseType.plain,
+          ));
+
+      if (responseReset.statusCode != 200) {
+        throw SiraException('El servidor no responde');
+      }
+
+      final documentReset = parse(responseReset.data);
+      if (documentReset.querySelector('.error') != null) {
+        throw SiraException(documentReset.querySelector('.error')!.text);
+      }
+    } catch (e) {
+      throw handleSiraError(e);
+    }
+  }
 }
