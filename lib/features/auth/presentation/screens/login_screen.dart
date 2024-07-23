@@ -8,6 +8,7 @@ import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
 import 'package:univalle_app/core/utils/validate.dart';
 import 'package:univalle_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:univalle_app/features/auth/presentation/views/reset_password.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -139,9 +140,9 @@ class _AuthForm extends StatelessWidget {
                               await authNotifier.login();
                               ref.read(appRouterProvider).go('/home');
                             } catch (e) {
-                              ref.read(snackBarHandlerProvider).showSnackBar(
-                                    e.toString(),
-                                  );
+                              ref
+                                  .read(snackBarHandlerProvider)
+                                  .showSnackBar(e.toString(), AppColors.error);
                             }
                           }
                         : null,
@@ -152,11 +153,24 @@ class _AuthForm extends StatelessWidget {
                     onPressed: !auth ? () {} : null,
                     backgroundColor: AppColors.white,
                     borderColor: AppColors.primaryRed,
-                    borderWidth: 2,
+                    borderWidth: 1.5,
                     textColor: AppColors.primaryRed,
                   ),
                   TextButton(
-                      onPressed: !auth ? () {} : null,
+                      onPressed: !auth
+                          ? () {
+                              final key = GlobalKey<FormState>();
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => Padding(
+                                        padding: EdgeInsets.only(
+                                            bottom: MediaQuery.of(context)
+                                                .viewInsets
+                                                .bottom),
+                                        child: ResetPassword(formKey: key),
+                                      ));
+                            }
+                          : null,
                       child: const Text(
                         '¿Olvidaste tu contraseña?',
                         style: TextStyle(
