@@ -37,12 +37,6 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
     }
   }
 
-  @override
-  void dispose() {
-    _ref.invalidate(_gradesProvider);
-    super.dispose();
-  }
-
   void filterGrades(int index) async {
     if (index == 0) {
       state = await _ref.read(_gradesProvider.future);
