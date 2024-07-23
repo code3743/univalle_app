@@ -21,7 +21,7 @@ class SubjectResolutionModel {
       name: json['name'],
       subjectType: json['subjectType'],
       credits: json['credits'],
-      prerequisites: List<String>.from(json['prerequisites']),
+      prerequisites: Set<String>.from(json['prerequisites']).toList(),
     );
   }
 

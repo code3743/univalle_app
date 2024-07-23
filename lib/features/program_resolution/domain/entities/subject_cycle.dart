@@ -14,9 +14,7 @@ class SubjectCycle {
           (previousValue, element) =>
               previousValue + int.parse(element.credits),
         ),
-        totalPreRequisites = subjects.fold<int>(
-          0,
-          (previousValue, element) =>
-              previousValue + element.prerequisites.length,
-        );
+        totalPreRequisites = Set<String>.from(
+          subjects.expand((element) => element.prerequisites).toList(),
+        ).length;
 }
