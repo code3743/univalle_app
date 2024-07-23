@@ -13,6 +13,7 @@ class Header extends StatelessWidget {
     return SafeArea(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
             onPressed: () => scaffoldKey.currentState!.openDrawer(),
@@ -21,11 +22,14 @@ class Header extends StatelessWidget {
               color: AppColors.white,
             ),
           ),
-          Hero(
-            tag: 'uv_logo',
-            child: SvgPicture.asset(
-              'assets/svg/logo.svg',
-              height: 40,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+            child: Hero(
+              tag: 'uv_logo',
+              child: SvgPicture.asset(
+                'assets/svg/logo.svg',
+                height: 35,
+              ),
             ),
           ),
         ],
