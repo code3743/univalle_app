@@ -10,4 +10,7 @@ class SiraConstants {
   static const String tabulatedPath = '/paquetes/matricula/index_publico.php';
   static const String resolutionPath =
       '/paquetes/resolucionporprograma/index.php';
+
+  static const String resetPasswordPath =
+      'https://swebse58.univalle.edu.co/sac/sac.php/solicitarClave';
 }
