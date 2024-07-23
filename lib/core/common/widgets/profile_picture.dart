@@ -19,22 +19,25 @@ class ProfilePicture extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Container(
-            clipBehavior: Clip.antiAlias,
-            width: 130,
-            height: 130,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primaryBlue,
-              border: Border.all(
-                color: AppColors.white,
-                width: 3,
+          Hero(
+            tag: 'profile_picture',
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              width: 130,
+              height: 130,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryBlue,
+                border: Border.all(
+                  color: AppColors.white,
+                  width: 3,
+                ),
               ),
-            ),
-            child: const Icon(
-              Icons.person,
-              size: 80,
-              color: AppColors.white,
+              child: const Icon(
+                Icons.person,
+                size: 80,
+                color: AppColors.white,
+              ),
             ),
           ),
           if (isEditable)
