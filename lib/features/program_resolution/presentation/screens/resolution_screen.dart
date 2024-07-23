@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
