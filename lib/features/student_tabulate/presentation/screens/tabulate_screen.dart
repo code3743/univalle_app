@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/core/common/widgets/custom_button.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
@@ -24,6 +26,33 @@ class TabulateScreen extends StatelessWidget {
                         return WebViewWidget(
                           controller: snapshot.data!,
                         );
+                      }
+                      if (snapshot.hasError) {
+                        return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Aun no tienes un tabulado registrado',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primaryBlue),
+                              ),
+                              SizedBox(
+                                height: 300,
+                                child: Image.asset('assets/img/uv_ardilla.png'),
+                              ),
+                              const SizedBox(height: 10),
+                              FractionallySizedBox(
+                                  widthFactor: 0.8,
+                                  child: CustomButton(
+                                    text: 'Volver a consultar',
+                                    onPressed: () {
+                                      ref.invalidate(studentTabulateProvider);
+                                    },
+                                  ))
+                            ]);
                       }
                       return const Loading(text: 'Cargando tabulado...');
                     }))));
