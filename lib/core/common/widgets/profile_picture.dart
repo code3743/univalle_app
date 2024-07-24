@@ -55,17 +55,57 @@ class ProfilePicture extends ConsumerWidget {
             Positioned(
               left: 105,
               bottom: 15,
-              child: IconButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: AppColors.white,
+              child: PopupMenuButton<ProfilePictureAction>(
+                color: AppColors.white,
+                onSelected: (value) async => await ref
+                    .read(profilePictureProvider.notifier)
+                    .pickImage(value),
+                itemBuilder: (BuildContext context) {
+                  return <PopupMenuEntry<ProfilePictureAction>>[
+                    const PopupMenuItem(
+                        value: ProfilePictureAction.camarePicker,
+                        child: Row(
+                          children: [
+                            Icon(Icons.camera_alt),
+                            SizedBox(width: 10),
+                            Text('Cámara'),
+                          ],
+                        )),
+                    const PopupMenuItem(
+                      value: ProfilePictureAction.galleryPicker,
+                      child: Row(
+                        children: [
+                          Icon(Icons.image),
+                          SizedBox(width: 10),
+                          Text('Galería'),
+                        ],
+                      ),
+                    ),
+                    if (file != null)
+                      const PopupMenuItem(
+                        value: ProfilePictureAction.removeImage,
+                        child: Row(
+                          children: [
+                            Icon(Icons.delete),
+                            SizedBox(width: 10),
+                            Text('Eliminar'),
+                          ],
+                        ),
+                      ),
+                  ];
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.white,
                   ),
-                  onPressed: () async => await ref
-                      .read(profilePictureProvider.notifier)
-                      .pickImage(),
-                  icon: const Icon(
+                  child: const Icon(
                     Icons.edit,
                     color: AppColors.primaryRed,
-                  )),
+                  ),
+                ),
+              ),
             )
         ],
       ),
