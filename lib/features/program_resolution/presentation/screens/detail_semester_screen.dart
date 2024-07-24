@@ -58,8 +58,9 @@ class DetailSemesterScreen extends StatelessWidget {
                                         style: TextStyle(
                                           color: AppColors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                                          fontSize: 14,
                                         ),
+                                        textAlign: TextAlign.center,
                                       ),
                                     );
                                   }
@@ -95,8 +96,12 @@ class DetailSemesterScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                itemCount: subjectCycle
-                                    .subjects[index].prerequisites.length,
+                                itemCount: subjectCycle.subjects[index]
+                                        .prerequisites.isNotEmpty
+                                    ? subjectCycle.subjects[index].prerequisites
+                                            .length +
+                                        1
+                                    : 0,
                               ),
                             )
                           ],
@@ -104,9 +109,7 @@ class DetailSemesterScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  childCount: subjectCycle.subjects.isNotEmpty
-                      ? subjectCycle.subjects.length + 1
-                      : 0,
+                  childCount: subjectCycle.subjects.length,
                 )),
                 const SliverToBoxAdapter(
                     child: SizedBox(
