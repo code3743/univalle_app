@@ -19,11 +19,17 @@ class ProfilePictureNotifier extends StateNotifier<File?> {
     _loadImage();
   }
 
-  Future<void> pickImage() async {
-    removeImage();
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future<void> pickImage(ProfilePictureAction action) async {
+    if (action == ProfilePictureAction.removeImage) {
+      removeImage();
+      return;
+    }
+    final source = action == ProfilePictureAction.camarePicker
+        ? ImageSource.camera
+        : ImageSource.gallery;
+    final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile == null) return;
+    removeImage();
 
     final directory = await getApplicationDocumentsDirectory();
 
@@ -77,3 +83,5 @@ class ProfilePictureNotifier extends StateNotifier<File?> {
     return result;
   }
 }
+
+enum ProfilePictureAction { camarePicker, removeImage, galleryPicker }
