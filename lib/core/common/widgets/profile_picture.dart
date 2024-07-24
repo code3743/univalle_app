@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/core/providers/profile_picture_provider.dart';
 
-class ProfilePicture extends StatelessWidget {
+class ProfilePicture extends ConsumerWidget {
   const ProfilePicture({
     super.key,
     this.isEditable = false,
@@ -12,7 +14,9 @@ class ProfilePicture extends StatelessWidget {
   final String? imageUrl;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final file = ref.watch(profilePictureProvider);
+
     return SizedBox(
       width: 150,
       height: 130,
@@ -22,23 +26,30 @@ class ProfilePicture extends StatelessWidget {
           Hero(
             tag: 'profile_picture',
             child: Container(
-              clipBehavior: Clip.antiAlias,
-              width: 130,
-              height: 130,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryBlue,
-                border: Border.all(
-                  color: AppColors.white,
-                  width: 3,
+                clipBehavior: Clip.antiAlias,
+                width: 130,
+                height: 130,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryBlue,
+                  image: file != null
+                      ? DecorationImage(
+                          image: FileImage(file),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                  border: Border.all(
+                    color: AppColors.white,
+                    width: 3,
+                  ),
                 ),
-              ),
-              child: const Icon(
-                Icons.person,
-                size: 80,
-                color: AppColors.white,
-              ),
-            ),
+                child: file == null
+                    ? const Icon(
+                        Icons.person,
+                        size: 80,
+                        color: AppColors.white,
+                      )
+                    : null),
           ),
           if (isEditable)
             Positioned(
@@ -48,7 +59,9 @@ class ProfilePicture extends StatelessWidget {
                   style: IconButton.styleFrom(
                     backgroundColor: AppColors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () async => await ref
+                      .read(profilePictureProvider.notifier)
+                      .pickImage(),
                   icon: const Icon(
                     Icons.edit,
                     color: AppColors.primaryRed,
