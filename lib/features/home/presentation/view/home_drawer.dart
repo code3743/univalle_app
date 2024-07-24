@@ -16,9 +16,12 @@ class HomeDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
-            SvgPicture.asset('assets/svg/logo.svg', height: 80),
+            SizedBox(
+              height: 80,
+              child: SvgPicture.asset('assets/svg/logo.svg', height: 80),
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -40,7 +43,7 @@ class HomeDrawer extends StatelessWidget {
                               color: AppColors.primaryRed)),
                       TextSpan(
                           text:
-                              '! Esta aplicación móvil ha sido desarrollada para mejorar la experiencia de los estudiantes de la Universidad del Valle, proporcionando acceso fácil y rápido a diversos servicios universitarios desde sus dispositivos móviles.'),
+                              '! Esta aplicación ha sido desarrollada para mejorar la experiencia de los estudiantes de la Universidad del Valle, proporcionando acceso fácil y rápido a diversos servicios universitarios desde sus dispositivos móviles.'),
                     ],
                   ),
                 )),
@@ -62,7 +65,7 @@ class HomeDrawer extends StatelessWidget {
                     TextSpan(
                         text: 'Open Source',
                         style: TextStyle(
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             color: AppColors.primaryRed)),
                     TextSpan(
                         text:
@@ -90,8 +93,8 @@ class HomeDrawer extends StatelessWidget {
             ),
             ListTile(
               textColor: AppColors.primaryBlue,
-              leading: Image.asset('assets/img/github-mark.png'),
-              title: const Text('GitHub'),
+              leading: Image.asset('assets/img/github-mark.png', height: 24),
+              title: const Text('Código Fuente'),
               onTap: () {},
             ),
           ],
