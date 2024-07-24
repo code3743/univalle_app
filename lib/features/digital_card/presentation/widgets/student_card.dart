@@ -2,6 +2,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/widgets/profile_picture.dart';
+import 'package:univalle_app/core/constants/campus_id.dart';
 import 'package:univalle_app/core/domain/entities/student.dart';
 import 'package:univalle_app/core/utils/capitalize.dart';
 import 'package:univalle_app/features/digital_card/presentation/widgets/item_card.dart';
@@ -83,7 +84,9 @@ class StudentCard extends StatelessWidget {
                             ItemCard(title: 'Código', value: student.studentId),
                             ItemCard(
                                 title: 'Documento', value: student.documentId),
-                            ItemCard(title: 'Sede', value: student.campus),
+                            ItemCard(
+                                title: 'Sede',
+                                value: CampusId.getCampus(student.campus)),
                           ],
                         ),
                       ),
