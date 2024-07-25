@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
-import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
+import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/program_resolution/presentation/providers/program_resolution_provider.dart';
-import 'package:univalle_app/features/program_resolution/presentation/widgets/semester_widget.dart';
+import 'package:univalle_app/features/program_resolution/presentation/widgets/about_item_resolution.dart';
+import 'package:univalle_app/features/program_resolution/presentation/widgets/semester_list.dart';
 
-class ResolutionScreen extends StatelessWidget {
+class ResolutionScreen extends ConsumerWidget {
   const ResolutionScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final subjectCycles = ref.watch(programResolutionProvider);
+    final studentCredits =
+        ref.watch(studentUseCasesProvider).getStudent().accumulatedCredits;
     return Scaffold(
         appBar: AppBar(
           title: const Text('Resolución'),
@@ -22,48 +27,94 @@ class ResolutionScreen extends StatelessWidget {
                 child: SizedBox(
               height: 20,
             )),
-            Consumer(builder: (context, ref, _) {
-              final subjectCycles = ref.watch(programResolutionProvider);
-              if (subjectCycles == null) {
-                return SliverToBoxAdapter(
+            SliverToBoxAdapter(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      clipBehavior: Clip.antiAlias,
+                      height: 180,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 5,
+                                offset: Offset(0, 2))
+                          ]),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            color: AppColors.primaryRed,
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Center(
+                                child: Text('Créditos',
+                                    style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    AboutItemResolution(
+                                      title: 'Resolución',
+                                      value: subjectCycles
+                                              ?.map((e) => e.totalCredits)
+                                              .reduce((value, element) =>
+                                                  value + element)
+                                              .toInt() ??
+                                          0,
+                                    ),
+                                    AboutItemResolution(
+                                        title: 'Acumulados',
+                                        value: subjectCycles != null
+                                            ? studentCredits
+                                            : 0),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Los creditos de la resolución no incluyen los creditos de las asignaturas electivas, los creditos acumulados del estudiante se calculan con base en todas las asignaturas aprobadas.',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  height: 1,
+                                  color: AppColors.grey),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))),
+            subjectCycles == null
+                ? SliverToBoxAdapter(
                     child: SizedBox(
                         width: MediaQuery.sizeOf(context).width,
                         height: MediaQuery.sizeOf(context).height,
-                        child: const Loading(text: 'Consultando resolución')));
-              }
-              return SemesterList(
-                subjectCycles: subjectCycles,
-              );
-            }),
+                        child: const Loading(text: 'Consultando resolución')))
+                : SemesterList(
+                    subjectCycles: subjectCycles,
+                  ),
             const SliverToBoxAdapter(
                 child: SizedBox(
               height: 20,
             )),
           ]),
         ));
-  }
-}
-
-class SemesterList extends StatelessWidget {
-  const SemesterList({
-    super.key,
-    required this.subjectCycles,
-  });
-  final List<SubjectCycle> subjectCycles;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverList(
-        delegate: SliverChildBuilderDelegate(
-      (_, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          child: SemesterWidget(
-            subjectCycle: subjectCycles[index],
-          ),
-        );
-      },
-      childCount: subjectCycles.length,
-    ));
   }
 }
