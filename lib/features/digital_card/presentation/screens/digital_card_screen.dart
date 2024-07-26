@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/digital_card/presentation/widgets/student_card.dart';
@@ -46,6 +47,24 @@ class DigitalCardScreen extends StatelessWidget {
               })
             ],
           ),
+          Positioned(
+            top: 10,
+            right: 20,
+            child: SafeArea(
+              child: IconButton(
+                  style: IconButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      shadowColor: AppColors.grey,
+                      elevation: 5,
+                      backgroundColor: AppColors.white),
+                  onPressed: () => context.pop(),
+                  icon: const Icon(
+                    Icons.cancel_rounded,
+                    color: AppColors.primaryRed,
+                  )),
+            ),
+          )
         ],
       ),
     ));
