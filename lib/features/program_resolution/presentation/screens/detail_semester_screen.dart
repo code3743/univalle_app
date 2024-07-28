@@ -48,6 +48,7 @@ class DetailSemesterScreen extends StatelessWidget {
                               width: double.infinity,
                               color: AppColors.primaryBlue,
                               child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemBuilder: (_, i) {
                                   if (i == 0) {
