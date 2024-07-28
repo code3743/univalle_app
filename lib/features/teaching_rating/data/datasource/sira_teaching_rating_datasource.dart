@@ -34,8 +34,9 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
             'imageField.y': '6'
           },
           options: Options(
-            followRedirects: false,
-          ));
+              followRedirects: false,
+              validateStatus: (status) =>
+                  status != null && status >= 200 && status < 400));
       if (response.statusCode != 302) {
         final data = latin1.decode(response.data);
         final document = parse(data);
@@ -50,6 +51,7 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
 
       final cookies =
           await _cookieJar.loadForRequest(Uri.parse(CourseEvaluation.baseUrl));
+      print(cookies.first.value);
       return cookies.first.value;
     } catch (e) {
       throw handleSiraError(e);
@@ -73,8 +75,9 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
         final Map<String, dynamic> data = {};
 
         final teacherName = form.querySelector('span')?.text ?? '';
-        final isQualified = form.querySelector('span')?.attributes['title'] ==
-            'El Docente ya ha sido evaluado';
+        final isQualified =
+            form.querySelector('span')?.attributes['title']?.trim() ==
+                'El Docente ya ha sido evaluado';
         data['teacherName'] = teacherName;
         data['isQualified'] = isQualified;
         form.querySelectorAll('input').forEach((element) {
