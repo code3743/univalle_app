@@ -9,6 +9,8 @@ import 'package:univalle_app/features/student_grades/data/datasources/sira_grade
 import 'package:univalle_app/features/student_grades/data/repositories/sira_grades_repository_impl.dart';
 import 'package:univalle_app/features/student_tabulate/data/datasource/sira_tabulate_datasource.dart';
 import 'package:univalle_app/features/student_tabulate/data/repositories/sira_tabulate_repository_impl.dart';
+import 'package:univalle_app/features/teaching_rating/data/datasource/sira_teaching_rating_datasource.dart';
+import 'package:univalle_app/features/teaching_rating/data/repositories/sira_teaching_rating_repository_impl.dart';
 
 final studentUseCasesProvider = Provider<StudentUseCase>((ref) {
   final sharedStudentUtility = ref.watch(sharedUtilityProvider);
@@ -21,6 +23,13 @@ final studentUseCasesProvider = Provider<StudentUseCase>((ref) {
   final resolutionRepository =
       SiraResolutionRepositoryImpl(SiraResolutionDatasource());
 
-  return StudentUseCase(authRepository, studentGradesRepository,
-      studentTabulateRepository, resolutionRepository);
+  final teachingRatingRepository =
+      SiraTeachingRatingRepositoryImpl(SiraTeachingRatingDatasource());
+
+  return StudentUseCase(
+      authRepository,
+      studentGradesRepository,
+      studentTabulateRepository,
+      resolutionRepository,
+      teachingRatingRepository);
 });
