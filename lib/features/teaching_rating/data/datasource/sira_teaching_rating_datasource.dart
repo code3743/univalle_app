@@ -51,7 +51,6 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
 
       final cookies =
           await _cookieJar.loadForRequest(Uri.parse(CourseEvaluation.baseUrl));
-      print(cookies.first.value);
       return cookies.first.value;
     } catch (e) {
       throw handleSiraError(e);
