@@ -53,7 +53,9 @@ class HomeScreen extends StatelessWidget {
               children: [
                 ItemService(
                   title: 'Calificación docente',
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/home/teaching-rating');
+                  },
                   icon: 'assets/svg/calificacion_docente.svg',
                 ),
                 ItemService(
@@ -80,7 +82,14 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ItemService(
                   title: 'Restaurante',
-                  onPressed: () {},
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Este modulo esta en desarrollo'),
+                        backgroundColor: AppColors.warning,
+                      ),
+                    );
+                  },
                   icon: 'assets/svg/restaurante.svg',
                 ),
               ],

@@ -23,7 +23,7 @@ class Header extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: Hero(
               tag: 'uv_logo',
               child: SvgPicture.asset(
