@@ -90,7 +90,7 @@ class ResolutionScreen extends ConsumerWidget {
                           const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              'Los creditos de la resolución no incluyen los creditos de las asignaturas electivas, los creditos acumulados del estudiante se calculan con base en todas las asignaturas aprobadas.',
+                              'Los créditos de la resolución no incluyen las asignaturas electivas. Los créditos acumulados del estudiante se calculan sumando todas las asignaturas aprobadas.',
                               style: TextStyle(
                                   fontSize: 12,
                                   height: 1,
@@ -102,11 +102,8 @@ class ResolutionScreen extends ConsumerWidget {
                       ),
                     ))),
             subjectCycles == null
-                ? SliverToBoxAdapter(
-                    child: SizedBox(
-                        width: MediaQuery.sizeOf(context).width,
-                        height: MediaQuery.sizeOf(context).height,
-                        child: const Loading(text: 'Consultando resolución')))
+                ? const SliverToBoxAdapter(
+                    child: Loading(text: 'Consultando resolución'))
                 : SemesterList(
                     subjectCycles: subjectCycles,
                   ),
