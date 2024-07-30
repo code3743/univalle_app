@@ -6,8 +6,8 @@ import 'package:univalle_app/core/domain/usecases/student_usecase.dart';
 import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/teaching_rating/domain/entities/teaching_rating.dart';
 
-final teachingRatingProvider =
-    StateNotifierProvider<TeachingRatingNotifier, List<TeachingRating>?>((ref) {
+final teachingRatingProvider = StateNotifierProvider.autoDispose<
+    TeachingRatingNotifier, List<TeachingRating>?>((ref) {
   return TeachingRatingNotifier(ref);
 });
 
