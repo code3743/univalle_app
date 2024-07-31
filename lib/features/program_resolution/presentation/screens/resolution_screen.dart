@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
-import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
+import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/program_resolution/presentation/providers/program_resolution_provider.dart';
 import 'package:univalle_app/features/program_resolution/presentation/widgets/about_item_resolution.dart';
 import 'package:univalle_app/features/program_resolution/presentation/widgets/semester_list.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
-import 'package:univalle_app/core/providers/profile_picture_provider.dart';
+import 'package:univalle_app/config/providers/profile_picture_provider.dart';
 
 class ProfilePicture extends ConsumerWidget {
   const ProfilePicture({

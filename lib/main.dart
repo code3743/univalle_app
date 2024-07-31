@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:univalle_app/config/themes/app_theme.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
-import 'package:univalle_app/core/providers/shared_preferences_provider.dart';
+import 'package:univalle_app/config/providers/shared_preferences_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

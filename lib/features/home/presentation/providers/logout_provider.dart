@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
-import 'package:univalle_app/core/providers/profile_picture_provider.dart';
-import 'package:univalle_app/core/providers/shared_preferences_provider.dart';
-import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
+import 'package:univalle_app/config/providers/profile_picture_provider.dart';
+import 'package:univalle_app/config/providers/shared_preferences_provider.dart';
+import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/student_grades/presentation/providers/student_grades_provider.dart';
 import 'package:univalle_app/features/student_tabulate/presentation/providers/student_tabulate_provider.dart';
 

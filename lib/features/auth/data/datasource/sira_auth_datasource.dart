@@ -4,10 +4,10 @@ import 'package:html/parser.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
-import 'package:univalle_app/core/constants/sira_constants.dart';
+import 'package:univalle_app/config/constants/sira_constants.dart';
 import 'package:univalle_app/core/errors/handle_sira_errors.dart';
 import 'package:univalle_app/core/errors/sira_exception.dart';
-import 'package:univalle_app/core/providers/shared_preferences_provider.dart';
+import 'package:univalle_app/config/providers/shared_preferences_provider.dart';
 import 'package:univalle_app/features/auth/data/models/student_model.dart';
 import 'package:univalle_app/features/auth/domain/datasources/auth_datasource.dart';
 import 'package:univalle_app/core/domain/entities/student.dart';

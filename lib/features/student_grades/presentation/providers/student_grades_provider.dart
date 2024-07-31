@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
-import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
+import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/features/student_grades/domain/entities/grades.dart';
 
 final studentGradesProvider =

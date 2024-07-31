@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
-import 'package:univalle_app/core/providers/student_use_cases_provider.dart';
+import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
 
 class CheckScreen extends ConsumerWidget {
   const CheckScreen({super.key});

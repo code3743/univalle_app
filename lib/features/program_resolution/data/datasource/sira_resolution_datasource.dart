@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
-import 'package:univalle_app/core/constants/sira_constants.dart';
+import 'package:univalle_app/config/constants/sira_constants.dart';
 import 'package:univalle_app/core/errors/handle_sira_errors.dart';
 import 'package:univalle_app/features/program_resolution/data/models/subject_cycle_model.dart';
 import 'package:univalle_app/features/program_resolution/domain/datasource/resolution_datasource.dart';
