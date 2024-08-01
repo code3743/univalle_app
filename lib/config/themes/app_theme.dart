@@ -7,6 +7,7 @@ final lightTheme = ThemeData.light().copyWith(
   primaryColor: AppColors.primaryRed,
   appBarTheme: const AppBarTheme(
     backgroundColor: AppColors.primaryRed,
+    foregroundColor: AppColors.primaryRed,
     titleTextStyle: TextStyle(
       color: AppColors.white,
       fontSize: 20,
