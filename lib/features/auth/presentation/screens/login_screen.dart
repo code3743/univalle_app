@@ -29,10 +29,10 @@ class LoginScreen extends StatelessWidget {
                 '¿Cómo ingresar?',
                 Column(mainAxisSize: MainAxisSize.min, children: [
                   const Text(
-                      'Utiliza tu código de estudiante y contraseña para acceder a todas las funcionalidades que tenemos para ti.',
+                      'Usa tu código y contraseña de SIRA para iniciar sesión',
                       textAlign: TextAlign.center),
                   const Text(
-                      'Si prefieres, puedes ingresar como invitado y explorar nuestra aplicación.',
+                      'SSi lo prefieres, puedes ingresar como invitado y explorar nuestra aplicación.',
                       textAlign: TextAlign.center),
                   const SizedBox(height: 10),
                   SizedBox(
@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                 ]));
           },
           child: const Icon(
-            Icons.notifications_rounded,
+            Icons.info_outlined,
             color: AppColors.white,
           ),
         );
