@@ -61,7 +61,7 @@ class TeachingRatingScreen extends ConsumerWidget {
                                   ref
                                       .read(snackBarHandlerProvider)
                                       .showSnackBar(
-                                          'Este modulo esta en desarrollo',
+                                          'Este módulo está en desarrollo.',
                                           AppColors.warning);
                                 }),
                       childCount: teachingProvider.length)),
