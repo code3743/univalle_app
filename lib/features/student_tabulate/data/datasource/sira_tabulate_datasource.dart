@@ -43,7 +43,7 @@ class SiraTabulateDatasource implements TabulateDataSource {
           '</head>',
           '<head><style>body, html {height: 100%; margin: 0;display: flex;justify-content: center;align-items: center;} .box{width: 90%;transform: scale(1.1);}</style> </head>'));
       if (document.querySelector('img[name="logoUV"]') == null) {
-        throw SiraException('Tabulado no disponible');
+        throw SiraException('No se encontro el tabulado');
       }
       document.querySelector('noscript')?.remove();
       document.querySelector('a')?.remove();

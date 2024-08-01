@@ -17,7 +17,7 @@ final studentTabulateProvider = FutureProvider<WebViewController>((ref) async {
   } catch (e) {
     ref
         .read(snackBarHandlerProvider)
-        .showSnackBar(e.toString(), AppColors.warning);
+        .showSnackBar(e.toString(), AppColors.error);
     ref.read(appRouterProvider).pop();
     rethrow;
   }
