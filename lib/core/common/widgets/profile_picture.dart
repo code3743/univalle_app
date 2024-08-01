@@ -57,6 +57,8 @@ class ProfilePicture extends ConsumerWidget {
               bottom: 15,
               child: PopupMenuButton<ProfilePictureAction>(
                 color: AppColors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
                 onSelected: (value) async => await ref
                     .read(profilePictureProvider.notifier)
                     .pickImage(value),
