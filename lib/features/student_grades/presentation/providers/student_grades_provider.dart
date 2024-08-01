@@ -21,11 +21,12 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
   }
 
   final List<String> periods = ['Todos'];
+  late final List<Grades> grades;
   int selectedPeriod = 0;
 
   Future<void> getGrades() async {
     try {
-      final grades = await _ref.read(_gradesProvider.future);
+      grades = await _ref.read(_gradesProvider.future);
       for (var element in grades) {
         periods.add(element.period);
       }
@@ -39,9 +40,8 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
 
   void filterGrades(int index) async {
     if (index == 0) {
-      state = await _ref.read(_gradesProvider.future);
+      state = grades;
     } else {
-      final grades = await _ref.read(_gradesProvider.future);
       state = [grades[index - 1]];
     }
     selectedPeriod = index;
