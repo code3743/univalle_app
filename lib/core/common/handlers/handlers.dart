@@ -28,7 +28,10 @@ class DialogHandler {
           title: Text(title,
               textAlign: TextAlign.center,
               style: textStyle ??
-                  const TextStyle(color: AppColors.primaryBlue, fontSize: 18)),
+                  const TextStyle(
+                      color: AppColors.primaryBlue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold)),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           clipBehavior: Clip.antiAlias,
