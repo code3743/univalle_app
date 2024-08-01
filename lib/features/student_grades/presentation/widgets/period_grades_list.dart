@@ -30,7 +30,7 @@ class PeriodGradesList extends StatelessWidget {
             child: Consumer(builder: (_, ref, __) {
               ref.watch(studentGradesProvider);
               final studentGradeNotifier =
-                  ref.watch(studentGradesProvider.notifier);
+                  ref.read(studentGradesProvider.notifier);
               final ValueNotifier<int> selectedPeriod =
                   ValueNotifier<int>(studentGradeNotifier.selectedPeriod);
               return ListView.builder(

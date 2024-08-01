@@ -107,7 +107,7 @@ class _StudentProfileInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final student = ref.watch(studentUseCasesProvider).getStudent();
+    final student = ref.read(studentUseCasesProvider).getStudent();
     return SizedBox(
       width: size.width,
       height: 400,
