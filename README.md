@@ -26,18 +26,10 @@ Univalle App reúne varios servicios esenciales en una interfaz amigable y optim
 | Consultar calificaciones del semestre actual             | ✅     |
 | Ver su promedio académico                                | ✅     |
 | Consultar el tabulado                                    | ✅     |
-| Calificar a los docentes                                 | 🔄     |
+| Calificar a los docentes                                 | 🔄 (Parcialmente desarrollada)  |
 | Buscar asignaturas y electivas disponibles               | ❌     |
 | Carné estudiantil digital                                | ✅     |
 | Acceder a enlaces de interés relacionados con la universidad | ❌     |
-
-## Leyenda de Iconos
-
-| Icono | Estado                    |
-|-------|---------------------------|
-| ✅    | Desarrollada              |
-| 🔄    | Parcialmente desarrollada |
-| ❌    | No desarrollada           |
 
 
 ## Visión a Futuro
