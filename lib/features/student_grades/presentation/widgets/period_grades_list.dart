@@ -1,59 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
-import 'package:univalle_app/features/student_grades/presentation/providers/student_grades_provider.dart';
 
 class PeriodGradesList extends StatelessWidget {
   const PeriodGradesList({
     super.key,
+    required this.initialValue,
+    required this.periods,
+    required this.onChanged,
   });
+  final int initialValue;
+  final List<String> periods;
+  final ValueChanged<int> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 90,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Text('Periodos',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: AppColors.primaryBlue,
-                    fontWeight: FontWeight.w500)),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: Consumer(builder: (_, ref, __) {
-              ref.watch(studentGradesProvider);
-              final studentGradeNotifier =
-                  ref.read(studentGradesProvider.notifier);
-              final ValueNotifier<int> selectedPeriod =
-                  ValueNotifier<int>(studentGradeNotifier.selectedPeriod);
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: studentGradeNotifier.periods.length,
-                itemBuilder: (context, index) {
-                  return ValueListenableBuilder(
-                      valueListenable: selectedPeriod,
-                      builder: (_, value, __) {
-                        return PeriodItem(
-                          title: studentGradeNotifier.periods[index],
-                          onTap: () {
-                            selectedPeriod.value = index;
-                            studentGradeNotifier.filterGrades(index);
-                          },
-                          selected: value == index,
-                        );
-                      });
-                },
-              );
-            }),
-          ),
-        ],
+    final currentValue = ValueNotifier<int>(initialValue);
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        width: double.infinity,
+        height: 90,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Text('Periodos',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: AppColors.primaryBlue,
+                      fontWeight: FontWeight.w500)),
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: Consumer(builder: (_, ref, __) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: periods.length,
+                  itemBuilder: (context, index) {
+                    return ValueListenableBuilder(
+                        valueListenable: currentValue,
+                        builder: (_, value, __) {
+                          return PeriodItem(
+                            title: periods[index],
+                            onTap: () {
+                              currentValue.value = index;
+                              onChanged(currentValue.value);
+                            },
+                            selected: value == index,
+                          );
+                        });
+                  },
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -68,7 +71,7 @@ class PeriodItem extends StatelessWidget {
   });
   final bool selected;
   final String title;
-  final Function()? onTap;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
