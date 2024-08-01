@@ -17,9 +17,36 @@ Univalle App reúne varios servicios esenciales en una interfaz amigable y optim
 - Ver su carnet estudiantil digital.
 - Acceder a enlaces de interés relacionados con la universidad.
 
+
+## Seguimiento de Desarrollo de Funcionalidades
+
+| Funcionalidad                                            | Estado |
+|----------------------------------------------------------|--------|
+| Consultar calificaciones de todos los semestres          | ✅     |
+| Consultar calificaciones del semestre actual             | ✅     |
+| Ver su promedio académico                                | ✅     |
+| Consultar el tabulado                                    | ✅     |
+| Calificar a los docentes                                 | 🔄     |
+| Buscar asignaturas y electivas disponibles               | ❌     |
+| Carné estudiantil digital                                | ✅     |
+| Acceder a enlaces de interés relacionados con la universidad | ❌     |
+
+## Leyenda de Iconos
+
+| Icono | Estado                    |
+|-------|---------------------------|
+| ✅    | Desarrollada              |
+| 🔄    | Parcialmente desarrollada |
+| ❌    | No desarrollada           |
+
+
 ## Visión a Futuro
 
-Lo ideal es que toda la lógica de la aplicación resida en el backend, permitiendo que la aplicación se enfoque únicamente en mostrar la información. Esto no solo reduciría el tamaño de la aplicación y facilitaría la división de responsabilidades, sino que también eliminaría la dependencia de terceros y mejoraría la mantenibilidad del sistema. Actualmente, la aplicación se encarga de realizar el web scraping y presentar la información. Sin embargo, en el futuro se espera desarrollar un backend robusto que gestione toda la lógica de negocio.
+Nuestro objetivo es trasladar toda la lógica de la aplicación al backend, permitiendo que la aplicación móvil se enfoque únicamente en la presentación de la información. Esta estrategia no solo reducirá el tamaño de la aplicación y facilitará la división de responsabilidades, sino que también eliminará la dependencia de terceros y mejorará la mantenibilidad del sistema.
+
+
+Actualmente, la aplicación realiza el web scraping y muestra la información directamente, en el futuro, planeamos desarrollar un backend robusto que gestione toda la lógica de negocio. Tener un backend independiente es importante porque, si cambian las formas de obtener la información, no será necesario desplegar una nueva versión de la aplicación, en su lugar, bastará con modificar el backend, lo que agiliza las actualizaciones y asegura un servicio más consistente y fiable.
+
 
 ## Tecnologías Utilizadas
 
