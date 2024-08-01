@@ -28,4 +28,6 @@ class CampusId {
   static String getCampus(String id) {
     return campus[id] ?? 'Cali';
   }
+
+  static List<String> listCampus = campus.values.toList();
 }
