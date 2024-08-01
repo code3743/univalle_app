@@ -8,15 +8,12 @@ import 'package:univalle_app/features/home/presentation/view/home_drawer.dart';
 import 'package:univalle_app/features/home/presentation/widgets/custom_navigation_bar.dart';
 import 'package:univalle_app/features/home/presentation/widgets/widgets.dart';
 
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       drawer: const HomeDrawer(),
       bottomNavigationBar: const CustomNavigationBar(),
       body: SingleChildScrollView(
@@ -85,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Este modulo esta en desarrollo'),
+                        content: Text('Este módulo está en desarrollo.'),
                         backgroundColor: AppColors.warning,
                       ),
                     );
@@ -128,7 +125,7 @@ class _StudentProfileInfo extends ConsumerWidget {
             ),
             child: Column(
               children: [
-                Header(scaffoldKey: _scaffoldKey),
+                const Header(),
                 Column(
                   children: [
                     const ProfilePicture(isEditable: true),

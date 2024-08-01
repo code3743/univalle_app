@@ -3,11 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 
 class Header extends StatelessWidget {
-  const Header({
-    super.key,
-    required this.scaffoldKey,
-  });
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  const Header({super.key});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,7 +12,7 @@ class Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
-            onPressed: () => scaffoldKey.currentState!.openDrawer(),
+            onPressed: Scaffold.of(context).openDrawer,
             icon: const Icon(
               Icons.menu,
               color: AppColors.white,
