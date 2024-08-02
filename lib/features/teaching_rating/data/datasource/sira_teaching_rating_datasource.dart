@@ -73,12 +73,19 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
       for (final form in forms) {
         final Map<String, dynamic> data = {};
 
-        final teacherName = form.querySelector('span')?.text ?? '';
+        final teacherName = form.querySelector('span')?.text ??
+            form.querySelector('label')?.text ??
+            '';
         final isQualified =
             form.querySelector('span')?.attributes['title']?.trim() ==
                 'El Docente ya ha sido evaluado';
         data['teacherName'] = teacherName;
         data['isQualified'] = isQualified;
+        if (!isQualified && form.querySelector('span') != null) {
+          data['novelty'] =
+              form.querySelector('span')!.attributes['title']?.trim() ??
+                  'Se encontró una novedad';
+        }
         form.querySelectorAll('input').forEach((element) {
           data[element.attributes['name']!] = element.attributes['value'];
         });

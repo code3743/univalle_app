@@ -49,21 +49,23 @@ class TeachingRatingScreen extends ConsumerWidget {
                           name: teachingProvider[index].teacherName,
                           subject: teachingProvider[index].subjectName,
                           isRated: teachingProvider[index].isQualified,
-                          onTap: teachingProvider[index].isQualified
-                              ? () {
-                                  ref
-                                      .read(snackBarHandlerProvider)
-                                      .showSnackBar(
-                                          'Ya has calificado a este docente',
-                                          AppColors.info);
-                                }
-                              : () {
-                                  ref
-                                      .read(snackBarHandlerProvider)
-                                      .showSnackBar(
-                                          'Este módulo está en desarrollo.',
-                                          AppColors.warning);
-                                }),
+                          onTap: () {
+                            if (teachingProvider[index].isQualified) {
+                              ref.read(snackBarHandlerProvider).showSnackBar(
+                                  'Ya has calificado a este docente',
+                                  AppColors.success);
+                              return;
+                            }
+                            if (teachingProvider[index].novelty != null) {
+                              ref.read(snackBarHandlerProvider).showSnackBar(
+                                  teachingProvider[index].novelty!,
+                                  AppColors.info);
+                              return;
+                            }
+                            ref.read(snackBarHandlerProvider).showSnackBar(
+                                'Estamos trabajando en esta funcionalidad',
+                                AppColors.warning);
+                          }),
                       childCount: teachingProvider.length)),
               const SliverToBoxAdapter(
                 child: SizedBox(

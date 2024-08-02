@@ -12,6 +12,7 @@ class TeachingRatingModel {
   final String programName;
   final String programId;
   final bool isQualified;
+  final String? novelty;
 
   TeachingRatingModel({
     required this.id,
@@ -25,19 +26,10 @@ class TeachingRatingModel {
     required this.programName,
     required this.programId,
     required this.isQualified,
+    this.novelty,
   });
 
   factory TeachingRatingModel.fromJson(Map<String, dynamic> json) {
-    /*
-
-                                       
-                                        <input type="hidden" name="ase_maa_pea_codigo" value="202402041">
-                                     
-                                        <input type="hidden" name="ase_apd_doc_per_codigo" value="2000004351">
-                                       
-                                    
-    
-     */
     return TeachingRatingModel(
       id: json['ase_maa_pea_codigo'],
       teacherName: json['teacherName'],
@@ -50,6 +42,7 @@ class TeachingRatingModel {
       programName: json['ase_pra_nombre'],
       programId: json['ase_maa_pra_codigo'],
       isQualified: json['isQualified'],
+      novelty: json['novelty'],
     );
   }
 
@@ -66,6 +59,7 @@ class TeachingRatingModel {
       'programName': programName,
       'programId': programId,
       'isQualified': isQualified,
+      'novelty': novelty,
     };
   }
 
@@ -82,6 +76,7 @@ class TeachingRatingModel {
       programName: entity.programName,
       programId: entity.programId,
       isQualified: entity.isQualified,
+      novelty: entity.novelty,
     );
   }
 
@@ -98,6 +93,7 @@ class TeachingRatingModel {
       programName: programName,
       programId: programId,
       isQualified: isQualified,
+      novelty: novelty,
     );
   }
 }

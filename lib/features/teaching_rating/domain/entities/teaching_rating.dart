@@ -10,6 +10,7 @@ class TeachingRating {
   final String programName;
   final String programId;
   final bool isQualified;
+  final String? novelty;
 
   TeachingRating({
     required this.id,
@@ -23,5 +24,6 @@ class TeachingRating {
     required this.programName,
     required this.programId,
     required this.isQualified,
+    this.novelty,
   });
 }
