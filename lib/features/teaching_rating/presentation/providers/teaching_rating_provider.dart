@@ -17,13 +17,13 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
   }
 
   final Ref _ref;
-  late String _sesssionId;
+  late String _sessionId;
   late StudentUseCase studentUseCase;
 
   void getTeachingRating() async {
     try {
-      _sesssionId = await studentUseCase.executeSessionEvaluationTeaching();
-      state = await studentUseCase.getTeachingRating(_sesssionId);
+      _sessionId = await studentUseCase.executeSessionEvaluationTeaching();
+      state = await studentUseCase.getTeachingToRatings(_sessionId);
     } catch (e) {
       _ref
           .read(snackBarHandlerProvider)

@@ -7,6 +7,8 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:univalle_app/core/errors/sira_exception.dart';
 import 'package:univalle_app/core/errors/handle_sira_errors.dart';
 import 'package:univalle_app/config/constants/course_evaluation.dart';
+import 'package:univalle_app/features/teaching_rating/domain/entities/questions_subject.dart';
+import 'package:univalle_app/features/teaching_rating/domain/entities/review_subject.dart';
 import 'package:univalle_app/features/teaching_rating/domain/entities/teaching_rating.dart';
 import 'package:univalle_app/features/teaching_rating/data/models/teaching_rating_model.dart';
 import 'package:univalle_app/features/teaching_rating/domain/datasources/teaching_rating_datasource.dart';
@@ -58,8 +60,7 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
   }
 
   @override
-  Future<List<TeachingRating>> getTeachingQualifications(
-      String sessionId) async {
+  Future<List<TeachingRating>> getTeachingToRatings(String sessionId) async {
     try {
       final response = await _dio.get(
           CourseEvaluation.baseUrl + CourseEvaluation.homePath,
@@ -98,9 +99,15 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
   }
 
   @override
-  Future<void> sendTeachingQualification(
-      TeachingRating teacher, String sessionId) {
-    // TODO: implement sendTeachingQualification
+  Future<List<QuestionsSubject>> getQuestionsSubject(
+      String sessionId, TeachingRating teacher) {
+    // TODO: implement getQuestionsSubject
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> sendTeachingRating(String sessionId, ReviewSubject review) {
+    // TODO: implement sendTeachingRating
     throw UnimplementedError();
   }
 }
