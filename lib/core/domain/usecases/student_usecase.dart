@@ -6,6 +6,7 @@ import 'package:univalle_app/features/program_resolution/domain/entities/subject
 import 'package:univalle_app/features/student_grades/domain/repositories/grades_repository.dart';
 import 'package:univalle_app/features/student_tabulate/domain/repositories/tabulate_repository.dart';
 import 'package:univalle_app/features/program_resolution/domain/repositories/resolution_repository.dart';
+import 'package:univalle_app/features/teaching_rating/domain/entities/review_subject.dart';
 import 'package:univalle_app/features/teaching_rating/domain/entities/teaching_rating.dart';
 import 'package:univalle_app/features/teaching_rating/domain/repositories/teaching_rating_repository.dart';
 
@@ -73,14 +74,13 @@ class StudentUseCase {
         _student.token, _student.studentId, _student.programId);
   }
 
-  Future<List<TeachingRating>> getTeachingRating(String sessionId) async {
-    return await _teachingRatingRepository.getTeachingQualifications(sessionId);
+  Future<List<TeachingRating>> getTeachingToRatings(String sessionId) async {
+    return await _teachingRatingRepository.getTeachingToRatings(sessionId);
   }
 
   Future<void> sendTeachingRating(
-      TeachingRating teacher, String sessionId) async {
-    await _teachingRatingRepository.sendTeachingQualification(
-        teacher, sessionId);
+      String sessionId, ReviewSubject review) async {
+    await _teachingRatingRepository.sendTeachingRating(sessionId, review);
   }
 
   Future<String> executeSessionEvaluationTeaching() async {
