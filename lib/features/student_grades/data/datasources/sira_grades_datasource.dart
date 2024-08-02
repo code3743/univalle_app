@@ -60,7 +60,8 @@ class SiraGradesDatasource implements GradesDataSource {
           if (isEnable) {
             grade = subjectData[9].text.trim();
           }
-          final isCanceled = subjectData[10].text.trim().isNotEmpty;
+          final isCanceled =
+              subjectData[10].text.trim().contains('CANCELACIÓN');
           subjects.add(SubjectModel(
               name: name,
               code: code,
