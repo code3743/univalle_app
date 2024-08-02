@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                       'Usa tu código y contraseña de SIRA para iniciar sesión',
                       textAlign: TextAlign.center),
                   const Text(
-                      'SSi lo prefieres, puedes ingresar como invitado y explorar nuestra aplicación.',
+                      'Si lo prefieres, puedes ingresar como invitado y explorar nuestra aplicación.',
                       textAlign: TextAlign.center),
                   const SizedBox(height: 10),
                   SizedBox(

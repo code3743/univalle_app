@@ -183,7 +183,7 @@ class _StudentProfileInfo extends ConsumerWidget {
                     icon: 'assets/svg/creditos.svg',
                   ),
                   AboutItem(
-                    title: 'Dedudas',
+                    title: 'Deudas',
                     value: student.studentFines.toString(),
                     color: AppColors.blue,
                     icon: 'assets/svg/deudas.svg',
