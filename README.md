@@ -97,10 +97,8 @@ Para más detalles sobre cómo contribuir, consulta nuestro [CONTRIBUTING](CONTR
 
 Este proyecto está licenciado bajo la [MIT License](LICENSE).
 
-## Contacto
+## Contribuidores
 
-Si tienes alguna pregunta o sugerencia, no dudes en contactarme:
-
-- **Nombre**: Jota E. López Ramírez
-- **Correo Electrónico**: [jota.lopez@correounivalle.edu.co](mailto:jota.lopez@correounivalle.edu.co)
-- **Instagram**: [@jotalopezr](https://www.instagram.com/jotalopezr/)
+<a href="https://github.com/code3743/univalle_app/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=code3743/univalle_app" />
+</a>
