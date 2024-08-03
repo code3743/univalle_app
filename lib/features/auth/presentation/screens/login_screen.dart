@@ -6,14 +6,13 @@ import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
+import 'package:univalle_app/core/utils/svg_paths.dart';
 import 'package:univalle_app/core/utils/validate.dart';
 import 'package:univalle_app/features/auth/presentation/providers/auth_provider.dart';
-import 'package:univalle_app/features/auth/presentation/views/reset_password.dart';
-
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, required this.formKey});
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +57,13 @@ class LoginScreen extends StatelessWidget {
                 Hero(
                   tag: 'uv_logo',
                   child: SvgPicture.asset(
-                    'assets/svg/logo.svg',
+                    SvgPaths.logo,
                     height: 80,
                   ),
                 ),
                 const SizedBox(height: 20),
                 _AuthForm(
-                  _formKey,
+                  formKey,
                 ),
               ],
             ),
@@ -81,14 +80,15 @@ class _AuthForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> isObscure = ValueNotifier<bool>(true);
     return FractionallySizedBox(
       widthFactor: 0.9,
       child: Form(
         key: formKey,
         child: Consumer(builder: (context, ref, _) {
           final auth = ref.watch(authProvider);
-          final authNotifier = ref.watch(authProvider.notifier);
+          final authNotifier = ref.read(authProvider.notifier);
+          final ValueNotifier<bool> isObscure =
+              ValueNotifier<bool>(authNotifier.obscureText);
           return Stack(
             alignment: Alignment.center,
             children: [
@@ -120,7 +120,10 @@ class _AuthForm extends StatelessWidget {
                           icon: Icon(!value
                               ? Icons.visibility_off_rounded
                               : Icons.visibility_rounded),
-                          onPressed: () => isObscure.value = !value,
+                          onPressed: () => {
+                            isObscure.value = !isObscure.value,
+                            authNotifier.obscureText = isObscure.value
+                          },
                         ),
                         hintText: 'Contraseña',
                         validator: Validate.validatePassword,
@@ -158,18 +161,9 @@ class _AuthForm extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: !auth
-                          ? () {
-                              final key = GlobalKey<FormState>();
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) => Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom),
-                                        child: ResetPassword(formKey: key),
-                                      ));
-                            }
+                          ? () => ref
+                              .read(appRouterProvider)
+                              .go('/login/reset-password')
                           : null,
                       child: const Text(
                         '¿Olvidaste tu contraseña?',
