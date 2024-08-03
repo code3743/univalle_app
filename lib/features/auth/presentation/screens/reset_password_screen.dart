@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
-import 'package:univalle_app/core/common/widgets/custom_button.dart';
-import 'package:univalle_app/core/common/widgets/custom_text_form_field.dart';
-import 'package:univalle_app/core/utils/svg_paths.dart';
+import 'package:univalle_app/core/common/widgets/widgets.dart';
 import 'package:univalle_app/core/utils/validate.dart';
 import 'package:univalle_app/features/auth/presentation/providers/auth_provider.dart';
 
@@ -27,9 +24,7 @@ class ResetPasswordScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Hero(
-                tag: 'uv_logo',
-                child: SvgPicture.asset(SvgPaths.logo, height: 80)),
+            const AppLogo(size: 80),
             const SizedBox(height: 20),
             FractionallySizedBox(
               widthFactor: .8,

@@ -19,6 +19,8 @@ class ProfilePictureNotifier extends StateNotifier<File?> {
     _loadImage();
   }
 
+  final String _pathPicture = 'profile-picture';
+
   Future<void> pickImage(ProfilePictureAction action) async {
     if (action == ProfilePictureAction.removeImage) {
       removeImage();
@@ -33,7 +35,7 @@ class ProfilePictureNotifier extends StateNotifier<File?> {
 
     final directory = await getApplicationDocumentsDirectory();
 
-    final path = p.join(directory.path, 'imagen-perfil');
+    final path = p.join(directory.path, _pathPicture);
     final directoryPath = Directory(path);
 
     if (!directoryPath.existsSync()) {
@@ -53,7 +55,7 @@ class ProfilePictureNotifier extends StateNotifier<File?> {
     final directory = await getApplicationDocumentsDirectory();
     final fileName = _sharedPrefs.getString('profile');
     if (fileName == null) return;
-    final path = p.join(directory.path, 'imagen-perfil', fileName);
+    final path = p.join(directory.path, _pathPicture, fileName);
     final file = File(path);
     if (file.existsSync()) {
       state = file;
@@ -64,7 +66,7 @@ class ProfilePictureNotifier extends StateNotifier<File?> {
     final directory = await getApplicationDocumentsDirectory();
     final fileName = _sharedPrefs.getString('profile');
     if (fileName == null) return;
-    final path = p.join(directory.path, 'imagen-perfil', fileName);
+    final path = p.join(directory.path, _pathPicture, fileName);
     final file = File(path);
 
     if (file.existsSync()) {

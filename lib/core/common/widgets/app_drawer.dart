@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
-import 'package:univalle_app/features/home/presentation/providers/logout_provider.dart';
+import 'package:univalle_app/config/providers/logout_provider.dart';
+import 'package:univalle_app/core/common/widgets/widgets.dart';
 
-class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({super.key});
+class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,8 @@ class HomeDrawer extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(
-              height: 80,
-              child: SvgPicture.asset('assets/svg/logo.svg', height: 80),
+            const AppLogo(
+              size: 80,
             ),
             const SizedBox(
               height: 10,
@@ -81,7 +81,10 @@ class HomeDrawer extends StatelessWidget {
                 textColor: AppColors.primaryRed,
                 leading: const Icon(Icons.exit_to_app),
                 title: const Text('Cerrar Sesión'),
-                onTap: () => ref.read(logoutProvider),
+                onTap: () async {
+                  await ref.read(logoutProvider.future);
+                  ref.read(appRouterProvider).go('/login');
+                },
               );
             }),
             ListTile(

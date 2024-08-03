@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
-import 'package:univalle_app/core/utils/svg_paths.dart';
 import 'package:univalle_app/core/utils/validate.dart';
 import 'package:univalle_app/features/auth/presentation/providers/auth_provider.dart';
 
@@ -54,13 +52,7 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Hero(
-                  tag: 'uv_logo',
-                  child: SvgPicture.asset(
-                    SvgPaths.logo,
-                    height: 80,
-                  ),
-                ),
+                const AppLogo(size: 80),
                 const SizedBox(height: 20),
                 _AuthForm(
                   formKey,

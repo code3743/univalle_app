@@ -26,7 +26,7 @@ class ProgramResolutionNotifier extends StateNotifier<List<SubjectCycle>?> {
     } catch (e) {
       _ref
           .read(snackBarHandlerProvider)
-          .showSnackBar(e.toString(), AppColors.warning);
+          .showSnackBar(e.toString(), AppColors.error);
       _ref.read(appRouterProvider).pop();
       dispose();
     }

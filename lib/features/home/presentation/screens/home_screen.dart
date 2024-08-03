@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
-import 'package:univalle_app/core/utils/svg_paths.dart';
-import 'package:univalle_app/features/home/presentation/config/button_services_options.dart';
-import 'package:univalle_app/features/home/presentation/view/home_drawer.dart';
-import 'package:univalle_app/core/common/widgets/custom_navigation_bar.dart';
+import 'package:univalle_app/core/common/widgets/widgets.dart';
 import 'package:univalle_app/features/home/presentation/widgets/widgets.dart';
+import 'package:univalle_app/features/home/presentation/config/button_services_options.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,19 +11,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const HomeDrawer(),
+      drawer: const AppDrawer(),
       bottomNavigationBar: const CustomNavigationBar(),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             floating: false,
             pinned: false,
             backgroundColor: AppColors.primaryRed,
             actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(SvgPaths.logo, height: 35),
-              ),
+              AppLogo(padding: EdgeInsets.all(8.0), isHero: false),
             ],
           ),
           const SliverToBoxAdapter(child: StudentProfileInfo()),
@@ -45,8 +39,7 @@ class HomeScreen extends StatelessWidget {
                         if (service.isUnderDevelopment) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Servicio en desarrollo'),
-                            ),
+                                content: Text('Servicio en desarrollo')),
                           );
                           return;
                         }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
-import 'package:univalle_app/core/utils/svg_paths.dart';
+import 'package:univalle_app/core/common/widgets/widgets.dart';
 
 class CheckScreen extends ConsumerWidget {
   const CheckScreen({super.key});
@@ -26,18 +25,14 @@ class CheckScreen extends ConsumerWidget {
             if (snapshot.hasError) {
               Future.microtask(() => context.go('/login'));
             }
-            return Column(
+            return const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Hero(
-                  tag: 'uv_logo',
-                  child: SizedBox(
-                    height: 80,
-                    child: SvgPicture.asset(SvgPaths.logo),
-                  ),
+                AppLogo(
+                  size: 80,
                 ),
-                const SizedBox(height: 20),
-                const CircularProgressIndicator.adaptive(
+                SizedBox(height: 20),
+                CircularProgressIndicator.adaptive(
                   backgroundColor: AppColors.primaryRed,
                   valueColor:
                       AlwaysStoppedAnimation<Color>(AppColors.primaryBlue),

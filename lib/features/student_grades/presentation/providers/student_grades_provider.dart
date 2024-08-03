@@ -9,11 +9,6 @@ final studentGradesProvider =
   return StudentGradesNotifier(ref);
 });
 
-final _gradesProvider = FutureProvider<List<Grades>>((ref) async {
-  final studentUseCase = ref.watch(studentUseCasesProvider);
-  return await studentUseCase.getGrades();
-});
-
 class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
   final Ref _ref;
   StudentGradesNotifier(this._ref) : super(null) {
@@ -26,7 +21,7 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
 
   Future<void> getGrades() async {
     try {
-      grades = await _ref.read(_gradesProvider.future);
+      grades = await _ref.read(studentUseCasesProvider).getGrades();
       for (var element in grades) {
         periods.add(element.period);
       }
