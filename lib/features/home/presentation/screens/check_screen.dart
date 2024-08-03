@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
+import 'package:univalle_app/core/utils/svg_paths.dart';
 
 class CheckScreen extends ConsumerWidget {
   const CheckScreen({super.key});
@@ -30,9 +31,9 @@ class CheckScreen extends ConsumerWidget {
               children: [
                 Hero(
                   tag: 'uv_logo',
-                  child: SvgPicture.asset(
-                    'assets/svg/logo.svg',
+                  child: SizedBox(
                     height: 80,
+                    child: SvgPicture.asset(SvgPaths.logo),
                   ),
                 ),
                 const SizedBox(height: 20),

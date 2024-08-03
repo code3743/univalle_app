@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/core/common/widgets/profile_picture.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
+import 'package:univalle_app/core/utils/svg_paths.dart';
 import 'package:univalle_app/features/home/presentation/widgets/about_item.dart';
 
 class StudentProfileInfo extends ConsumerWidget {
@@ -78,19 +79,19 @@ class StudentProfileInfo extends ConsumerWidget {
                     title: 'Promedio',
                     value: student.average.toString(),
                     color: AppColors.orange,
-                    icon: 'assets/svg/promedio.svg',
+                    icon: SvgPaths.avarage,
                   ),
                   AboutItem(
                     title: 'Créditos',
                     value: student.accumulatedCredits.toString(),
                     color: AppColors.green,
-                    icon: 'assets/svg/creditos.svg',
+                    icon: SvgPaths.credits,
                   ),
                   AboutItem(
                     title: 'Deudas',
                     value: student.studentFines.toString(),
                     color: AppColors.blue,
-                    icon: 'assets/svg/deudas.svg',
+                    icon: SvgPaths.debts,
                   ),
                 ],
               ),
