@@ -8,6 +8,7 @@ class SvgPaths {
   static const String logo = '${_basePath}logo.svg';
   static const String ratings = '${_basePath}ratings.svg';
   static const String restaurant = '${_basePath}restaurant.svg';
+  static const String resolution = '${_basePath}resolution.svg';
   static const String tabulated = '${_basePath}tabulated.svg';
   static const String teacherRating = '${_basePath}teacher_rating.svg';
 }

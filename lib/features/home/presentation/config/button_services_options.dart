@@ -42,7 +42,7 @@ final List<ButtonServicesOptions> servicesOptions = [
   ButtonServicesOptions(
     title: 'Resolución',
     route: '/home/resolution',
-    icon: SvgPaths.avarage,
+    icon: SvgPaths.resolution,
   ),
   ButtonServicesOptions(
     title: 'Restaurante',
