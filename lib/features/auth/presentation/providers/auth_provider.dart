@@ -14,6 +14,7 @@ class AuthProvider extends StateNotifier<bool> {
   final StudentUseCase _studentUseCase;
   final TextEditingController code = TextEditingController();
   final TextEditingController pass = TextEditingController();
+  bool obscureText = true;
 
   @override
   void dispose() {
