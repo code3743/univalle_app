@@ -64,4 +64,20 @@ class SnackBarHandler {
       ),
     );
   }
+
+  void showSnackBArError(String message) {
+    showSnackBar(message, AppColors.error);
+  }
+
+  void showSnackBarSuccess(String message) {
+    showSnackBar(message, AppColors.success);
+  }
+
+  void showSnackBarInfo(String message) {
+    showSnackBar(message, AppColors.info);
+  }
+
+  void showSnackBarWarning(String message) {
+    showSnackBar(message, AppColors.warning);
+  }
 }
