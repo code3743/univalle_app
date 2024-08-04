@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 
-class CustomNavigationBar extends StatelessWidget {
-  const CustomNavigationBar({
+class AppNavigationBar extends StatelessWidget {
+  const AppNavigationBar({
     super.key,
   });
 

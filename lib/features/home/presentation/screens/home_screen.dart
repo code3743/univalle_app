@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
 import 'package:univalle_app/features/home/presentation/widgets/widgets.dart';
 import 'package:univalle_app/features/home/presentation/config/button_services_options.dart';
@@ -12,13 +11,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const AppDrawer(),
-      bottomNavigationBar: const CustomNavigationBar(),
+      bottomNavigationBar: const AppNavigationBar(),
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
             floating: false,
             pinned: false,
-            backgroundColor: AppColors.primaryRed,
             actions: [
               AppLogo(padding: EdgeInsets.all(8.0), isHero: false),
             ],
