@@ -74,7 +74,7 @@ class GradesOverview extends StatelessWidget {
                               title: 'Promedio',
                               value: grade.average.toString()),
                           GradesOverviewItem(
-                              title: 'Creditos',
+                              title: 'Créditos',
                               value: grade.credits.toString()),
                           GradesOverviewItem(
                               title: 'Aprobado',

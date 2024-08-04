@@ -60,7 +60,7 @@ class AboutItem extends StatelessWidget {
               )),
           Container(
             width: double.infinity,
-            height: 32,
+            height: 27,
             decoration: BoxDecoration(
               color: AppColors.lightGrey,
               borderRadius: BorderRadius.circular(10),
