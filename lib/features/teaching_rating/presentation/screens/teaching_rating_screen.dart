@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/providers/teaching_rating_provider.dart';
@@ -51,20 +50,23 @@ class TeachingRatingScreen extends ConsumerWidget {
                           isRated: teachingProvider[index].isQualified,
                           onTap: () {
                             if (teachingProvider[index].isQualified) {
-                              ref.read(snackBarHandlerProvider).showSnackBar(
-                                  'Ya has calificado a este docente',
-                                  AppColors.success);
+                              ref
+                                  .read(snackBarHandlerProvider)
+                                  .showSnackBarSuccess(
+                                      'Ya has calificado a este docente');
                               return;
                             }
                             if (teachingProvider[index].novelty != null) {
-                              ref.read(snackBarHandlerProvider).showSnackBar(
-                                  teachingProvider[index].novelty!,
-                                  AppColors.info);
+                              ref
+                                  .read(snackBarHandlerProvider)
+                                  .showSnackBarInfo(
+                                      teachingProvider[index].novelty!);
                               return;
                             }
-                            ref.read(snackBarHandlerProvider).showSnackBar(
-                                'Estamos trabajando en esta funcionalidad',
-                                AppColors.warning);
+                            ref
+                                .read(snackBarHandlerProvider)
+                                .showSnackBarWarning(
+                                    'Estamos trabajando en esta funcionalidad');
                           }),
                       childCount: teachingProvider.length)),
               const SliverToBoxAdapter(

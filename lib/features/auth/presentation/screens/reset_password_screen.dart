@@ -70,15 +70,15 @@ class ResetPasswordScreen extends StatelessWidget {
                                   }
                                   try {
                                     await authNotifier.resetPassword();
+                                    ref
+                                        .read(snackBarHandlerProvider)
+                                        .showSnackBarSuccess(
+                                            'Se ha enviado un correo a tu cuenta institucional');
                                     ref.read(appRouterProvider).pop();
-                                    ref.read(snackBarHandlerProvider).showSnackBar(
-                                        'Se ha enviado un correo a tu cuenta institucional',
-                                        AppColors.success);
                                   } catch (e) {
                                     ref
                                         .read(snackBarHandlerProvider)
-                                        .showSnackBar(
-                                            e.toString(), AppColors.error);
+                                        .showSnackBArError(e.toString());
                                   }
                                 }),
                     ],

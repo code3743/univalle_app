@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
-import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/domain/usecases/student_usecase.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
@@ -25,9 +24,7 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
       _sessionId = await studentUseCase.executeSessionEvaluationTeaching();
       state = await studentUseCase.getTeachingToRatings(_sessionId);
     } catch (e) {
-      _ref
-          .read(snackBarHandlerProvider)
-          .showSnackBar(e.toString(), AppColors.error);
+      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
       _ref.read(appRouterProvider).pop();
     }
   }

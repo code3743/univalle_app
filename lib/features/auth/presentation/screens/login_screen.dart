@@ -137,7 +137,7 @@ class _AuthForm extends StatelessWidget {
                             } catch (e) {
                               ref
                                   .read(snackBarHandlerProvider)
-                                  .showSnackBar(e.toString(), AppColors.error);
+                                  .showSnackBArError(e.toString());
                             }
                           }
                         : null,

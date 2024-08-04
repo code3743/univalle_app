@@ -27,7 +27,7 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
       }
       state = grades;
     } catch (e) {
-      _ref.read(snackBarHandlerProvider).showSnackBar(e.toString());
+      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
       _ref.read(appRouterProvider).pop();
       dispose();
     }
