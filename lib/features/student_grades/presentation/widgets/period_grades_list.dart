@@ -33,7 +33,7 @@ class PeriodGradesList extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 45,
               child: Consumer(builder: (_, ref, __) {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
