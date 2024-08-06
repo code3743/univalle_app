@@ -2,6 +2,7 @@ import 'package:univalle_app/features/search_subject/domain/entities/subject_res
 import 'package:univalle_app/features/search_subject/domain/entities/subject_suggestion.dart';
 
 abstract class SearchSubjectRepository {
-  Future<List<SubjectResult>> searchSubjects(String query);
-  Future<List<SubjectSuggestion>> getSuggestions(String query, int limit);
+  Future<List<SubjectResult>> searchSubjects(String query, String campus);
+  Future<List<SubjectSuggestion>> getSuggestions(
+      String query, int page, String campus);
 }

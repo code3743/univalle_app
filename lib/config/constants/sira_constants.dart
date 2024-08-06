@@ -17,5 +17,5 @@ class SiraConstants {
   static const String searchSubjectPath =
       'paquetes/programacionacademica/index_publico.php';
   static const String searchSuggestionsPath =
-      'paquetes/herramientas/wincombo.php?&ID=ID&db_conexion=&patron=%QUERY%&patron2=CAMPUS&patron3=&patron4=&patron5=&patron6=&patron7=&patron8=&patron9=&opcion=asignaturaProgramadaActualmente_programacionAcademica&min=PAGE&variableCalculada=0&numeroRegistros=LIMIT';
+      'paquetes/herramientas/wincombo.php?&ID=ID&db_conexion=&patron=QUERY%&patron2=CAMPUS&patron3=&patron4=&patron5=&patron6=&patron7=&patron8=&patron9=&opcion=asignaturaProgramadaActualmente_programacionAcademica&min=PAGE&variableCalculada=0&numeroRegistros=';
 }
