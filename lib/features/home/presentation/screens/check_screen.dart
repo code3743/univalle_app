@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/config/providers/selected_campus_provider.dart';
+import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
@@ -19,11 +20,23 @@ class CheckScreen extends ConsumerWidget {
           future: ref.watch(studentUseCasesProvider).isLogged(),
           builder: (_, AsyncSnapshot<bool> snapshot) {
             if (snapshot.hasData) {
-              Future.microtask(
-                  () => context.go(snapshot.data! ? '/home' : '/login'));
+              Future.microtask(() {
+                ref.read(selectedCampusProvider.notifier).changeCampusById(
+                    snapshot.data!
+                        ? ref.read(studentUseCasesProvider).getStudent().campus
+                        : '00');
+                ref
+                    .read(appRouterProvider)
+                    .go(snapshot.data! ? '/home' : '/login');
+              });
             }
             if (snapshot.hasError) {
-              Future.microtask(() => context.go('/login'));
+              Future.microtask(() {
+                ref
+                    .read(selectedCampusProvider.notifier)
+                    .changeCampusById('00');
+                ref.read(appRouterProvider).go('/login');
+              });
             }
             return const Column(
               mainAxisAlignment: MainAxisAlignment.center,
