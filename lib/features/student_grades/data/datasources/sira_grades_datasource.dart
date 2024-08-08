@@ -18,8 +18,7 @@ class SiraGradesDatasource implements GradesDataSource {
       ..options.responseType = ResponseType.bytes;
   }
 
-  @override
-  Future<List<Grades>> getGrades(String token, String studentId) async {
+  Future<Response> _fetchTotalRating(String studentId, String token) async {
     try {
       final response =
           await _dio.post(SiraConstants.baseUrl + SiraConstants.rantingPath,
@@ -31,6 +30,28 @@ class SiraGradesDatasource implements GradesDataSource {
                 'y': '21'
               },
               options: Options(headers: {'Cookie': 'PHPSESSID=$token'}));
+      final rantingDocument = parse(latin1.decode(response.data));
+      final inputs = rantingDocument.querySelectorAll('form > input');
+      final Map<String, String> data = {};
+      for (final input in inputs) {
+        data[input.attributes['name']!] = input.attributes['value']!;
+      }
+      data['TipoCarpeta'] = 'COMPLETA';
+      data['DetalleCarpeta'] = 'COMPLETA';
+      data['accion'] = 'Generar Carpeta';
+
+      return await _dio.post(SiraConstants.baseUrl + SiraConstants.rantingPath,
+          data: data,
+          options: Options(headers: {'Cookie': 'PHPSESSID=$token'}));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Grades>> getGrades(String token, String studentId) async {
+    try {
+      final response = await _fetchTotalRating(studentId, token);
       final document = parse(latin1.decode(response.data));
 
       final tableRaw =

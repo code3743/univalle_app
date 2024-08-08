@@ -24,6 +24,33 @@ class SiraAuthDatasource implements AuthDatasource {
       ..options.responseType = ResponseType.bytes;
   }
 
+  Future<Response> _fetchBasicRating(String code) async {
+    try {
+      final response = await _dio
+          .post(SiraConstants.baseUrl + SiraConstants.rantingPath, data: {
+        'accion': 'Consultar Historial',
+        'codigo_estudiante': code,
+        'modulo': 'Academica',
+        'x': '22',
+        'y': '21'
+      });
+      final rantingDocument = parse(latin1.decode(response.data));
+      final inputs = rantingDocument.querySelectorAll('form > input');
+      final Map<String, String> data = {};
+      for (final input in inputs) {
+        data[input.attributes['name']!] = input.attributes['value']!;
+      }
+      data['TipoCarpeta'] = 'COMPLETA';
+      data['DetalleCarpeta'] = 'COMPLETA';
+      data['accion'] = 'Generar Carpeta';
+
+      return await _dio.post(SiraConstants.baseUrl + SiraConstants.rantingPath,
+          data: data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Student> _getStudent(String code, String password) async {
     try {
       final studentResponse = await _dio
@@ -32,20 +59,15 @@ class SiraAuthDatasource implements AuthDatasource {
         'x': '31',
         'y': '24'
       });
-      final rantingResponse = await _dio
-          .post(SiraConstants.baseUrl + SiraConstants.rantingPath, data: {
-        'accion': 'Consultar Historial',
-        'codigo_estudiante': code,
-        'modulo': 'Academica',
-        'x': '22',
-        'y': '21'
-      });
+
+      final rantingResponse = await _fetchBasicRating(code);
       if (studentResponse.statusCode != 200 ||
           rantingResponse.statusCode != 200) {
         throw SiraException('No se pudo obtener la información del estudiante');
       }
       final rantingDocument = parse(latin1.decode(rantingResponse.data));
       final studentDocument = parse(latin1.decode(studentResponse.data));
+
       final dataRanting = rantingDocument
               .querySelector('font')
               ?.text
@@ -56,6 +78,10 @@ class SiraAuthDatasource implements AuthDatasource {
               .map((e) => e.split(':')[1].trim())
               .toList() ??
           [];
+
+      final accumulatedCredits = rantingDocument.querySelectorAll(
+          'td[title="Acumulado: Número de Créditos Aprobados Acumulados"]');
+
       final studentModel = StudentModel(
           token: (await _cookieJar.loadForRequest(Uri.parse(SiraConstants.baseUrl)))
               .first
@@ -85,7 +111,7 @@ class SiraAuthDatasource implements AuthDatasource {
           campus: dataRanting[2].split('-')[1],
           programName: dataRanting[2].split('-')[3],
           accumulatedCredits:
-              int.tryParse(rantingDocument.querySelectorAll('td[title="Acumulado: Número de Créditos Aprobados Acumulados"]').last.text.trim()) ?? 0,
+              int.tryParse(accumulatedCredits.isNotEmpty ? accumulatedCredits.last.text.trim() : '0') ?? 0,
           studentFines: await _getStudentFines(code, dataRanting[2].split('-')[0]));
 
       _sharedStudentUtility.saveStudentData(
@@ -94,6 +120,7 @@ class SiraAuthDatasource implements AuthDatasource {
           studentModel.password);
       return studentModel.toEntity();
     } catch (e) {
+      print(e);
       throw handleSiraError(e);
     }
   }
