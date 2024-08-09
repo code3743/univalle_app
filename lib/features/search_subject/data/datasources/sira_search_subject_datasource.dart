@@ -108,22 +108,33 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
       final RegExp regExp =
           RegExp(r"^(.+)\s([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$");
       final List<SubjectResult> results = [];
-      for (int i = 3; i < rows.length; i += 3) {
-        final teacherData =
-            rows[i].querySelector('td[title="Docente Responsable"]')?.text ??
-                '';
-        final match = regExp.firstMatch(teacherData);
-        final teacherName = match?.group(1) ?? '';
-        final teacherEmail = match?.group(2) ?? '';
+      String teacherName = '';
+      String teacherEmail = '';
+      String schedule = '';
+      for (int i = 3; i < rows.length; i++) {
+        if (rows[i].querySelectorAll('td').length < 8) {
+          teacherName = '';
+          teacherEmail = '';
+          schedule = '';
+          continue;
+        }
+        if (teacherEmail.isEmpty && teacherName.isEmpty) {
+          final teacherData =
+              rows[i].querySelector('td[title="Docente Responsable"]')?.text ??
+                  '';
+          final match = regExp.firstMatch(teacherData);
+          teacherName = match?.group(1) ?? '';
+          teacherEmail = match?.group(2) ?? '';
+          schedule = rows[i]
+                  .querySelector('td[title="Horario de la Asignatura"]')
+                  ?.text ??
+              '';
+        }
 
-        final schedule = rows[i]
-                .querySelector('td[title="Horario de la Asignatura"]')
-                ?.text ??
-            '';
-
-        final cells = rows[i + 1].querySelectorAll('td');
+        final cells = rows[i].querySelectorAll('td');
         final group = cells[2].text.trim();
         final capacity = int.tryParse(cells[3].text.trim()) ?? 0;
+        if (capacity == 0) continue;
         final program = cells[6].text.trim();
         final isGeneric = cells[7].text.trim().isNotEmpty;
         final isRepeater = cells[8].text.trim().isNotEmpty;
