@@ -13,6 +13,7 @@ class TeachingRatingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final teachingProvider = ref.watch(teachingRatingProvider);
     final teachingNotifier = ref.read(teachingRatingProvider.notifier);
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     if (teachingProvider == null) {
       teachingNotifier.getTeachingRating();
       return Scaffold(
@@ -22,6 +23,7 @@ class TeachingRatingScreen extends ConsumerWidget {
           body: const Center(child: Loading(text: 'Buscando docentes...')));
     }
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: const Text('Calificación Docente'),
       ),
@@ -30,9 +32,9 @@ class TeachingRatingScreen extends ConsumerWidget {
         width: double.infinity,
         child: Builder(builder: (context) {
           Future.microtask(() {
-            Scaffold.of(context).showBottomSheet(
-                (context) => const MessageRating(),
-                backgroundColor: Colors.transparent);
+            scaffoldKey.currentState?.showBottomSheet((context) {
+              return const MessageRating();
+            }, backgroundColor: Colors.transparent);
           });
 
           return CustomScrollView(
