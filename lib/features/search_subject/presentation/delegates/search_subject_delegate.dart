@@ -78,7 +78,6 @@ class SearchSubjectDelegate extends SearchDelegate<SubjectSuggestion?> {
   @override
   Widget buildSuggestions(BuildContext context) {
     _fecthSuggestions(query);
-    print(_campus);
     return StreamBuilder(
         stream: _getSuggestionsStream.stream,
         builder: (context, snapshot) {
