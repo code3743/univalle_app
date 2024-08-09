@@ -7,13 +7,13 @@ import 'package:univalle_app/features/search_subject/domain/entities/subject_sug
 import 'package:univalle_app/features/search_subject/domain/repositories/search_subject_repository.dart';
 
 final subjectSearchProvider =
-    StateNotifierProvider<SubjectSearchNotifier, List<SubjectResult>?>((ref) {
+    StateNotifierProvider<SubjectSearchNotifier, SearchResult?>((ref) {
   final searchSubjectRepository =
       SiraSearchSubjectRepositoryImpl(SiraSearchSubjectDatasource());
   return SubjectSearchNotifier(ref, searchSubjectRepository);
 });
 
-class SubjectSearchNotifier extends StateNotifier<List<SubjectResult>?> {
+class SubjectSearchNotifier extends StateNotifier<SearchResult?> {
   final Ref _ref;
   final SearchSubjectRepository _searchSubjectRepository;
 
