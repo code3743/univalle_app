@@ -13,7 +13,7 @@ class SiraSearchSubjectRepositoryImpl implements SearchSubjectRepository {
   }
 
   @override
-  Future<List<SubjectResult>> searchSubjects(
+  Future<SearchResult> searchSubjects(
       SubjectSuggestion suggestion, String campus) {
     return dataSource.searchSubjects(suggestion, campus);
   }
