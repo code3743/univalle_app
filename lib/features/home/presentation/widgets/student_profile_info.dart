@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/config/providers/selected_campus_provider.dart';
 import 'package:univalle_app/core/common/widgets/profile_picture.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
@@ -13,6 +14,7 @@ class StudentProfileInfo extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     final student = ref.read(studentUseCasesProvider).getStudent();
+    ref.read(selectedCampusProvider.notifier).changeCampusById(student.campus);
     return SizedBox(
       width: double.infinity,
       height: 320,

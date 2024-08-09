@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
-import 'package:univalle_app/config/providers/logout_provider.dart';
+import 'package:univalle_app/config/providers/reset_providers.dart';
 import 'package:univalle_app/core/common/widgets/widgets.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -82,7 +83,11 @@ class AppDrawer extends StatelessWidget {
                 leading: const Icon(Icons.exit_to_app),
                 title: const Text('Cerrar Sesión'),
                 onTap: () async {
-                  await ref.read(logoutProvider.future);
+                  final studentUseCase = ref.read(studentUseCasesProvider);
+                  if (await studentUseCase.isLogged()) {
+                    await studentUseCase.logout();
+                    await ref.read(resetProvider.future);
+                  }
                   ref.read(appRouterProvider).go('/login');
                 },
               );

@@ -17,6 +17,7 @@ class SiraAuthDatasource implements AuthDatasource {
   final _cookieJar = CookieJar();
   late Student _student;
   final SharedStudentUtility _sharedStudentUtility;
+  bool _isLogged = false;
   SiraAuthDatasource(this._sharedStudentUtility) {
     _dio
       ..interceptors.add(CookieManager(_cookieJar))
@@ -120,7 +121,6 @@ class SiraAuthDatasource implements AuthDatasource {
           studentModel.password);
       return studentModel.toEntity();
     } catch (e) {
-      print(e);
       throw handleSiraError(e);
     }
   }
@@ -191,6 +191,7 @@ class SiraAuthDatasource implements AuthDatasource {
   @override
   Future<void> logout() async {
     try {
+      _isLogged = false;
       await _dio.get(SiraConstants.baseUrl + SiraConstants.logoutPath);
       await _cookieJar.deleteAll();
     } catch (e) {
@@ -205,10 +206,14 @@ class SiraAuthDatasource implements AuthDatasource {
 
   @override
   Future<bool> isLogged() async {
+    if (_isLogged) {
+      return Future.value(true);
+    }
     final studentId = _sharedStudentUtility.getStudentId();
     final password = _sharedStudentUtility.getPassword();
     if (studentId != null && password != null) {
       await login(studentId, password);
+      _isLogged = true;
       return Future.value(true);
     }
     return Future.value(false);
