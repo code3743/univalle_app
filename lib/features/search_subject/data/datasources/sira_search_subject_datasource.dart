@@ -77,48 +77,75 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
     return match?.group(3);
   }
 
-  Future<String> _getSession(String campus) async {
-    final response = await _dio
-        .post(SiraConstants.baseUrl + SiraConstants.searchSubjectPath, data: {
-      'facultad': '1',
-      'sed_codigo': campus,
-      'accion': 'desplegarFormularioConsultarProgramacion',
-      'boton': 'Consultar+Programación'
-    });
-    final cookies = response.headers.map['set-cookie'];
-    if (cookies == null) {
-      throw SiraException('No se pudo obtener la sesión');
-    }
-    final document = parse(latin1.decode(response.data));
-    print(document.querySelectorAll('form input').length);
-    return cookies
-        .where((element) => element.contains('PHPSESSID'))
-        .first
-        .split(';')
-        .first;
-  }
-
   @override
-  Future<List<SubjectResult>> searchSubjects(
+  Future<SearchResult> searchSubjects(
       SubjectSuggestion suggestion, String campus) async {
     try {
-      final token = await _getSession(campus);
-      print(token);
       final response = await _dio.post(
-          SiraConstants.baseUrl + SiraConstants.searchSubjectPath,
-          data:
-              'sed_codigo=06&agp_asi_codigo=990001M&wincomboagp_asi_codigo=&accion=Consultar+Programaci%F3n+Acad%E9mica&fac_codigo=1&una_codigo=102&tipo_consulta=desplegarFormularioConsultarProgramacion&fac_codigo=1&pra_codigo=&tipo_consulta=desplegarFormularioConsultarProgramacion',
-          options: Options(headers: {'Cookie': token}));
-      print(campus);
+        SiraConstants.baseUrl + SiraConstants.searchSubjectPath,
+        data: SiraConstants.bodySearchSubject
+            .replaceAll('CAMPUS', campus)
+            .replaceAll('CODE', suggestion.code),
+      );
       if (response.statusCode != 200) {
         throw SiraException('El servicio no está disponible temporalmente');
       }
 
       final document = parse(latin1.decode(response.data));
-      print(document.outerHtml);
-      print(document.querySelectorAll('tables').length);
+      final rows = document.querySelectorAll('table[width="768"]>tbody>tr');
 
-      return [];
+      if (rows.isEmpty) {
+        return SearchResult(
+            code: suggestion.code,
+            name: suggestion.name,
+            credits: 0,
+            results: []);
+      }
+
+      final credits = int.tryParse(
+              rows[0].querySelector('font[size="2"]>b')?.text ?? '0') ??
+          0;
+      final RegExp regExp =
+          RegExp(r"^(.+)\s([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$");
+      final List<SubjectResult> results = [];
+      for (int i = 3; i < rows.length; i += 3) {
+        final teacherData =
+            rows[i].querySelector('td[title="Docente Responsable"]')?.text ??
+                '';
+        final match = regExp.firstMatch(teacherData);
+        final teacherName = match?.group(1) ?? '';
+        final teacherEmail = match?.group(2) ?? '';
+
+        final schedule = rows[i]
+                .querySelector('td[title="Horario de la Asignatura"]')
+                ?.text ??
+            '';
+
+        final cells = rows[i + 1].querySelectorAll('td');
+        final group = cells[2].text.trim();
+        final capacity = int.tryParse(cells[3].text.trim()) ?? 0;
+        final program = cells[6].text.trim();
+        final isGeneric = cells[7].text.trim().isNotEmpty;
+        final isRepeater = cells[8].text.trim().isNotEmpty;
+        results.add(
+          SubjectResult(
+            group: group,
+            teacher: teacherName,
+            teacherEmail: teacherEmail,
+            program: program,
+            isGeneric: isGeneric,
+            isRepeater: isRepeater,
+            schedule: schedule,
+            capacity: capacity,
+          ),
+        );
+      }
+      return SearchResult(
+        code: suggestion.code,
+        name: suggestion.name,
+        credits: credits,
+        results: results,
+      );
     } catch (e) {
       throw handleSiraError(e);
     }
