@@ -25,7 +25,7 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
 
       final response = await _dio.get(SiraConstants.baseUrl +
           SiraConstants.searchSuggestionsPath
-              .replaceAll('QUERY', _checkQuery(query))
+              .replaceAll('QUERY', _checkQuery(query).trim())
               .replaceAll('CAMPUS', campus)
               .replaceAll('PAGE', currentPage.toString()));
 
@@ -43,15 +43,21 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
               ?.querySelectorAll('tr[bgColor]') ??
           [];
 
-      final suggestions = rows.map((row) {
-        final cells = row.querySelectorAll('td');
+      final suggestionCodes = <String>[];
+      final suggestions = <SubjectSuggestion>[];
+
+      for (final suggestion in rows) {
+        final cells = suggestion.querySelectorAll('td');
         final code = cells[1].text.trim();
+        if (suggestionCodes.contains(code)) continue;
+        suggestionCodes.add(code);
         final name = cells[2].text.trim();
         final onClick = _getQuerySearch(
                 cells[1].querySelector('a')?.attributes['onclick']) ??
             '$code -> $name';
-        return SubjectSuggestion(code: code, name: name, query: onClick);
-      }).toList();
+        suggestions
+            .add(SubjectSuggestion(code: code, name: name, query: onClick));
+      }
 
       return suggestions;
     } catch (e) {
@@ -71,10 +77,50 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
     return match?.group(3);
   }
 
+  Future<String> _getSession(String campus) async {
+    final response = await _dio
+        .post(SiraConstants.baseUrl + SiraConstants.searchSubjectPath, data: {
+      'facultad': '1',
+      'sed_codigo': campus,
+      'accion': 'desplegarFormularioConsultarProgramacion',
+      'boton': 'Consultar+Programación'
+    });
+    final cookies = response.headers.map['set-cookie'];
+    if (cookies == null) {
+      throw SiraException('No se pudo obtener la sesión');
+    }
+    final document = parse(latin1.decode(response.data));
+    print(document.querySelectorAll('form input').length);
+    return cookies
+        .where((element) => element.contains('PHPSESSID'))
+        .first
+        .split(';')
+        .first;
+  }
+
   @override
   Future<List<SubjectResult>> searchSubjects(
-      String query, String campus) async {
-    // TODO: implement searchSubjects
-    throw UnimplementedError();
+      SubjectSuggestion suggestion, String campus) async {
+    try {
+      final token = await _getSession(campus);
+      print(token);
+      final response = await _dio.post(
+          SiraConstants.baseUrl + SiraConstants.searchSubjectPath,
+          data:
+              'sed_codigo=06&agp_asi_codigo=990001M&wincomboagp_asi_codigo=&accion=Consultar+Programaci%F3n+Acad%E9mica&fac_codigo=1&una_codigo=102&tipo_consulta=desplegarFormularioConsultarProgramacion&fac_codigo=1&pra_codigo=&tipo_consulta=desplegarFormularioConsultarProgramacion',
+          options: Options(headers: {'Cookie': token}));
+      print(campus);
+      if (response.statusCode != 200) {
+        throw SiraException('El servicio no está disponible temporalmente');
+      }
+
+      final document = parse(latin1.decode(response.data));
+      print(document.outerHtml);
+      print(document.querySelectorAll('tables').length);
+
+      return [];
+    } catch (e) {
+      throw handleSiraError(e);
+    }
   }
 }

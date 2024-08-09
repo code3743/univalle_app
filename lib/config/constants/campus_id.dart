@@ -1,4 +1,5 @@
 class CampusId {
+  CampusId._();
   static const campus = {
     '00': 'Cali',
     '01': 'Buga',
