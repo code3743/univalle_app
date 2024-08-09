@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/providers/selected_campus_provider.dart';
+import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/features/search_subject/presentation/widgets/campus_picker_list.dart';
 
 class CampusPicker extends StatelessWidget {
@@ -21,8 +22,8 @@ class CampusPicker extends StatelessWidget {
             child: Center(
               child: Consumer(builder: (context, ref, _) {
                 return ListTile(
-                  iconColor: Colors.white,
-                  textColor: Colors.white,
+                  iconColor: AppColors.primaryBlue,
+                  textColor: AppColors.primaryBlue,
                   leading: const Icon(
                     Icons.location_on,
                   ),

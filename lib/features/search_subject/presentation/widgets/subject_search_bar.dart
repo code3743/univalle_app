@@ -16,7 +16,7 @@ class SubjectSearchBar extends StatelessWidget {
           height: 140,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: AppColors.primaryBlue,
+            color: AppColors.white,
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(35),
               bottomRight: Radius.circular(35),
