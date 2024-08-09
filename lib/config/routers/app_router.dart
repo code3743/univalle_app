@@ -8,18 +8,17 @@ import 'package:univalle_app/features/home/presentation/screens/home_screen.dart
 import 'package:univalle_app/features/home/presentation/screens/check_screen.dart';
 import 'package:univalle_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
+import 'package:univalle_app/features/search_subject/presentation/screens/search_subject_screen.dart';
 import 'package:univalle_app/features/student_tabulate/presentation/screens/tabulate_screen.dart';
 import 'package:univalle_app/features/program_resolution/presentation/screens/resolution_screen.dart';
 import 'package:univalle_app/features/student_grades/presentation/screens/student_grades_screen.dart';
 import 'package:univalle_app/features/program_resolution/presentation/screens/detail_semester_screen.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/screens/teaching_rating_screen.dart';
 
-final GlobalKey<NavigatorState> _globalKey = GlobalKey<NavigatorState>();
-
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/check',
-    navigatorKey: _globalKey,
+    navigatorKey: GlobalKey<NavigatorState>(),
     routes: [
       GoRoute(
         path: '/check',
@@ -82,6 +81,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               builder: (context, state) => const TeachingRatingScreen(),
             )
           ]),
+      GoRoute(
+        path: '/subject-search',
+        name: 'subject-search',
+        builder: (context, state) => const SubjectSearchScreen(),
+      )
     ],
   );
 });
