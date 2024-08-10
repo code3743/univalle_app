@@ -7,17 +7,21 @@ import 'package:univalle_app/features/search_subject/domain/entities/subject_sug
 import 'package:univalle_app/features/search_subject/domain/repositories/search_subject_repository.dart';
 
 final subjectSearchProvider =
-    StateNotifierProvider<SubjectSearchNotifier, SearchResult?>((ref) {
+    StateNotifierProvider<SubjectSearchNotifier, SubjectSearchStatus>((ref) {
   final searchSubjectRepository =
       SiraSearchSubjectRepositoryImpl(SiraSearchSubjectDatasource());
   return SubjectSearchNotifier(ref, searchSubjectRepository);
 });
 
-class SubjectSearchNotifier extends StateNotifier<SearchResult?> {
+class SubjectSearchNotifier extends StateNotifier<SubjectSearchStatus> {
   final Ref _ref;
   final SearchSubjectRepository _searchSubjectRepository;
+  late SearchResult _result;
 
-  SubjectSearchNotifier(this._ref, this._searchSubjectRepository) : super(null);
+  SubjectSearchNotifier(this._ref, this._searchSubjectRepository)
+      : super(SubjectSearchStatus.initial);
+
+  bool islLoading = false;
 
   Future<void> searchSubjects(
       SubjectSuggestion? suggestion, String campus) async {
@@ -25,9 +29,17 @@ class SubjectSearchNotifier extends StateNotifier<SearchResult?> {
       if (suggestion == null) {
         return;
       }
-      state = await _searchSubjectRepository.searchSubjects(suggestion, campus);
+      state = SubjectSearchStatus.loading;
+      _result =
+          await _searchSubjectRepository.searchSubjects(suggestion, campus);
+      state = SubjectSearchStatus.loaded;
     } catch (e) {
       _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      state = SubjectSearchStatus.error;
     }
   }
+
+  SearchResult get result => _result;
 }
+
+enum SubjectSearchStatus { initial, loading, loaded, error }
