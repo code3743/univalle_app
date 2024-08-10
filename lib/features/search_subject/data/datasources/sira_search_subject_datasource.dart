@@ -105,7 +105,7 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
       final credits = int.tryParse(
               rows[0].querySelector('font[size="2"]>b')?.text ?? '0') ??
           0;
-      final RegExp regExp =
+      final regExp =
           RegExp(r"^(.+)\s([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$");
       final List<SubjectResult> results = [];
       String teacherName = '';
@@ -119,15 +119,18 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
           continue;
         }
         if (teacherEmail.isEmpty && teacherName.isEmpty) {
-          final teacherData =
-              rows[i].querySelector('td[title="Docente Responsable"]')?.text ??
-                  '';
+          final teacherData = rows[i]
+                  .querySelector('td[title="Docente Responsable"]')
+                  ?.text
+                  .trim() ??
+              '';
           final match = regExp.firstMatch(teacherData);
-          teacherName = match?.group(1) ?? '';
-          teacherEmail = match?.group(2) ?? '';
+          teacherName = match?.group(1) ?? teacherData;
+          teacherEmail = match?.group(2) ?? '-';
           schedule = rows[i]
                   .querySelector('td[title="Horario de la Asignatura"]')
-                  ?.text ??
+                  ?.text
+                  .trim() ??
               '';
         }
 
@@ -141,8 +144,8 @@ class SiraSearchSubjectDatasource implements SearchSubjectDataSource {
         results.add(
           SubjectResult(
             group: group,
-            teacher: teacherName,
-            teacherEmail: teacherEmail,
+            teacher: teacherName.trim(),
+            teacherEmail: teacherEmail.trim(),
             program: program,
             isGeneric: isGeneric,
             isRepeater: isRepeater,
