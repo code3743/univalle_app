@@ -27,7 +27,7 @@ Univalle App reúne varios servicios esenciales en una interfaz amigable y optim
 | Ver su promedio académico                                | ✅     |
 | Consultar el tabulado                                    | ✅     |
 | Calificar a los docentes                                 | 🔄 (Parcialmente desarrollada)  |
-| Buscar asignaturas y electivas disponibles               | ❌     |
+| Buscar asignaturas y electivas disponibles               | ✅     |
 | Carné estudiantil digital                                | ✅     |
 | Acceder a enlaces de interés relacionados con la universidad | ❌     |
 
