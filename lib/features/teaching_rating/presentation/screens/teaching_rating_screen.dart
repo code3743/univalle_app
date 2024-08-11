@@ -56,7 +56,7 @@ class TeachingRatingScreen extends ConsumerWidget {
                               ref
                                   .read(snackBarHandlerProvider)
                                   .showSnackBarSuccess(
-                                      'Ya has calificado a este docente');
+                                      'El docente ya ha sido calificado');
                               return;
                             }
                             if (teachingProvider[index].novelty != null) {
