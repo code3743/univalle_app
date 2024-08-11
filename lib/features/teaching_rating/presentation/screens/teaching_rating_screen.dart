@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
@@ -65,10 +66,9 @@ class TeachingRatingScreen extends ConsumerWidget {
                                       teachingProvider[index].novelty!);
                               return;
                             }
-                            ref
-                                .read(snackBarHandlerProvider)
-                                .showSnackBarWarning(
-                                    'Estamos trabajando en esta funcionalidad');
+                            context.push(
+                                '/home/teaching-rating/teaching-rating-details',
+                                extra: index);
                           }),
                       childCount: teachingProvider.length)),
               const SliverToBoxAdapter(
