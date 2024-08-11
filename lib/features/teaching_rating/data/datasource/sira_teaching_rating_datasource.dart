@@ -24,8 +24,7 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
       ..options.responseType = ResponseType.bytes;
   }
 
-  @override
-  Future<String> authenticateSession(String user, String password) async {
+  Future<void> authenticateSession(String user, String password) async {
     try {
       final response = await _dio.post(CourseEvaluation.baseUrl,
           data: {
@@ -50,21 +49,18 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
             .trim();
         throw SiraException(error ?? 'Error al autenticar');
       }
-
-      final cookies =
-          await _cookieJar.loadForRequest(Uri.parse(CourseEvaluation.baseUrl));
-      return cookies.first.value;
     } catch (e) {
       throw handleSiraError(e);
     }
   }
 
   @override
-  Future<List<TeachingRating>> getTeachingToRatings(String sessionId) async {
+  Future<List<TeachingRating>> getTeachingToRatings(
+      String user, String password) async {
     try {
-      final response = await _dio.get(
-          CourseEvaluation.baseUrl + CourseEvaluation.homePath,
-          options: Options(headers: {'Cookie': 'PHPSESSID=$sessionId'}));
+      await authenticateSession(user, password);
+      final response =
+          await _dio.get(CourseEvaluation.baseUrl + CourseEvaluation.homePath);
       if (response.statusCode != 200) {
         throw SiraException('No se pudo obtener la información');
       }
@@ -99,15 +95,111 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
   }
 
   @override
-  Future<List<QuestionsSubject>> getQuestionsSubject(
-      String sessionId, TeachingRating teacher) {
-    // TODO: implement getQuestionsSubject
-    throw UnimplementedError();
+  Future<void> sendTeachingRating(ReviewSubject review) async {
+    try {
+      final data = {};
+      for (int i = 0; i < review.questions.length; i++) {
+        data['res_codigo$i'] = '';
+        data['res_eva_codigo$i'] = '';
+        data['res_cue_codigo$i'] = review.questions[i].id;
+        data['res_cal_codigo$i'] =
+            '${(review.questions[i].rating?.index ?? 5) + 1}';
+      }
+      final response = await _dio
+          .post(CourseEvaluation.baseUrl + CourseEvaluation.homePath, data: {
+        ...review.bodyData,
+        ...data,
+        'num_respuestacualitativa': '0',
+        'eva_observacion': review.feedback ?? '',
+        'operacion_principal': 'Nuevo',
+        'Ventana': '',
+        'accion': 'Enviar'
+      });
+      if (response.statusCode != 200) {
+        throw SiraException('No se pudo enviar la evaluación');
+      }
+      final document = parse(latin1.decode(response.data));
+      //TODO: Check if the evaluation was sent
+      throw SiraException('No se pudo enviar la evaluación');
+    } catch (e) {
+      throw handleSiraError(e);
+    }
   }
 
   @override
-  Future<void> sendTeachingRating(String sessionId, ReviewSubject review) {
-    // TODO: implement sendTeachingRating
-    throw UnimplementedError();
+  Future<ReviewSubject> getReviewSubject(TeachingRating teacher) async {
+    try {
+      final response = await _dio
+          .post(CourseEvaluation.baseUrl + CourseEvaluation.homePath, data: {
+        'ase_maa_per_codigo': teacher.programId,
+        'ase_apd_asi_codigo': teacher.code,
+        'apd_asi_nombre': teacher.subjectName,
+        'ase_apd_agp_grupo': teacher.group,
+        'ase_maa_pea_codigo': teacher.id,
+        'ase_apd_sed_codigo': teacher.campusId,
+        'ase_apd_doc_per_codigo': teacher.teacherId,
+        'ase_apd_doc_codigo': teacher.teacherDocument,
+        'ase_pra_nombre': teacher.programName,
+        'ase_maa_pra_codigo': teacher.programCode,
+        'accion': 'Evaluar',
+      });
+      if (response.statusCode != 200) {
+        throw SiraException('No se pudo obtener la información');
+      }
+      final document = parse(latin1.decode(response.data));
+
+      if (document.querySelector('td[width="100%"]>form') == null) {
+        throw SiraException('No se pudo iniciar la evaluación');
+      }
+      final inputs = document
+          .querySelector('td[width="100%"]>form')!
+          .querySelectorAll('input[type="HIDDEN"]')
+          .sublist(0, 21);
+      final data = <String, String>{};
+      for (final input in inputs) {
+        if (input.attributes['name']?.isEmpty ?? false) continue;
+        data[input.attributes['name']!] = input.attributes['value']!;
+      }
+      final List<QuestionsSubject> questions = [];
+
+      final subjectQuestionsTexts =
+          document.querySelectorAll('.asignatura > td[size]');
+      final subjectQuestionsIds =
+          document.querySelectorAll('.asignatura > td[size] > input');
+      for (int i = 0; i < subjectQuestionsTexts.length; i++) {
+        final question = subjectQuestionsTexts[i].text;
+        final questionId = subjectQuestionsIds[i].attributes['value'] ?? '';
+        questions.add(QuestionsSubject(
+            question: question, id: questionId, category: 'Asignatura'));
+      }
+      final teacherQuestionsTexts =
+          document.querySelectorAll('.profesor > td[size]');
+      final teacherQuestionsIds =
+          document.querySelectorAll('.profesor > td[size] > input');
+      for (int i = 0; i < teacherQuestionsTexts.length; i++) {
+        final question = teacherQuestionsTexts[i].text;
+        final questionId = teacherQuestionsIds[i].attributes['value'] ?? '';
+        questions.add(QuestionsSubject(
+            question: question, id: questionId, category: 'Docente'));
+      }
+      final studentQuestionsTexts =
+          document.querySelectorAll('.estudiante > td[size]');
+      final studentQuestionsIds =
+          document.querySelectorAll('.estudiante > td[size] > input');
+      for (int i = 0; i < studentQuestionsTexts.length; i++) {
+        final question = studentQuestionsTexts[i].text;
+        final questionId = studentQuestionsIds[i].attributes['value'] ?? '';
+        questions.add(QuestionsSubject(
+            question: question, id: questionId, category: 'Estudiante'));
+      }
+
+      return ReviewSubject(
+          bodyData: data,
+          questions: questions,
+          teacherName: teacher.teacherName,
+          subjectName: teacher.subjectName);
+    } catch (e) {
+      throw handleSiraError(e);
+    }
   }
 }
