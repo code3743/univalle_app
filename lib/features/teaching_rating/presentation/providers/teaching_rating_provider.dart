@@ -34,6 +34,7 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
       return result;
     } catch (e) {
       _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      _ref.read(appRouterProvider).pop();
       rethrow;
     }
   }
@@ -43,7 +44,6 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
       await studentUseCase.sendTeachingRating(review);
     } catch (e) {
       _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
-      rethrow;
     }
   }
 }
