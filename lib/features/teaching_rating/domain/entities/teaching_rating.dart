@@ -7,8 +7,9 @@ class TeachingRating {
   final String campusId;
   final String teacherId;
   final String teacherDocument;
-  final String programName;
   final String programId;
+  final String programName;
+  final String programCode;
   final bool isQualified;
   final String? novelty;
 
@@ -21,8 +22,9 @@ class TeachingRating {
     required this.campusId,
     required this.teacherId,
     required this.teacherDocument,
-    required this.programName,
     required this.programId,
+    required this.programName,
+    required this.programCode,
     required this.isQualified,
     this.novelty,
   });

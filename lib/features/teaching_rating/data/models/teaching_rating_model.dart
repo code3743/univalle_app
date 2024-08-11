@@ -9,8 +9,9 @@ class TeachingRatingModel {
   final String campusId;
   final String teacherId;
   final String teacherDocument;
-  final String programName;
   final String programId;
+  final String programName;
+  final String programCode;
   final bool isQualified;
   final String? novelty;
 
@@ -23,8 +24,9 @@ class TeachingRatingModel {
     required this.campusId,
     required this.teacherId,
     required this.teacherDocument,
-    required this.programName,
     required this.programId,
+    required this.programName,
+    required this.programCode,
     required this.isQualified,
     this.novelty,
   });
@@ -39,8 +41,9 @@ class TeachingRatingModel {
       campusId: json['ase_apd_sed_codigo'],
       teacherId: json['ase_apd_doc_per_codigo'],
       teacherDocument: json['ase_apd_doc_codigo'],
+      programId: json['ase_maa_per_codigo'],
       programName: json['ase_pra_nombre'],
-      programId: json['ase_maa_pra_codigo'],
+      programCode: json['ase_maa_pra_codigo'],
       isQualified: json['isQualified'],
       novelty: json['novelty'],
     );
@@ -56,8 +59,9 @@ class TeachingRatingModel {
       'campusId': campusId,
       'teacherId': teacherId,
       'teacherDocument': teacherDocument,
-      'programName': programName,
       'programId': programId,
+      'programCode': programCode,
+      'programName': programName,
       'isQualified': isQualified,
       'novelty': novelty,
     };
@@ -73,8 +77,9 @@ class TeachingRatingModel {
       campusId: entity.campusId,
       teacherId: entity.teacherId,
       teacherDocument: entity.teacherDocument,
-      programName: entity.programName,
       programId: entity.programId,
+      programName: entity.programName,
+      programCode: entity.programCode,
       isQualified: entity.isQualified,
       novelty: entity.novelty,
     );
@@ -90,8 +95,9 @@ class TeachingRatingModel {
       campusId: campusId,
       teacherId: teacherId,
       teacherDocument: teacherDocument,
-      programName: programName,
       programId: programId,
+      programName: programName,
+      programCode: programCode,
       isQualified: isQualified,
       novelty: novelty,
     );
