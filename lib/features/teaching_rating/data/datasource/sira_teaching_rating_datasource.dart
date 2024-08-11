@@ -97,13 +97,15 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
   @override
   Future<void> sendTeachingRating(ReviewSubject review) async {
     try {
-      final data = {};
+      final Map<String, String> data = {};
       for (int i = 0; i < review.questions.length; i++) {
         data['res_codigo$i'] = '';
         data['res_eva_codigo$i'] = '';
         data['res_cue_codigo$i'] = review.questions[i].id;
-        data['res_cal_codigo$i'] =
-            '${(review.questions[i].rating?.index ?? 5) + 1}';
+        if (review.questions[i].rating == null) {
+          throw SiraException('No se ha calificado la pregunta ${i + 1}');
+        }
+        data['res_cal_codigo$i'] = '${(review.questions[i].rating!.index) + 1}';
       }
       final response = await _dio
           .post(CourseEvaluation.baseUrl + CourseEvaluation.homePath, data: {
@@ -118,9 +120,6 @@ class SiraTeachingRatingDatasource implements TeachingRatingDatasource {
       if (response.statusCode != 200) {
         throw SiraException('No se pudo enviar la evaluación');
       }
-      final document = parse(latin1.decode(response.data));
-      //TODO: Check if the evaluation was sent
-      throw SiraException('No se pudo enviar la evaluación');
     } catch (e) {
       throw handleSiraError(e);
     }
