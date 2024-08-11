@@ -42,8 +42,15 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
   Future<void> setRating(ReviewSubject review) async {
     try {
       await studentUseCase.sendTeachingRating(review);
+      state = null;
+      _ref
+          .read(snackBarHandlerProvider)
+          .showSnackBarSuccess('Calificación enviada correctamente');
+      getTeachingRating();
+      _ref.read(appRouterProvider).pop();
     } catch (e) {
       _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
+      _ref.read(appRouterProvider).pop();
     }
   }
 }
