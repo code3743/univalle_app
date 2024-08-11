@@ -5,6 +5,7 @@ import 'package:univalle_app/config/themes/app_colors.dart';
 final lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: AppColors.lightGrey,
   primaryColor: AppColors.primaryRed,
+  primaryColorLight: AppColors.primaryRed,
   appBarTheme: const AppBarTheme(
     backgroundColor: AppColors.primaryRed,
     foregroundColor: AppColors.primaryRed,
