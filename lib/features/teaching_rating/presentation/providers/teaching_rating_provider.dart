@@ -3,6 +3,7 @@ import 'package:univalle_app/config/routers/app_router.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/domain/usecases/student_usecase.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
+import 'package:univalle_app/features/teaching_rating/domain/entities/review_subject.dart';
 import 'package:univalle_app/features/teaching_rating/domain/entities/teaching_rating.dart';
 
 final teachingRatingProvider = StateNotifierProvider.autoDispose<
@@ -16,16 +17,33 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
   }
 
   final Ref _ref;
-  late String _sessionId;
   late StudentUseCase studentUseCase;
 
   void getTeachingRating() async {
     try {
-      _sessionId = await studentUseCase.executeSessionEvaluationTeaching();
-      state = await studentUseCase.getTeachingToRatings(_sessionId);
+      state = await studentUseCase.getTeachingToRatings();
     } catch (e) {
       _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
       _ref.read(appRouterProvider).pop();
+    }
+  }
+
+  Future<ReviewSubject> getReviewSubject(int index) async {
+    try {
+      final result = await studentUseCase.getReviewSubject(state![index]);
+      return result;
+    } catch (e) {
+      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> setRating(ReviewSubject review) async {
+    try {
+      await studentUseCase.sendTeachingRating(review);
+    } catch (e) {
+      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      rethrow;
     }
   }
 }
