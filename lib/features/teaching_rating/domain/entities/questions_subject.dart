@@ -14,10 +14,16 @@ class QuestionsSubject {
 
 //Totalmente en desacuerdo	En desacuerdo	Medianamente de acuerdo	De acuerdo	Totalmente de acuerdo	No Aplica
 enum Rating {
-  totallyDisagree,
-  disagree,
-  somewhatAgree,
-  agree,
-  totallyAgree,
-  notApply
+  totallyDisagree('Totalmente en desacuerdo'),
+  disagree('En desacuerdo'),
+  somewhatAgree('Medianamente de acuerdo'),
+  agree('De acuerdo'),
+  totallyAgree('Totalmente de acuerdo'),
+  notApply('No Aplica');
+
+  final String label;
+  const Rating(this.label);
+
+  @override
+  toString() => label;
 }
