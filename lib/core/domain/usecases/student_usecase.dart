@@ -74,18 +74,17 @@ class StudentUseCase {
         _student.token, _student.studentId, _student.programId);
   }
 
-  Future<List<TeachingRating>> getTeachingToRatings(String sessionId) async {
-    return await _teachingRatingRepository.getTeachingToRatings(sessionId);
-  }
-
-  Future<void> sendTeachingRating(
-      String sessionId, ReviewSubject review) async {
-    await _teachingRatingRepository.sendTeachingRating(sessionId, review);
-  }
-
-  Future<String> executeSessionEvaluationTeaching() async {
-    return await _teachingRatingRepository.authenticateSession(
+  Future<List<TeachingRating>> getTeachingToRatings() async {
+    return await _teachingRatingRepository.getTeachingToRatings(
         '${_student.studentId.substring(2)}-${_student.programId}',
         _student.password);
+  }
+
+  Future<void> sendTeachingRating(ReviewSubject review) async {
+    await _teachingRatingRepository.sendTeachingRating(review);
+  }
+
+  Future<ReviewSubject> getReviewSubject(TeachingRating teacher) async {
+    return await _teachingRatingRepository.getReviewSubject(teacher);
   }
 }
