@@ -23,7 +23,7 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
     try {
       state = await studentUseCase.getTeachingToRatings();
     } catch (e) {
-      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
       _ref.read(appRouterProvider).pop();
     }
   }
@@ -33,7 +33,7 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
       final result = await studentUseCase.getReviewSubject(state![index]);
       return result;
     } catch (e) {
-      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
       _ref.read(appRouterProvider).pop();
       rethrow;
     }
@@ -43,7 +43,7 @@ class TeachingRatingNotifier extends StateNotifier<List<TeachingRating>?> {
     try {
       await studentUseCase.sendTeachingRating(review);
     } catch (e) {
-      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
     }
   }
 }

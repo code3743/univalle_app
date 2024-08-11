@@ -48,7 +48,7 @@ class SnackBarHandler {
   SnackBarHandler(this.context);
 
   void showSnackBar(String message,
-      [Color? backgroundColor, TextStyle? textStyle]) {
+      {Color? backgroundColor, TextStyle? textStyle, Duration? duration}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -58,26 +58,27 @@ class SnackBarHandler {
         ),
         animation: AnimationController(
           vsync: ScaffoldMessenger.of(context),
-          duration: const Duration(seconds: 3),
+          duration: duration ?? const Duration(seconds: 3),
         ),
         backgroundColor: backgroundColor,
       ),
     );
   }
 
-  void showSnackBArError(String message) {
-    showSnackBar(message, AppColors.error);
+  void showSnackBarError(String message) {
+    showSnackBar(message, backgroundColor: AppColors.error);
   }
 
   void showSnackBarSuccess(String message) {
-    showSnackBar(message, AppColors.success);
+    showSnackBar(message, backgroundColor: AppColors.success);
   }
 
   void showSnackBarInfo(String message) {
-    showSnackBar(message, AppColors.info);
+    showSnackBar(message,
+        backgroundColor: AppColors.info, duration: const Duration(seconds: 5));
   }
 
   void showSnackBarWarning(String message) {
-    showSnackBar(message, AppColors.warning);
+    showSnackBar(message, backgroundColor: AppColors.warning);
   }
 }

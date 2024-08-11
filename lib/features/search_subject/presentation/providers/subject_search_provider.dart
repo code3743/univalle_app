@@ -34,7 +34,7 @@ class SubjectSearchNotifier extends StateNotifier<SubjectSearchStatus> {
           await _searchSubjectRepository.searchSubjects(suggestion, campus);
       state = SubjectSearchStatus.loaded;
     } catch (e) {
-      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
       state = SubjectSearchStatus.error;
     }
   }

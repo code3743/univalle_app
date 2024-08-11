@@ -69,14 +69,14 @@ class ResetPassword extends StatelessWidget {
                                 try {
                                   await authNotifier.resetPassword();
                                   ref.read(appRouterProvider).pop();
-                                  ref.read(snackBarHandlerProvider).showSnackBar(
-                                      'Se ha enviado un correo a tu cuenta institucional',
-                                      AppColors.info);
+                                  ref
+                                      .read(snackBarHandlerProvider)
+                                      .showSnackBarInfo(
+                                          'Se ha enviado un correo a tu cuenta institucional');
                                 } catch (e) {
                                   ref
                                       .read(snackBarHandlerProvider)
-                                      .showSnackBar(
-                                          e.toString(), AppColors.error);
+                                      .showSnackBarError(e.toString());
                                 }
                               }),
                   ],

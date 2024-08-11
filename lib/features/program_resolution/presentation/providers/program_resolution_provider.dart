@@ -23,7 +23,7 @@ class ProgramResolutionNotifier extends StateNotifier<List<SubjectCycle>?> {
           await _ref.read(studentUseCasesProvider).getResolution();
       state = subjectCycles;
     } catch (e) {
-      _ref.read(snackBarHandlerProvider).showSnackBArError(e.toString());
+      _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
       _ref.read(appRouterProvider).pop();
       dispose();
     }
