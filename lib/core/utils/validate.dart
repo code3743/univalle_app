@@ -1,4 +1,5 @@
 class Validate {
+  Validate._();
   static String? validateStudentCode(String? code) {
     if (code == null || code.isEmpty) {
       return 'El código del estudiante es requerido';
