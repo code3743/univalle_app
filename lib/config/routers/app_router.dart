@@ -13,6 +13,7 @@ import 'package:univalle_app/features/student_tabulate/presentation/screens/tabu
 import 'package:univalle_app/features/program_resolution/presentation/screens/resolution_screen.dart';
 import 'package:univalle_app/features/student_grades/presentation/screens/student_grades_screen.dart';
 import 'package:univalle_app/features/program_resolution/presentation/screens/detail_semester_screen.dart';
+import 'package:univalle_app/features/teaching_rating/presentation/screens/teaching_rating_details.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/screens/teaching_rating_screen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -76,10 +77,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               builder: (context, state) => const DigitalCardScreen(),
             ),
             GoRoute(
-              path: 'teaching-rating',
-              name: 'teaching-rating',
-              builder: (context, state) => const TeachingRatingScreen(),
-            )
+                path: 'teaching-rating',
+                name: 'teaching-rating',
+                builder: (context, state) => const TeachingRatingScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'teaching-rating-details',
+                    name: 'teaching-rating-details',
+                    builder: (context, state) {
+                      final int index = state.extra as int;
+                      return TeachingRatingDetails(index: index);
+                    },
+                  )
+                ])
           ]),
       GoRoute(
         path: '/subject-search',
