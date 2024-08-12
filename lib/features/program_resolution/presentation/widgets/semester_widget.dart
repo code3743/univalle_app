@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:univalle_app/config/routers/app_router_name.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
 
@@ -15,7 +16,7 @@ class SemesterWidget extends StatelessWidget {
     return MaterialButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        context.push('/home/resolution/detail-semester', extra: subjectCycle);
+        context.push(AppRouterName.detailSemester, extra: subjectCycle);
       },
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

@@ -1,5 +1,6 @@
 import 'dart:ui' show Color;
 
+import 'package:univalle_app/config/routers/app_router_name.dart';
 import 'package:univalle_app/core/utils/svg_paths.dart';
 
 class ButtonServicesOptions {
@@ -21,27 +22,27 @@ class ButtonServicesOptions {
 final List<ButtonServicesOptions> servicesOptions = [
   ButtonServicesOptions(
     title: 'Calificaciones',
-    route: '/home/student-grades',
+    route: AppRouterName.studentGrades,
     icon: SvgPaths.ratings,
   ),
   ButtonServicesOptions(
     title: 'Tabulado',
-    route: '/home/tabulate',
+    route: AppRouterName.tabulate,
     icon: SvgPaths.tabulated,
   ),
   ButtonServicesOptions(
     title: 'Calificación docente',
-    route: '/home/teaching-rating',
+    route: AppRouterName.teachingRating,
     icon: SvgPaths.teacherRating,
   ),
   ButtonServicesOptions(
     title: 'Carné digital',
-    route: '/home/digital-card',
+    route: AppRouterName.digitalCard,
     icon: SvgPaths.digitalCard,
   ),
   ButtonServicesOptions(
     title: 'Resolución',
-    route: '/home/resolution',
+    route: AppRouterName.resolution,
     icon: SvgPaths.resolution,
   ),
   ButtonServicesOptions(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:univalle_app/config/routers/app_router_name.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/common/widgets/loading.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/providers/teaching_rating_provider.dart';
@@ -66,8 +67,7 @@ class TeachingRatingScreen extends ConsumerWidget {
                                       teachingProvider[index].novelty!);
                               return;
                             }
-                            context.push(
-                                '/home/teaching-rating/teaching-rating-details',
+                            context.push(AppRouterName.reviewSubject,
                                 extra: index);
                           }),
                       childCount: teachingProvider.length)),
