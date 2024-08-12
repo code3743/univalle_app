@@ -4,11 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:univalle_app/features/digital_card/presentation/screens/digital_card_screen.dart';
-import 'package:univalle_app/features/home/presentation/screens/home_screen.dart';
 import 'package:univalle_app/features/home/presentation/screens/check_screen.dart';
 import 'package:univalle_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:univalle_app/features/home/presentation/screens/main_screen.dart';
 import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
-import 'package:univalle_app/features/search_subject/presentation/screens/search_subject_screen.dart';
 import 'package:univalle_app/features/student_tabulate/presentation/screens/tabulate_screen.dart';
 import 'package:univalle_app/features/program_resolution/presentation/screens/resolution_screen.dart';
 import 'package:univalle_app/features/student_grades/presentation/screens/student_grades_screen.dart';
@@ -44,9 +43,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             )
           ]),
       GoRoute(
-          path: '/home',
-          name: 'home',
-          builder: (context, state) => const HomeScreen(),
+          path: '/main',
+          name: 'main',
+          builder: (context, state) {
+            final hasAuth = state.extra as bool?;
+            return MainScreen(hasAuth: hasAuth);
+          },
           routes: [
             GoRoute(
               path: 'student-grades',
@@ -90,12 +92,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                     },
                   )
                 ])
-          ]),
-      GoRoute(
-        path: '/subject-search',
-        name: 'subject-search',
-        builder: (context, state) => const SubjectSearchScreen(),
-      )
+          ])
     ],
   );
 });

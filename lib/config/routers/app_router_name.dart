@@ -2,8 +2,7 @@ class AppRouterName {
   AppRouterName._();
 
   static const String checkAuth = '/check';
-  static const String home = '/home';
-  static const String subjectSearch = '/subject-search';
+  static const String main = '/main';
   static const String login = '/login';
   static const String resetPassword = '/login/reset-password';
   static const String studentGrades = '/home/student-grades';
