@@ -136,7 +136,7 @@ class _AuthForm extends StatelessWidget {
                               await authNotifier.login();
                               ref
                                   .read(appRouterProvider)
-                                  .go(AppRouterName.home);
+                                  .go(AppRouterName.main, extra: true);
                             } catch (e) {
                               ref
                                   .read(snackBarHandlerProvider)
@@ -148,7 +148,11 @@ class _AuthForm extends StatelessWidget {
                   const SizedBox(height: 10),
                   CustomButton(
                     text: 'Invitado',
-                    onPressed: !auth ? () {} : null,
+                    onPressed: !auth
+                        ? () {
+                            ref.read(appRouterProvider).go(AppRouterName.main);
+                          }
+                        : null,
                     backgroundColor: AppColors.white,
                     borderColor: AppColors.primaryRed,
                     borderWidth: 1.5,
