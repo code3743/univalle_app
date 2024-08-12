@@ -39,11 +39,12 @@ class StudentGradesScreen extends ConsumerWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          PeriodGradesList(
-            initialValue: studentGradesNotifer.selectedPeriod,
-            periods: studentGradesNotifer.periods,
-            onChanged: (value) => studentGradesNotifer.filterGrades(value),
-          ),
+          if (studentGrades != null)
+            PeriodGradesList(
+              initialValue: studentGradesNotifer.selectedPeriod,
+              periods: studentGradesNotifer.periods,
+              onChanged: (value) => studentGradesNotifer.filterGrades(value),
+            ),
           SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
             if (studentGrades == null) {
