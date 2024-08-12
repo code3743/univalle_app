@@ -20,7 +20,7 @@ class StudentUseCase {
   final ResolutionRepository _resolutionRepository;
 
   final TeachingRatingRepository _teachingRatingRepository;
-  late Student _student;
+  late final Student? _student;
 
   StudentUseCase(
     this._authRepository,
@@ -45,7 +45,7 @@ class StudentUseCase {
 
   Future<bool> isLogged() async {
     final status = await _authRepository.isLogged();
-    if (status) {
+    if (status && _student == null) {
       _student = await _authRepository.getStudent();
     }
     return status;
@@ -56,27 +56,27 @@ class StudentUseCase {
   }
 
   Student getStudent() {
-    return _student;
+    return _student!;
   }
 
   Future<List<Grades>> getGrades() async {
     return await _gradesRepository.getGrades(
-        _student.token, _student.studentId.substring(2));
+        _student!.token, _student.studentId.substring(2));
   }
 
   Future<Tabulate> getTabulate() async {
     return await _tabulateRepository.getTabulate(
-        _student.studentId.substring(2), _student.programId, _student.token);
+        _student!.studentId.substring(2), _student.programId, _student.token);
   }
 
   Future<List<SubjectCycle>> getResolution() async {
     return await _resolutionRepository.getResolution(
-        _student.token, _student.studentId, _student.programId);
+        _student!.token, _student.studentId, _student.programId);
   }
 
   Future<List<TeachingRating>> getTeachingToRatings() async {
     return await _teachingRatingRepository.getTeachingToRatings(
-        '${_student.studentId.substring(2)}-${_student.programId}',
+        '${_student!.studentId.substring(2)}-${_student.programId}',
         _student.password);
   }
 
