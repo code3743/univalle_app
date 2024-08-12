@@ -19,6 +19,13 @@ class StudentGradesNotifier extends StateNotifier<List<Grades>?> {
   late final List<Grades> grades;
   int selectedPeriod = 0;
 
+  void reset() {
+    state = null;
+    periods.clear();
+    selectedPeriod = 0;
+    periods.add('Todos');
+  }
+
   Future<void> getGrades() async {
     try {
       grades = await _ref.read(studentUseCasesProvider).getGrades();
