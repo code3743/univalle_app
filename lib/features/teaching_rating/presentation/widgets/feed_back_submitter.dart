@@ -5,13 +5,14 @@ class FeedbackSubmitter extends StatelessWidget {
   const FeedbackSubmitter({
     super.key,
     required this.onFeedback,
+    required this.feedbackTextController,
   });
 
   final ValueChanged<String> onFeedback;
+  final TextEditingController feedbackTextController;
 
   @override
   Widget build(BuildContext context) {
-    final feedbackTextController = TextEditingController();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

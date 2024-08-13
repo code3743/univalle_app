@@ -19,6 +19,7 @@ class TeachingQuestions extends StatefulWidget {
 
 class _TeachingQuestionsState extends State<TeachingQuestions> {
   final controller = PageController(initialPage: 0);
+  final feedbackTextController = TextEditingController();
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _TeachingQuestionsState extends State<TeachingQuestions> {
 
   @override
   void dispose() {
+    feedbackTextController.dispose();
     controller.dispose();
     super.dispose();
   }
@@ -44,6 +46,7 @@ class _TeachingQuestionsState extends State<TeachingQuestions> {
       itemBuilder: (context, index) {
         if (index == widget.questions.length) {
           return FeedbackSubmitter(
+            feedbackTextController: feedbackTextController,
             onFeedback: (feedback) {
               widget.onFeedback(feedback);
             },
