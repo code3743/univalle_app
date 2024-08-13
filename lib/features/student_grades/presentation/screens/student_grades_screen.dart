@@ -39,28 +39,31 @@ class StudentGradesScreen extends ConsumerWidget {
       ),
       body: CustomScrollView(
         slivers: [
+          if (studentGrades == null)
+            const SliverFillRemaining(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           if (studentGrades != null)
             PeriodGradesList(
               initialValue: studentGradesNotifer.selectedPeriod,
               periods: studentGradesNotifer.periods,
               onChanged: (value) => studentGradesNotifer.filterGrades(value),
             ),
-          SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-            if (studentGrades == null) {
-              //TODO: Implement shimmer animation
-              return Container();
-            }
-            return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                child: GradesOverview(grade: studentGrades[index]));
-          }, childCount: studentGrades?.length ?? 1)),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 50,
-            ),
-          )
+          if (studentGrades != null)
+            SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+              if (index == studentGrades.length) {
+                return const SizedBox(
+                  height: 50,
+                );
+              }
+              return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  child: GradesOverview(grade: studentGrades[index]));
+            }, childCount: studentGrades.length + 1)),
         ],
       ),
     );
