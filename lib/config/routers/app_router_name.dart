@@ -11,5 +11,6 @@ class AppRouterName {
   static const String detailSemester = '/main/resolution/detail-semester';
   static const String digitalCard = '/main/digital-card';
   static const String teachingRating = '/main/teaching-rating';
-  static const String reviewSubject = '/main/teaching-rating/review-subject';
+  static const String teachingRatingDetails =
+      '/main/teaching-rating/teaching-rating-details';
 }

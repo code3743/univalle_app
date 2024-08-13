@@ -8,7 +8,7 @@ import 'package:univalle_app/features/student_tabulate/presentation/providers/st
 final resetProvider = FutureProvider.autoDispose<void>((ref) async {
   ref.read(profilePictureProvider.notifier).removeImage();
   await ref.read(sharedUtilityProvider).clearStudentData();
-  ref.read(studentGradesProvider.notifier).reset();
+  ref.invalidate(studentGradesProvider);
   ref.invalidate(studentTabulateProvider);
   ref.invalidate(studentUseCasesProvider);
   return;

@@ -67,7 +67,7 @@ class TeachingRatingScreen extends ConsumerWidget {
                                       teachingProvider[index].novelty!);
                               return;
                             }
-                            context.push(AppRouterName.reviewSubject,
+                            context.push(AppRouterName.teachingRatingDetails,
                                 extra: index);
                           }),
                       childCount: teachingProvider.length)),
