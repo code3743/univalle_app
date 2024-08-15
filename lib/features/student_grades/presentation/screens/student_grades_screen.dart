@@ -5,67 +5,61 @@ import 'package:univalle_app/features/student_grades/presentation/providers/stud
 import 'package:univalle_app/features/student_grades/presentation/widgets/grades_overview.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/period_grades_list.dart';
 
-class StudentGradesScreen extends ConsumerWidget {
+class StudentGradesScreen extends StatelessWidget {
   const StudentGradesScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final studentGrades = ref.watch(studentGradesProvider);
-    final studentGradesNotifer = ref.read(studentGradesProvider.notifier);
+  Widget build(BuildContext context) {
+    final currentPeriod = ValueNotifier<int>(0);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calificaciones'),
         elevation: 2,
       ),
-      endDrawer: Drawer(
-        backgroundColor: AppColors.white,
-        child: ListView.builder(
-          itemBuilder: (_, index) {
-            return ListTile(
-              selectedColor: AppColors.primaryBlue,
-              title: Text(studentGradesNotifer.periods[index]),
-              leading: Icon(
-                studentGradesNotifer.selectedPeriod == index
-                    ? Icons.circle
-                    : Icons.circle_outlined,
-                color: AppColors.primaryBlue,
-              ),
-              selected: studentGradesNotifer.selectedPeriod == index,
-              onTap: () => studentGradesNotifer.filterGrades(index),
-            );
-          },
-          itemCount: studentGradesNotifer.periods.length,
-        ),
-      ),
-      body: CustomScrollView(
-        slivers: [
-          if (studentGrades == null)
-            const SliverFillRemaining(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          if (studentGrades != null)
-            PeriodGradesList(
-              initialValue: studentGradesNotifer.selectedPeriod,
-              periods: studentGradesNotifer.periods,
-              onChanged: (value) => studentGradesNotifer.filterGrades(value),
-            ),
-          if (studentGrades != null)
-            SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-              if (index == studentGrades.length) {
-                return const SizedBox(
-                  height: 50,
+      body: Consumer(builder: (_, ref, __) {
+        return FutureBuilder(
+            future: ref.watch(studentGradesProvider.future),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                //TODO: Implement a error widget
+                return const Center(
+                  child: Text('Error al cargar las calificaciones'),
                 );
               }
-              return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  child: GradesOverview(grade: studentGrades[index]));
-            }, childCount: studentGrades.length + 1)),
-        ],
-      ),
+              if (!snapshot.hasData) {
+                //TODO: Implement a loading widget
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryRed,
+                  ),
+                );
+              }
+              final grades = snapshot.data!;
+              return CustomScrollView(
+                slivers: [
+                  PeriodGradesList(
+                    initialValue: currentPeriod.value,
+                    periods: ['Todos', ...grades.map((e) => e.period)],
+                    onChanged: (value) => currentPeriod.value = value,
+                  ),
+                  ValueListenableBuilder(
+                      valueListenable: currentPeriod,
+                      builder: (context, value, __) {
+                        return SliverList(
+                            delegate:
+                                SliverChildBuilderDelegate((context, index) {
+                          final grade = grades[value == 0 ? index : value - 1];
+                          return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 8),
+                              child: GradesOverview(grade: grade));
+                        }, childCount: value == 0 ? grades.length : 1));
+                      }),
+                ],
+              );
+            });
+      }),
     );
   }
 }
