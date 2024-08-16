@@ -36,7 +36,7 @@ class DetailSemesterScreen extends StatelessWidget {
                                   const Text('Créditos'),
                                   Text(subjectCycle.subjects[index].credits,
                                       style: const TextStyle(
-                                          fontSize: 26,
+                                          fontSize: 23,
                                           fontWeight: FontWeight.w500))
                                 ],
                               ),
