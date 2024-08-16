@@ -21,8 +21,6 @@ class SubjectSearchNotifier extends StateNotifier<SubjectSearchStatus> {
   SubjectSearchNotifier(this._ref, this._searchSubjectRepository)
       : super(SubjectSearchStatus.initial);
 
-  bool islLoading = false;
-
   Future<void> searchSubjects(
       SubjectSuggestion? suggestion, String campus) async {
     try {
