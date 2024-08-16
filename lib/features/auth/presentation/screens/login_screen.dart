@@ -80,8 +80,7 @@ class _AuthForm extends StatelessWidget {
         child: Consumer(builder: (context, ref, _) {
           final auth = ref.watch(authProvider);
           final authNotifier = ref.read(authProvider.notifier);
-          final ValueNotifier<bool> isObscure =
-              ValueNotifier<bool>(authNotifier.obscureText);
+          final isObscure = ValueNotifier<bool>(authNotifier.obscureText);
           return Stack(
             alignment: Alignment.center,
             children: [
@@ -94,7 +93,6 @@ class _AuthForm extends StatelessWidget {
                     controller: authNotifier.code,
                     enabled: !auth,
                     textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
                     prefixIcon: const Icon(Icons.person_rounded),
                     suffixIcon: const SizedBox(),
                     hintText: 'Usuario',
@@ -149,9 +147,8 @@ class _AuthForm extends StatelessWidget {
                   CustomButton(
                     text: 'Invitado',
                     onPressed: !auth
-                        ? () {
-                            ref.read(appRouterProvider).go(AppRouterName.main);
-                          }
+                        ? () =>
+                            ref.read(appRouterProvider).go(AppRouterName.main)
                         : null,
                     backgroundColor: AppColors.white,
                     borderColor: AppColors.primaryRed,
