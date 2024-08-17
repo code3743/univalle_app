@@ -6,6 +6,7 @@ import 'package:univalle_app/config/constants/restaurant_constants.dart';
 import 'package:univalle_app/core/errors/handle_sira_errors.dart';
 import 'package:univalle_app/core/errors/sira_exception.dart';
 import 'package:univalle_app/features/restaurant/domain/datasources/student_restaurant_datasource.dart';
+import 'package:univalle_app/features/restaurant/domain/entities/payment_process.dart';
 import 'package:univalle_app/features/restaurant/domain/entities/student_restaurant.dart';
 
 class RestaurantDatasource implements StudentRestaurantDatasource {
@@ -19,7 +20,7 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
   }
 
   @override
-  Future<void> buyLunches(int numberLunch, double total) {
+  Future<PaymentProcess> buyLunches(int numberLunch, double total) {
     // TODO: implement buyLunches
     throw UnimplementedError();
   }
