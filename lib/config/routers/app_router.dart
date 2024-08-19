@@ -8,6 +8,7 @@ import 'package:univalle_app/features/home/presentation/screens/check_screen.dar
 import 'package:univalle_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:univalle_app/features/home/presentation/screens/main_screen.dart';
 import 'package:univalle_app/features/program_resolution/domain/entities/subject_cycle.dart';
+import 'package:univalle_app/features/restaurant/presentation/screens/restaurant_screen.dart';
 import 'package:univalle_app/features/student_tabulate/presentation/screens/tabulate_screen.dart';
 import 'package:univalle_app/features/program_resolution/presentation/screens/resolution_screen.dart';
 import 'package:univalle_app/features/student_grades/presentation/screens/student_grades_screen.dart';
@@ -91,7 +92,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                       return TeachingRatingDetails(index: index);
                     },
                   )
-                ])
+                ]),
+            GoRoute(
+              path: 'restaurant',
+              name: 'restaurant',
+              builder: (context, state) => const RestaurantScreen(),
+            )
           ])
     ],
   );

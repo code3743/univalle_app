@@ -13,4 +13,5 @@ class AppRouterName {
   static const String teachingRating = '/main/teaching-rating';
   static const String teachingRatingDetails =
       '/main/teaching-rating/teaching-rating-details';
+  static const String restaurant = '/main/restaurant';
 }
