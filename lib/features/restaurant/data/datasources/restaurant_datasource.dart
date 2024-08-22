@@ -20,9 +20,38 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
   }
 
   @override
-  Future<PaymentProcess> buyLunches(int numberLunch, double total) {
-    // TODO: implement buyLunches
-    throw UnimplementedError();
+  Future<PaymentProcess> buyLunches(int numberLunch, double total) async {
+    try {
+      final response = await _dio.post(
+        RestaurantConstants.baseUrl + RestaurantConstants.buyLucnhes,
+        data: {
+          'comprar_tiquete[cantidad_tiquetes]': numberLunch,
+          'comprar_tiquete[total_compra]': total.toInt(),
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw SiraException('No se pudo realizar la compra');
+      }
+
+      final document = parse(response.data);
+      final url =
+          document.querySelector('a.btn.btn-danger')?.attributes['href'];
+      if (url == null) {
+        throw SiraException('No se pudo realizar la compra');
+      }
+      final message = document.querySelector('h1')?.text ?? '';
+      return PaymentProcess(
+        numberLunch: numberLunch,
+        total: total,
+        paymentUrl: url,
+        startDate: '',
+        expirationDate: '',
+        message: message,
+      );
+    } catch (e) {
+      throw handleSiraError(e);
+    }
   }
 
   @override
