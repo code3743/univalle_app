@@ -15,7 +15,9 @@ class CustomTextFormField extends StatelessWidget {
       this.textAlign,
       this.initialValue,
       this.suffixIcon,
-      this.keyboardType});
+      this.keyboardType,
+      this.label,
+      this.onChanged});
   final double? width;
   final double? height;
   final Widget? prefixIcon;
@@ -28,6 +30,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextAlign? textAlign;
   final String? initialValue;
   final Widget? suffixIcon;
+  final Widget? label;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +44,11 @@ class CustomTextFormField extends StatelessWidget {
         validator: validator,
         textAlign: textAlign ?? TextAlign.start,
         initialValue: initialValue,
+        onChanged: onChanged,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
           hintText: hintText,
+          label: label,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           enabled: enabled,
