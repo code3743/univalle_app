@@ -35,10 +35,10 @@ class RestaurantScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Column(
+                  child: const Column(
                     children: [
                       AccumulatedLunches(accumulated: 10),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       TicketItem(
                           title: 'Tipo de vinculación',
                           value: 'Estudiante',
@@ -48,31 +48,26 @@ class RestaurantScreen extends StatelessWidget {
                         value: '3.000',
                         icon: Icons.restaurant_rounded,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Divider(
                           color: AppColors.grey,
                           thickness: 1,
                         ),
                       ),
-                      const Text('Comprar almuerzos',
-                          style: TextStyle(
-                              color: AppColors.primaryBlue,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
                       BuyLunchs(
                         minLunches: 3,
                         maxLunches: 83,
                         lunchPrice: 3000,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Divider(
                           color: AppColors.grey,
                           thickness: 1,
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
                             'Esta aplicación no recauda dinero ni procesa pagos. Se te proporcionará un enlace para que te dirijas al sitio oficial de la universidad y completes el pago de los almuerzos.',
@@ -82,7 +77,7 @@ class RestaurantScreen extends StatelessWidget {
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500)),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ),
