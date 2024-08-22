@@ -47,8 +47,7 @@ final List<ButtonServicesOptions> servicesOptions = [
   ),
   ButtonServicesOptions(
     title: 'Restaurante',
-    route: '',
+    route: AppRouterName.restaurant,
     icon: SvgPaths.restaurant,
-    isUnderDevelopment: true,
   ),
 ];
