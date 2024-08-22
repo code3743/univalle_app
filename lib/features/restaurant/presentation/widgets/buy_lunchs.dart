@@ -43,6 +43,11 @@ class _BuyLunchsState extends State<BuyLunchs> {
       key: _formKey,
       child: Column(
         children: [
+          const Text('Comprar almuerzos',
+              style: TextStyle(
+                  color: AppColors.primaryBlue,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: CustomTextFormField(
