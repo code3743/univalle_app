@@ -54,42 +54,55 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
     }
   }
 
-  @override
-  Future<StudentRestaurant> getStudentRestaurant(
-      String user, String password) async {
-    try {
-      final getToken = await _dio
-          .get(RestaurantConstants.baseUrl + RestaurantConstants.login);
-      final dataToken = parse(getToken.data);
-      final token = dataToken
-              .querySelector('input[name="signin[_csrf_token]"]')
-              ?.attributes['value'] ??
-          '';
-      if (token.isEmpty) {
-        throw SiraException('No se pudo obtener el token de autenticación');
-      }
-      final loginData = await _dio.post(
-        RestaurantConstants.baseUrl + RestaurantConstants.login,
+  Future<void> _login(String user, String password) async {
+    final response = await _dio.get(
+      RestaurantConstants.baseUrl,
+    );
+    final document = parse(response.data);
+
+    final token =
+        document.querySelector('#signin__csrf_token')?.attributes['value'];
+
+    if (document.querySelector('#selecciona_perfil') != null) {
+      return;
+    }
+    if (token == null) {
+      throw SiraException('No se pudo obtener el token');
+    }
+
+    await _dio.post(RestaurantConstants.baseUrl + RestaurantConstants.login,
         data: {
           'signin[username]': user,
           'signin[password]': password,
           'signin[_csrf_token]': token,
         },
-      );
-      final verifyLogin = parse(loginData.data);
-      if (verifyLogin.querySelector('#selecciona_perfil') == null) {
-        throw SiraException('El servicio no está disponible');
-      }
+        options: Options(
+          validateStatus: (status) => status! < 500,
+        ));
+    await _dio.get(RestaurantConstants.baseUrl + RestaurantConstants.home);
+  }
 
+  @override
+  Future<StudentRestaurant> getStudentRestaurant(
+      String user, String password) async {
+    try {
+      await _login(user, password);
       final response = await _dio.get(
         RestaurantConstants.baseUrl + RestaurantConstants.info,
       );
       final document = parse(response.data);
+      if (document.querySelector('#selecciona_perfil') == null) {
+        throw SiraException('El servicio no está disponible');
+      }
 
       final dataRaw = document
           .querySelector('.panel-body')!
           .querySelectorAll('.form-group.col-sm-6');
-      final typeLink = dataRaw[5].querySelector('.form-control')!.text;
+      final typeLink = dataRaw[5]
+          .querySelector('.form-control')!
+          .text
+          .trim()
+          .replaceAll('\n', '');
       final lunchPrice = dataRaw[6].querySelector('.form-control')!.text;
       final accumulatedLunches =
           dataRaw[7].querySelector('.form-control')!.text;
@@ -106,6 +119,7 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
         paymentProcess: paymentProcess,
       );
     } catch (e) {
+      await _cookieJar.deleteAll();
       throw handleSiraError(e);
     }
   }
