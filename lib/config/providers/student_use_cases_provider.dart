@@ -5,6 +5,8 @@ import 'package:univalle_app/features/auth/data/datasource/sira_auth_datasource.
 import 'package:univalle_app/features/auth/data/repositories/sira_auth_repository_impl.dart';
 import 'package:univalle_app/features/program_resolution/data/datasource/sira_resolution_datasource.dart';
 import 'package:univalle_app/features/program_resolution/data/repositories/sira_resolution_repository_impl.dart';
+import 'package:univalle_app/features/restaurant/data/datasources/restaurant_datasource.dart';
+import 'package:univalle_app/features/restaurant/data/repositories/restaurant_repository_impl.dart';
 import 'package:univalle_app/features/student_grades/data/datasources/sira_grades_datasource.dart';
 import 'package:univalle_app/features/student_grades/data/repositories/sira_grades_repository_impl.dart';
 import 'package:univalle_app/features/student_tabulate/data/datasource/sira_tabulate_datasource.dart';
@@ -22,14 +24,15 @@ final studentUseCasesProvider = Provider<StudentUseCase>((ref) {
       SiraTabulateRepositoryImpl(SiraTabulateDatasource());
   final resolutionRepository =
       SiraResolutionRepositoryImpl(SiraResolutionDatasource());
-
   final teachingRatingRepository =
       SiraTeachingRatingRepositoryImpl(SiraTeachingRatingDatasource());
+  final studentRestaurant = RestaurantRepositoryImpl(RestaurantDatasource());
 
   return StudentUseCase(
       authRepository,
       studentGradesRepository,
       studentTabulateRepository,
       resolutionRepository,
-      teachingRatingRepository);
+      teachingRatingRepository,
+      studentRestaurant);
 });
