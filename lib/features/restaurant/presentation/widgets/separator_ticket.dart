@@ -14,7 +14,7 @@ class SeparatorTicket extends StatelessWidget {
         width: double.infinity,
         child: Column(
           children: [
-            const SizedBox(height: 150),
+            const SizedBox(height: 180),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

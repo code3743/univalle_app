@@ -12,13 +12,13 @@ class AccumulatedLunches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 160,
+      height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             width: double.infinity,
-            color: AppColors.primaryBlue,
+            color: AppColors.lightGrey,
             padding: const EdgeInsets.all(8),
             child: const Text(
               'Está opción aplica únicamente para las sedes en Cali',
@@ -26,11 +26,12 @@ class AccumulatedLunches extends StatelessWidget {
                   fontSize: 12,
                   height: 1,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white),
+                  color: AppColors.grey),
               textAlign: TextAlign.center,
               maxLines: 2,
             ),
           ),
+          const SizedBox(height: 20),
           TweenAnimationBuilder(
               tween: IntTween(
                 begin: 0,
@@ -52,8 +53,11 @@ class AccumulatedLunches extends StatelessWidget {
             style: TextStyle(
                 fontSize: 14,
                 height: 1,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
                 color: AppColors.primaryBlue),
+          ),
+          const SizedBox(
+            height: 20,
           ),
         ],
       ),

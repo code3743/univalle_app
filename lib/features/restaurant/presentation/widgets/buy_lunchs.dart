@@ -55,6 +55,11 @@ class _BuyLunchsState extends State<BuyLunchs> {
                 icon: const Icon(Icons.add),
                 onPressed: () {
                   if (_lunches == widget.maxLunches) return;
+                  if (_lunches < widget.minLunches) {
+                    _controller.text = widget.minLunches.toString();
+                    _lunches = widget.minLunches;
+                    return;
+                  }
                   _controller.text = (++_lunches).toString();
                 },
               ),
@@ -62,6 +67,11 @@ class _BuyLunchsState extends State<BuyLunchs> {
                 icon: const Icon(Icons.remove),
                 onPressed: () {
                   if (_lunches == widget.minLunches) return;
+                  if (_lunches < widget.minLunches) {
+                    _controller.text = widget.minLunches.toString();
+                    _lunches = widget.minLunches;
+                    return;
+                  }
                   _controller.text = (--_lunches).toString();
                 },
               ),
@@ -87,6 +97,13 @@ class _BuyLunchsState extends State<BuyLunchs> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Ingrese un valor';
+                }
+                if (int.tryParse(value) == null) {
+                  return 'Ingrese un valor numérico';
+                }
+
+                if (int.parse(value) < widget.minLunches) {
+                  return 'El valor mínimo es ${widget.minLunches}';
                 }
                 return null;
               },
