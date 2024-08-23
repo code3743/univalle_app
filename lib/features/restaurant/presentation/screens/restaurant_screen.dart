@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/features/restaurant/presentation/providers/student_restarant_provider.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/widgets.dart';
+import 'package:univalle_app/features/restaurant/presentation/widgets/ticket_information.dart';
 
 class RestaurantScreen extends StatelessWidget {
   const RestaurantScreen({super.key});
@@ -21,66 +24,46 @@ class RestaurantScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: Container(
-                  width: double.infinity,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.black.withOpacity(0.5),
-                        blurRadius: 5,
-                        spreadRadius: 1,
-                        offset: const Offset(0, 0),
-                      )
-                    ],
-                  ),
-                  child: const Column(
-                    children: [
-                      AccumulatedLunches(accumulated: 10),
-                      SizedBox(height: 10),
-                      TicketItem(
-                          title: 'Tipo de vinculación',
-                          value: 'Estudiante',
-                          icon: Icons.person),
-                      TicketItem(
-                        title: 'Valor del almuerzo',
-                        value: '3.000',
-                        icon: Icons.restaurant_rounded,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Divider(
-                          color: AppColors.grey,
-                          thickness: 1,
-                        ),
-                      ),
-                      BuyLunchs(
-                        minLunches: 3,
-                        maxLunches: 83,
-                        lunchPrice: 3000,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Divider(
-                          color: AppColors.grey,
-                          thickness: 1,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text(
-                            'Esta aplicación no recauda dinero ni procesa pagos. Se te proporcionará un enlace para que te dirijas al sitio oficial de la universidad y completes el pago de los almuerzos.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: AppColors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500)),
-                      ),
-                      SizedBox(height: 10),
-                    ],
-                  ),
-                ),
+                    width: double.infinity,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.grey.withOpacity(0.5),
+                          blurRadius: 5,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 0),
+                        )
+                      ],
+                    ),
+                    child: Consumer(builder: (_, ref, __) {
+                      return FutureBuilder(
+                          future: ref.watch(studentRestaurantProvider.future),
+                          builder: (_, snapshot) {
+                            if (snapshot.hasError) {
+                              //TODO: Implement error widget
+
+                              return Center(
+                                child: Text(snapshot.error.toString()),
+                              );
+                            }
+
+                            if (!snapshot.hasData) {
+                              //TODO: Implement loading widget
+                              return const SizedBox(
+                                height: 300,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+
+                            return TicketInformation(
+                                studentRestaurant: snapshot.data!);
+                          });
+                    })),
               ),
               const SeparatorTicket()
             ],
