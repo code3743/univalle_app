@@ -61,9 +61,10 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
       final getToken = await _dio
           .get(RestaurantConstants.baseUrl + RestaurantConstants.login);
       final dataToken = parse(getToken.data);
-      final token =
-          dataToken.querySelector('input[name="signin[_csrf_token]"]')?.text ??
-              '';
+      final token = dataToken
+              .querySelector('input[name="signin[_csrf_token]"]')
+              ?.attributes['value'] ??
+          '';
       if (token.isEmpty) {
         throw SiraException('No se pudo obtener el token de autenticación');
       }
