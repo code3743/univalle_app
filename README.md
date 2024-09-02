@@ -29,6 +29,7 @@ Univalle App reúne varios servicios esenciales en una interfaz amigable y optim
 | Calificar a los docentes                                 | ✅     |
 | Buscar asignaturas y electivas disponibles               | ✅     |
 | Carné estudiantil digital                                | ✅     |
+| Consultar tickets de almuezo                             | 🔧 (Parcialmente desarrollado) |
 | Acceder a enlaces de interés relacionados con la universidad | ❌     |
 
 
