@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/features/program_resolution/presentation/providers/program_resolution_provider.dart';
 import 'package:univalle_app/features/program_resolution/presentation/widgets/semester_list.dart';
+import 'package:univalle_app/core/common/widgets/widget_error.dart';
 
 class ResolutionScreen extends StatelessWidget {
   const ResolutionScreen({super.key});
@@ -17,12 +18,14 @@ class ResolutionScreen extends StatelessWidget {
                 future: ref.watch(programResolutionProvider.future),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    // TODO: Implement error widget
                     return SliverFillRemaining(
-                        child: Center(child: Text(snapshot.error.toString())));
+                        child: WidgetError(
+                        onRetry: () {
+                         final _ = ref.refresh(programResolutionProvider);
+                        }),);
                   }
                   if (!snapshot.hasData) {
-                    //TODO: Implement loading widget
+                     //TODO: Implement loading widget
                     return const SliverFillRemaining(
                         child: Center(child: CircularProgressIndicator()));
                   }
