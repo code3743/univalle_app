@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class WidgetError extends StatelessWidget {
+  final String message;
   final VoidCallback? onRetry;
 
-  const WidgetError({super.key, required this.onRetry});
+  const WidgetError({super.key, required this.message, this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +14,10 @@ class WidgetError extends StatelessWidget {
         children: [
           const Icon(Icons.error, color: Colors.red, size: 60),
           const SizedBox(height: 20),
-          const Text(
-            'Ocurrió un error',
+          Text(
+            message,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 20),
           ElevatedButton(

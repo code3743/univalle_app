@@ -19,7 +19,7 @@ class ResolutionScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return SliverFillRemaining(
-                        child: WidgetError(
+                        child: WidgetError( message: 'Ocurrió un error',
                         onRetry: () {
                          final _ = ref.refresh(programResolutionProvider);
                         }),);
