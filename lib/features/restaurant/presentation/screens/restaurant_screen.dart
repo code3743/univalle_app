@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/themes/app_colors.dart';
+import 'package:univalle_app/core/common/widgets/widget_error.dart';
 import 'package:univalle_app/features/restaurant/presentation/providers/student_restarant_provider.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/widgets.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/ticket_information.dart';
@@ -43,11 +44,10 @@ class RestaurantScreen extends StatelessWidget {
                           future: ref.watch(studentRestaurantProvider.future),
                           builder: (_, snapshot) {
                             if (snapshot.hasError) {
-                              //TODO: Implement error widget
-
-                              return Center(
-                                child: Text(snapshot.error.toString()),
-                              );
+                              return WidgetError(message: snapshot.error.toString(),
+                                onRetry: () {
+                                  final _ = ref.refresh(studentRestaurantProvider);
+                                },);
                             }
 
                             if (!snapshot.hasData) {
