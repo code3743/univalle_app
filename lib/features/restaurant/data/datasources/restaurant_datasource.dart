@@ -55,32 +55,37 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
   }
 
   Future<void> _login(String user, String password) async {
-    final response = await _dio.get(
-      RestaurantConstants.baseUrl,
-    );
-    final document = parse(response.data);
+    try {
+      final response = await _dio.get(
+        RestaurantConstants.baseUrl,
+      );
+      final document = parse(response.data);
 
-    final token =
-        document.querySelector('#signin__csrf_token')?.attributes['value'];
+      final token =
+          document.querySelector('#signin__csrf_token')?.attributes['value'];
 
-    if (document.querySelector('#selecciona_perfil') != null) {
-      return;
-    }
-    if (token == null) {
-      throw SiraException('No se pudo obtener el token');
-    }
+      if (document.querySelector('#selecciona_perfil') != null) {
+        return;
+      }
+      if (token == null) {
+        throw SiraException('No se pudo obtener el token');
+      }
 
-    await _dio.post(RestaurantConstants.baseUrl + RestaurantConstants.login,
-        data: {
-          'signin[username]': user,
-          'signin[password]': password,
-          'signin[_csrf_token]': token,
-        },
-        options: Options(
-          validateStatus: (status) => status! < 500,
-        ));
-    await _dio.get(RestaurantConstants.baseUrl + RestaurantConstants.home);
+      await _dio.post(RestaurantConstants.baseUrl + RestaurantConstants.login,
+          data: {
+            'signin[username]': user,
+            'signin[password]': password,
+            'signin[_csrf_token]': token,
+          },
+          options: Options(
+            validateStatus: (status) => status! < 500,
+          ));
+      await _dio.get(RestaurantConstants.baseUrl + RestaurantConstants.home);
+    } catch (e) {
+        throw handleSiraError(e);
+    }  
   }
+
 
   @override
   Future<StudentRestaurant> getStudentRestaurant(
