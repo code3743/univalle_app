@@ -31,22 +31,23 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
       );
 
       if (response.statusCode != 200) {
-        throw SiraException('No se pudo realizar la compra');
+        throw SiraException('No se pudo generar el enlace de pago');
       }
 
       final document = parse(response.data);
       final url =
           document.querySelector('a.btn.btn-danger')?.attributes['href'];
       if (url == null) {
-        throw SiraException('No se pudo realizar la compra');
+        throw SiraException('No se pudo generar el enlace de pago');
       }
       final message = document.querySelector('h1')?.text ?? '';
+      final startDate = DateTime.now();
       return PaymentProcess(
         numberLunch: numberLunch,
         total: total,
         paymentUrl: url,
-        startDate: '',
-        expirationDate: '',
+        startDate: startDate.toString(),
+        expirationDate: startDate.add(const Duration(days: 1)).toString(),
         message: message,
       );
     } catch (e) {
@@ -82,10 +83,9 @@ class RestaurantDatasource implements StudentRestaurantDatasource {
           ));
       await _dio.get(RestaurantConstants.baseUrl + RestaurantConstants.home);
     } catch (e) {
-        throw handleSiraError(e);
-    }  
+      throw handleSiraError(e);
+    }
   }
-
 
   @override
   Future<StudentRestaurant> getStudentRestaurant(
