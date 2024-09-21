@@ -20,6 +20,7 @@ class RestaurantScreen extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Stack(
             children: [
               Padding(
@@ -44,10 +45,13 @@ class RestaurantScreen extends StatelessWidget {
                           future: ref.watch(studentRestaurantProvider.future),
                           builder: (_, snapshot) {
                             if (snapshot.hasError) {
-                              return WidgetError(message: snapshot.error.toString(),
+                              return WidgetError(
+                                message: snapshot.error.toString(),
                                 onRetry: () {
-                                  final _ = ref.refresh(studentRestaurantProvider);
-                                },);
+                                  final _ =
+                                      ref.refresh(studentRestaurantProvider);
+                                },
+                              );
                             }
 
                             if (!snapshot.hasData) {
