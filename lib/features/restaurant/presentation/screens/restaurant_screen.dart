@@ -42,7 +42,9 @@ class RestaurantScreen extends StatelessWidget {
                     ),
                     child: Consumer(builder: (_, ref, __) {
                       return FutureBuilder(
-                          future: ref.watch(studentRestaurantProvider.future),
+                          future: ref
+                              .read(studentRestaurantProvider.notifier)
+                              .getStudentRestaurant(),
                           builder: (_, snapshot) {
                             if (snapshot.hasError) {
                               return WidgetError(

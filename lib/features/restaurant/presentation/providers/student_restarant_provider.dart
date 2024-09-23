@@ -2,43 +2,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/config/providers/student_use_cases_provider.dart';
 import 'package:univalle_app/core/common/handlers/handlers.dart';
 import 'package:univalle_app/core/domain/usecases/student_usecase.dart';
+import 'package:univalle_app/features/restaurant/domain/entities/payment_process.dart';
 import 'package:univalle_app/features/restaurant/domain/entities/student_restaurant.dart';
 
 final studentRestaurantProvider =
-    FutureProvider.autoDispose<StudentRestaurant>((ref) async {
-  try {
-    final studentUseCase = ref.read(studentUseCasesProvider);
-    return studentUseCase.getStudentRestaurant();
-  } catch (e) {
-    rethrow;
-  }
+    StateNotifierProvider.autoDispose<StudentRestaurantNotifier, dynamic>(
+        (ref) {
+  final studentUseCase = ref.read(studentUseCasesProvider);
+
+  return StudentRestaurantNotifier(ref, studentUseCase);
 });
 
-final paymentProcessProvider = StateNotifierProvider.autoDispose<
-    StudentRestaurantNotifier, StudentRestaurantStatus>((ref) {
-  return StudentRestaurantNotifier(ref);
-});
-
-class StudentRestaurantNotifier extends StateNotifier<StudentRestaurantStatus> {
-  StudentRestaurantNotifier(this._ref)
-      : super(StudentRestaurantStatus.initial) {
-    studentUseCase = _ref.read(studentUseCasesProvider);
-  }
+class StudentRestaurantNotifier extends StateNotifier {
+  StudentRestaurantNotifier(this._ref, this.studentUseCase) : super(null);
 
   final Ref _ref;
-  late final StudentUseCase studentUseCase;
+  final StudentUseCase studentUseCase;
 
-  Future<void> setPaymentProcess(int amount, double total) async {
+  Future<StudentRestaurant> getStudentRestaurant() async {
     try {
-      state = StudentRestaurantStatus.loading;
-      await studentUseCase.buyLunches(amount, total);
-      state = StudentRestaurantStatus.loaded;
+      return await studentUseCase.getStudentRestaurant();
     } catch (e) {
-      state = StudentRestaurantStatus.error;
+      _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<PaymentProcess> setPaymentProcess(int amount, double total) async {
+    try {
+      return await studentUseCase.buyLunches(amount, total);
+    } catch (e) {
       _ref.read(snackBarHandlerProvider).showSnackBarError(e.toString());
       rethrow;
     }
   }
 }
-
-enum StudentRestaurantStatus { initial, loading, loaded, error }
