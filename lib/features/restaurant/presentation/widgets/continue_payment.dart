@@ -51,7 +51,11 @@ class ContinuePayment extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: CustomButton(text: 'Continuar', onPressed: () {}),
+          child: CustomButton(
+              text: 'Continuar',
+              onPressed: () {
+                //TODO: Launch URL
+              }),
         )
       ],
     );
