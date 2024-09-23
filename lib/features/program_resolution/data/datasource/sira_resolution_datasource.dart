@@ -47,7 +47,7 @@ class SiraResolutionDatasource implements ResolutionDataSource {
         final name = row[3].text.trim();
         final subjectType = row[4].text.trim();
         final credits = row[5].text.trim();
-        final prereqCode = row[7].text.trim();
+        final prereqCode = row[6].text.trim();
 
         if (!data.containsKey(cycle)) {
           data[cycle] = [];
