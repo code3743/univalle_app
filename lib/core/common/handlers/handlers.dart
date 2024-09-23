@@ -20,9 +20,14 @@ class DialogHandler {
 
   DialogHandler(this.context);
 
-  void showAlertDialog(String title, Widget content, {TextStyle? textStyle}) {
+  void showAlertDialog(
+      {required String title,
+      required Widget content,
+      TextStyle? textStyle,
+      bool barrierDismissible = true}) {
     showDialog(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title,

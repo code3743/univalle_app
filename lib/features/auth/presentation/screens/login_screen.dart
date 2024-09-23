@@ -24,8 +24,8 @@ class LoginScreen extends StatelessWidget {
           backgroundColor: AppColors.primaryRed,
           onPressed: () {
             ref.read(dialogHandlerProvider).showAlertDialog(
-                '¿Cómo ingresar?',
-                Column(mainAxisSize: MainAxisSize.min, children: [
+                title: '¿Cómo ingresar?',
+                content: Column(mainAxisSize: MainAxisSize.min, children: [
                   const Text(
                       'Usa tu código y contraseña de SIRA para iniciar sesión',
                       textAlign: TextAlign.center),
