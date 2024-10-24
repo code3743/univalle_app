@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:univalle_app/features/program_resolution/presentation/providers/program_resolution_provider.dart';
 import 'package:univalle_app/features/program_resolution/presentation/widgets/semester_list.dart';
-import 'package:univalle_app/core/common/widgets/widget_error.dart';
+import 'package:univalle_app/core/common/widgets/widgets.dart';
 
 class ResolutionScreen extends StatelessWidget {
   const ResolutionScreen({super.key});
@@ -25,9 +25,8 @@ class ResolutionScreen extends StatelessWidget {
                         }),);
                   }
                   if (!snapshot.hasData) {
-                     //TODO: Implement loading widget
                     return const SliverFillRemaining(
-                        child: Center(child: CircularProgressIndicator()));
+                        child: Center(child: LoadingWidget()),);
                   }
                   return SemesterList(subjectCycles: snapshot.data!);
                 });

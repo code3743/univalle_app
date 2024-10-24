@@ -5,3 +5,4 @@ export 'profile_picture.dart';
 export 'app_drawer.dart';
 export 'app_logo.dart';
 export 'widget_error.dart';
+export 'loading_widget.dart';
