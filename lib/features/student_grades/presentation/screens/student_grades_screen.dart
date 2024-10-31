@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:univalle_app/config/themes/app_colors.dart';
 import 'package:univalle_app/features/student_grades/presentation/providers/student_grades_provider.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/grades_overview.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/period_grades_list.dart';
+import 'package:univalle_app/core/common/widgets/widgets.dart';
 
 class StudentGradesScreen extends StatelessWidget {
   const StudentGradesScreen({super.key});
@@ -22,18 +22,16 @@ class StudentGradesScreen extends StatelessWidget {
             future: ref.watch(studentGradesProvider.future),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                //TODO: Implement a error widget
-                return const Center(
-                  child: Text('Error al cargar las calificaciones'),
+                return Center(
+                  child: WidgetError( message: 'Ocurrió un error',
+                        onRetry: () {
+                         final _ = ref.refresh(studentGradesProvider);
+                        }),
                 );
               }
               if (!snapshot.hasData) {
-                //TODO: Implement a loading widget
                 return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryRed,
-                  ),
-                );
+                  child: Center(child: LoadingWidget()),);
               }
               final grades = snapshot.data!;
               return CustomScrollView(
