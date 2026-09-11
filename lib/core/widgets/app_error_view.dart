@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_strings.dart';
 import '../error/failures.dart';
 
 class AppErrorView extends StatelessWidget {
@@ -11,7 +12,7 @@ class AppErrorView extends StatelessWidget {
   String get _message {
     final err = error;
     if (err is Failure) return err.userMessage;
-    return 'Algo salió mal, intenta de nuevo.';
+    return AppStrings.genericError;
   }
 
   @override
@@ -22,12 +23,16 @@ class AppErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 40),
+            Icon(Icons.error_outline, size: 40, color: Theme.of(context).colorScheme.error),
             const SizedBox(height: 12),
-            Text(_message, textAlign: TextAlign.center),
+            Text(
+              _message,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             if (onRetry != null) ...[
               const SizedBox(height: 16),
-              FilledButton(onPressed: onRetry, child: const Text('Reintentar')),
+              FilledButton(onPressed: onRetry, child: const Text(AppStrings.retry)),
             ],
           ],
         ),
