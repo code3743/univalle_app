@@ -7,6 +7,7 @@ Failure mapExceptionToFailure(Object error) {
       ServerFailure(message: message, statusCode: statusCode),
     NetworkException(:final message) => NetworkFailure(message: message),
     CacheException(:final message) => CacheFailure(message: message),
+    AuthException(:final message) => AuthFailure(message: message),
     _ => UnknownFailure(message: error.toString()),
   };
 }

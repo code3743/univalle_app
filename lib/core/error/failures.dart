@@ -1,3 +1,5 @@
+import '../constants/app_strings.dart';
+
 sealed class Failure {
   final String message;
   final String userMessage;
@@ -15,27 +17,26 @@ final class ServerFailure extends Failure {
       : super(userMessage: _userMessageFor(statusCode));
 
   static String _userMessageFor(int? statusCode) {
-    if (statusCode == 401) return 'Tu sesión expiró, inicia sesión de nuevo.';
-    if (statusCode == 403) return 'No tienes permisos para esta acción.';
-    if (statusCode == 404) return 'No encontramos lo que buscabas.';
-    if (statusCode != null && statusCode >= 500) {
-      return 'Estamos teniendo problemas en el servidor, intenta más tarde.';
-    }
-    return 'Ocurrió un error al procesar tu solicitud.';
+    if (statusCode == 401) return AppStrings.sessionExpired;
+    if (statusCode == 403) return AppStrings.forbidden;
+    if (statusCode == 404) return AppStrings.notFound;
+    if (statusCode != null && statusCode >= 500) return AppStrings.serverError;
+    return AppStrings.requestError;
   }
 }
 
 final class NetworkFailure extends Failure {
-  NetworkFailure({required super.message})
-      : super(userMessage: 'Revisa tu conexión a internet e intenta de nuevo.');
+  NetworkFailure({required super.message}) : super(userMessage: AppStrings.networkError);
 }
 
 final class CacheFailure extends Failure {
-  CacheFailure({required super.message})
-      : super(userMessage: 'No pudimos cargar la información guardada en tu dispositivo.');
+  CacheFailure({required super.message}) : super(userMessage: AppStrings.cacheError);
 }
 
 final class UnknownFailure extends Failure {
-  UnknownFailure({required super.message})
-      : super(userMessage: 'Algo salió mal, intenta de nuevo.');
+  UnknownFailure({required super.message}) : super(userMessage: AppStrings.genericError);
+}
+
+final class AuthFailure extends Failure {
+  AuthFailure({required super.message}) : super(userMessage: message);
 }

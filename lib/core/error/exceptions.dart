@@ -18,3 +18,7 @@ final class NetworkException extends AppException {
 final class CacheException extends AppException {
   const CacheException({required super.message});
 }
+
+final class AuthException extends AppException {
+  const AuthException({required super.message});
+}
