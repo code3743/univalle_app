@@ -8,10 +8,12 @@ abstract final class AppTheme {
   static ThemeData get dark => _build(Brightness.dark);
 
   static ThemeData _build(Brightness brightness) {
+    // ColorScheme.fromSeed tones down a pure-red seed into a muddy brick tone
+    // for `primary`; force the real brand red so buttons/focus rings match it.
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.univalleRed,
       brightness: brightness,
-    );
+    ).copyWith(primary: AppColors.univalleRed);
     final baseTextTheme =
         brightness == Brightness.dark ? ThemeData.dark().textTheme : ThemeData.light().textTheme;
     final textTheme = GoogleFonts.poppinsTextTheme(baseTextTheme).apply(
@@ -24,9 +26,9 @@ abstract final class AppTheme {
       brightness: brightness,
       colorScheme: colorScheme,
       textTheme: textTheme,
-      scaffoldBackgroundColor: colorScheme.surface,
+      scaffoldBackgroundColor: AppColors.pageBackground,
       appBarTheme: AppBarTheme(
-        backgroundColor: colorScheme.surface,
+        backgroundColor: AppColors.pageBackground,
         foregroundColor: colorScheme.onSurface,
         elevation: 0,
         titleTextStyle: textTheme.titleLarge,
@@ -53,7 +55,7 @@ abstract final class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colorScheme.surfaceContainerHighest,
+        fillColor: AppColors.inputFill,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -75,6 +77,10 @@ abstract final class AppTheme {
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     );
   }

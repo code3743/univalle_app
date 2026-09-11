@@ -1,5 +1,3 @@
-/// Generic copy shared across features. Feature-specific copy (e.g., forms)
-/// lives in `features/<feature>/<feature>_strings.dart`.
 abstract final class AppStrings {
   static const genericError = 'Algo salió mal, intenta de nuevo.';
   static const retry = 'Reintentar';
