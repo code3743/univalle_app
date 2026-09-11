@@ -4,5 +4,5 @@ abstract interface class AuthRepository {
   Future<Result<void>> login({required String username, required String password});
   Future<Result<void>> logout();
   Future<Result<String?>> restoreSession();
-  Future<Result<void>> resetPassword({required String username});
+  Future<Result<String>> resetPassword({required String username});
 }

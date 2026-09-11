@@ -14,4 +14,14 @@ abstract final class AuthStrings {
   static const resetServiceUnavailable =
       'El servicio de recuperación no está disponible.';
   static const serverNotResponding = 'El servidor no responde.';
+  static const forgotPassword = '¿Olvidaste tu contraseña?';
+  static const resetPasswordTitle = 'Recuperar contraseña';
+  static const resetPasswordSubtitle =
+      'Ingresa tu usuario y te enviaremos instrucciones para restablecer tu contraseña.';
+  static const resetPasswordSubmit = 'Recuperar contraseña';
+  static const backToLogin = 'Volver al inicio de sesión';
+  static const accept = 'Aceptar';
+  static const resetPasswordSuccessTitle = 'Correo enviado';
+  static const resetPasswordSuccessCopy =
+      'Te enviamos un correo con las instrucciones para restablecer tu contraseña a:';
 }

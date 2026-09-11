@@ -50,10 +50,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<void>> resetPassword({required String username}) async {
+  Future<Result<String>> resetPassword({required String username}) async {
     try {
-      await _remote.resetPassword(username: username);
-      return const Ok(null);
+      final email = await _remote.resetPassword(username: username);
+      return Ok(email);
     } on AppException catch (e) {
       return Err(mapExceptionToFailure(e));
     }

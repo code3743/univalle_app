@@ -47,7 +47,7 @@ class SiraAuthRemoteDataSource {
     await _run(() => _dio.get(SiraConstants.logoutPath));
   }
 
-  Future<void> resetPassword({required String username}) async {
+  Future<String> resetPassword({required String username}) async {
     if (username.isEmpty) {
       throw const AuthException(message: AuthStrings.missingUsername);
     }
@@ -89,6 +89,16 @@ class SiraAuthRemoteDataSource {
     if (errorMessage != null && errorMessage.isNotEmpty) {
       throw AuthException(message: errorMessage);
     }
+
+    final email = resetDocument
+        .querySelector('#div_cambio_clave_success > p > b')
+        ?.text
+        .trim();
+    if (email == null || email.isEmpty) {
+      throw const ServerException(message: AuthStrings.resetServiceUnavailable);
+    }
+
+    return email;
   }
 
   Future<T> _run<T>(Future<T> Function() request) async {

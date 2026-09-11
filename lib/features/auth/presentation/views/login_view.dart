@@ -40,6 +40,11 @@ class _LoginViewState extends ConsumerState<LoginView> {
         );
   }
 
+  void _goToForgotPassword() {
+    FocusScope.of(context).unfocus();
+    context.push(AppRoutes.forgotPassword);
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen<AsyncValue<bool>>(authViewModelProvider, (previous, next) {
@@ -111,7 +116,14 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 validator: (value) =>
                     (value == null || value.isEmpty) ? AuthStrings.passwordRequired : null,
               ),
-              const SizedBox(height: 24),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: isLoading ? null : _goToForgotPassword,
+                  child: const Text(AuthStrings.forgotPassword),
+                ),
+              ),
+              const SizedBox(height: 8),
               FilledButton(
                 onPressed: isLoading ? null : () => _submit(isLoading),
                 child: isLoading
