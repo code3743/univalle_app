@@ -1,9 +1,11 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/network/sira_dio_provider.dart';
+import '../../../../core/network/uplanner_dio_provider.dart';
 import '../../../../core/storage/local_storage_providers.dart';
 import '../../data/datasources/auth_local_datasource.dart';
 import '../../data/datasources/sira_auth_remote_datasource.dart';
+import '../../data/datasources/uplanner_remote_datasource.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -19,6 +21,11 @@ SiraAuthRemoteDataSource siraAuthRemoteDataSource(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
+UplannerRemoteDataSource uplannerRemoteDataSource(Ref ref) {
+  return UplannerRemoteDataSource(ref.watch(uplannerDioProvider));
+}
+
+@Riverpod(keepAlive: true)
 AuthLocalDataSource authLocalDataSource(Ref ref) {
   return AuthLocalDataSource(ref.watch(localStorageServiceProvider));
 }
@@ -28,14 +35,17 @@ AuthRepository authRepository(Ref ref) {
   return AuthRepositoryImpl(
     ref.watch(siraAuthRemoteDataSourceProvider),
     ref.watch(authLocalDataSourceProvider),
+    ref.watch(uplannerRemoteDataSourceProvider),
   );
 }
 
 @Riverpod(keepAlive: true)
-LoginUseCase loginUseCase(Ref ref) => LoginUseCase(ref.watch(authRepositoryProvider));
+LoginUseCase loginUseCase(Ref ref) =>
+    LoginUseCase(ref.watch(authRepositoryProvider));
 
 @Riverpod(keepAlive: true)
-LogoutUseCase logoutUseCase(Ref ref) => LogoutUseCase(ref.watch(authRepositoryProvider));
+LogoutUseCase logoutUseCase(Ref ref) =>
+    LogoutUseCase(ref.watch(authRepositoryProvider));
 
 @Riverpod(keepAlive: true)
 RestoreSessionUseCase restoreSessionUseCase(Ref ref) {

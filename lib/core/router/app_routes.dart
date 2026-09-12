@@ -2,4 +2,7 @@ abstract final class AppRoutes {
   static const home = '/';
   static const login = '/login';
   static const profile = '/profile';
+  static const forgotPassword = '/forgot-password';
+  static const grades = '/grades';
+  static const digitalCard = '/digital-card';
 }

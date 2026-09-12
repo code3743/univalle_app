@@ -10,4 +10,9 @@ abstract final class AppColors {
   static const accentGreen = Color(0xFF16A34A);
   static const accentAmber = Color(0xFFD97706);
   static const accentPurple = Color(0xFF7C3AED);
+
+  // QR codes need fixed, near-max contrast to stay scannable, so these two
+  // don't come from the theme's ColorScheme like everything else.
+  static const qrBackground = Color(0xFFFFFFFF);
+  static const qrForeground = Color(0xFF000000);
 }
