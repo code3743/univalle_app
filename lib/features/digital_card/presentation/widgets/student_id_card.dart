@@ -1,6 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -289,12 +288,11 @@ class _QrBadge extends StatelessWidget {
         color: AppColors.qrBackground,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: QrImageView(
+      child: BarcodeWidget(
         data: data,
-        version: QrVersions.auto,
-        padding: EdgeInsets.zero,
-        eyeStyle: const QrEyeStyle(color: AppColors.qrForeground),
-        dataModuleStyle: const QrDataModuleStyle(color: AppColors.qrForeground),
+        barcode: Barcode.qrCode(),
+        color: AppColors.qrForeground,
+        drawText: false,
       ),
     );
   }
