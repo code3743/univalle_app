@@ -5,4 +5,5 @@ abstract final class AppRoutes {
   static const forgotPassword = '/forgot-password';
   static const grades = '/grades';
   static const digitalCard = '/digital-card';
+  static const tabulate = '/tabulado';
 }
