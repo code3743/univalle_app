@@ -6,4 +6,5 @@ abstract final class AppRoutes {
   static const grades = '/grades';
   static const digitalCard = '/digital-card';
   static const tabulate = '/tabulado';
+  static const resolution = '/resolucion';
 }

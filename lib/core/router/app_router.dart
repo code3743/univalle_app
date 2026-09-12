@@ -6,6 +6,7 @@ import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/digital_card/presentation/views/digital_card_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/profile/presentation/views/profile_view.dart';
+import '../../features/resolution/presentation/views/resolution_view.dart';
 import '../../features/student_grades/presentation/views/grades_view.dart';
 import '../../features/student_tabulate/presentation/views/tabulate_view.dart';
 import 'app_routes.dart';
@@ -44,6 +45,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.tabulate,
         builder: (context, state) => const TabulateView(),
+      ),
+      GoRoute(
+        path: AppRoutes.resolution,
+        builder: (context, state) => const ResolutionView(),
       ),
     ],
   );

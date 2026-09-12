@@ -18,6 +18,9 @@ Dio siraDio(Ref ref) {
       baseUrl: SiraConstants.baseUrl,
       contentType: 'application/x-www-form-urlencoded',
       responseType: ResponseType.bytes,
+      connectTimeout: const Duration(seconds: 15),
+      sendTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 30),
     ),
   );
   dio.interceptors.add(CookieManager(cookieJar));
