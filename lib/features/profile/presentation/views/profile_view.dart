@@ -6,9 +6,11 @@ import 'package:univalle_app/core/widgets/app_scaffold.dart';
 
 import '../../../../core/constants/asset_paths.dart';
 import '../../../../core/router/app_routes.dart';
+import '../../../../core/session/current_photo_url_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/async_value_widget.dart';
+import '../../../../core/widgets/user_avatar.dart';
 import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 import '../../domain/entities/student.dart';
 import '../../profile_strings.dart';
@@ -28,6 +30,7 @@ class ProfileView extends ConsumerWidget {
     });
 
     final profileState = ref.watch(profileViewModelProvider);
+    final photoUrl = ref.watch(currentPhotoUrlProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
     return AppScaffold(
@@ -38,7 +41,7 @@ class ProfileView extends ConsumerWidget {
           onRetry: () => ref.invalidate(profileViewModelProvider),
           data: (student) => Column(
             children: [
-              _Avatar(student: student),
+              _Avatar(student: student, photoUrl: photoUrl),
               const SizedBox(height: AppSpacing.lg),
               _InfoTile(
                 iconAsset: AssetPaths.iconUser,
@@ -86,25 +89,25 @@ class ProfileView extends ConsumerWidget {
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar({required this.student});
+  const _Avatar({required this.student, this.photoUrl});
 
   final Student student;
+  final String? photoUrl;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final initial = student.firstName.isNotEmpty ? student.firstName[0] : '?';
     return Center(
-      child: CircleAvatar(
-        radius: 44,
+      child: UserAvatar(
+        radius: 56,
+        initials: initial,
+        photoUrl: photoUrl,
         backgroundColor: AppColors.univalleRed,
-        child: Text(
-          initial,
-          style: TextStyle(
-            color: colorScheme.onPrimary,
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-          ),
+        textStyle: TextStyle(
+          color: colorScheme.onPrimary,
+          fontSize: 40,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
