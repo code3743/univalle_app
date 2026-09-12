@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../auth_strings.dart';
 import '../viewmodels/reset_password_view_model.dart';
+import '../widgets/reset_password_success_dialog.dart';
 
 class ForgotPasswordView extends ConsumerStatefulWidget {
   const ForgotPasswordView({super.key});
@@ -50,7 +50,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => _ResetPasswordSuccessDialog(email: email),
+      builder: (_) => ResetPasswordSuccessDialog(email: email),
     );
     if (mounted) _goBackToLogin();
   }
@@ -69,9 +69,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
           final message = error is Failure
               ? error.userMessage
               : AppStrings.genericError;
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(message)));
+          context.showSnack(message);
         },
       );
     });
@@ -139,70 +137,6 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ResetPasswordSuccessDialog extends StatelessWidget {
-  const _ResetPasswordSuccessDialog({required this.email});
-
-  final String email;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Dialog(
-      backgroundColor: colorScheme.surface,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: AppColors.accentGreen.withValues(alpha: 0.12),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.check_circle,
-                color: AppColors.accentGreen,
-                size: 32,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              AuthStrings.resetPasswordSuccessTitle,
-              style: Theme.of(context).textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              AuthStrings.resetPasswordSuccessCopy,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              email,
-              style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text(AuthStrings.accept),
-              ),
-            ),
-          ],
         ),
       ),
     );

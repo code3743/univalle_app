@@ -9,6 +9,7 @@ import '../../../../core/router/app_routes.dart';
 import '../../../../core/session/current_photo_url_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/utils/name_formatter.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../../../core/widgets/user_avatar.dart';
 import '../../../auth/presentation/viewmodels/auth_view_model.dart';
@@ -97,11 +98,10 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final initial = student.firstName.isNotEmpty ? student.firstName[0] : '?';
     return Center(
       child: UserAvatar(
         radius: 56,
-        initials: initial,
+        initials: NameFormatter.initial(student.firstName),
         photoUrl: photoUrl,
         backgroundColor: AppColors.univalleRed,
         textStyle: TextStyle(

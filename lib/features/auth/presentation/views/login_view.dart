@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/app_scaffold.dart';
@@ -34,7 +35,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
     if (isLoading) return;
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
-    await ref.read(authViewModelProvider.notifier).login(
+    await ref
+        .read(authViewModelProvider.notifier)
+        .login(
           username: _usernameController.text.trim(),
           password: _passwordController.text,
         );
@@ -53,10 +56,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
           if (isLoggedIn) context.go(AppRoutes.home);
         },
         error: (error, _) {
-          final message = error is Failure ? error.userMessage : AppStrings.genericError;
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(message)));
+          final message = error is Failure
+              ? error.userMessage
+              : AppStrings.genericError;
+          context.showSnack(message);
         },
       );
     });
@@ -94,8 +97,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   hintText: AuthStrings.usernameHint,
                 ),
                 textInputAction: TextInputAction.next,
-                validator: (value) =>
-                    (value == null || value.trim().isEmpty) ? AuthStrings.usernameRequired : null,
+                validator: (value) => (value == null || value.trim().isEmpty)
+                    ? AuthStrings.usernameRequired
+                    : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -105,16 +109,23 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 decoration: InputDecoration(
                   labelText: AuthStrings.passwordLabel,
                   suffixIcon: IconButton(
-                    icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
                     onPressed: isLoading
                         ? null
-                        : () => setState(() => _obscurePassword = !_obscurePassword),
+                        : () => setState(
+                            () => _obscurePassword = !_obscurePassword,
+                          ),
                   ),
                 ),
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) => _submit(isLoading),
-                validator: (value) =>
-                    (value == null || value.isEmpty) ? AuthStrings.passwordRequired : null,
+                validator: (value) => (value == null || value.isEmpty)
+                    ? AuthStrings.passwordRequired
+                    : null,
               ),
               Align(
                 alignment: Alignment.centerRight,

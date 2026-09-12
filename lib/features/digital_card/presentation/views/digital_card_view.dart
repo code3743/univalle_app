@@ -10,7 +10,7 @@ import '../../../../core/widgets/async_value_widget.dart';
 import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 import '../../../profile/presentation/viewmodels/profile_view_model.dart';
 import '../../digital_card_strings.dart';
-import '../widgets/student_id_card.dart';
+import '../widgets/student_id_card/student_id_card.dart';
 
 class DigitalCardView extends ConsumerWidget {
   const DigitalCardView({super.key});
