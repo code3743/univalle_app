@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'auth_local_datasource.dart';
 import 'local_storage_service.dart';
 import 'shared_preferences_service.dart';
 
@@ -17,4 +18,9 @@ SharedPreferences sharedPreferences(Ref ref) {
 LocalStorageService localStorageService(Ref ref) {
   final preferences = ref.watch(sharedPreferencesProvider);
   return SharedPreferencesService(preferences);
+}
+
+@Riverpod(keepAlive: true)
+AuthLocalDataSource authLocalDataSource(Ref ref) {
+  return AuthLocalDataSource(ref.watch(localStorageServiceProvider));
 }

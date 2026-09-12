@@ -12,6 +12,10 @@ abstract final class AppColors {
   static const accentPurple = Color(0xFF7C3AED);
   static const accentPink = Color(0xFFDB2777);
 
+  // Pastel fill to pair with an `accent*` color for a tinted icon circle on
+  // an otherwise white card (see TeacherToRateTile).
+  static const pastelPink = Color(0xFFF3DDE5);
+
   // QR codes need fixed, near-max contrast to stay scannable, so these two
   // don't come from the theme's ColorScheme like everything else.
   static const qrBackground = Color(0xFFFFFFFF);

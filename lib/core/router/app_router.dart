@@ -9,6 +9,9 @@ import '../../features/profile/presentation/views/profile_view.dart';
 import '../../features/resolution/presentation/views/resolution_view.dart';
 import '../../features/student_grades/presentation/views/grades_view.dart';
 import '../../features/student_tabulate/presentation/views/tabulate_view.dart';
+import '../../features/teaching_rating/domain/entities/teacher_to_rate.dart';
+import '../../features/teaching_rating/presentation/views/teacher_review_view.dart';
+import '../../features/teaching_rating/presentation/views/teachers_to_rate_view.dart';
 import 'app_routes.dart';
 
 part 'app_router.g.dart';
@@ -49,6 +52,15 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.resolution,
         builder: (context, state) => const ResolutionView(),
+      ),
+      GoRoute(
+        path: AppRoutes.teacherRating,
+        builder: (context, state) => const TeachersToRateView(),
+      ),
+      GoRoute(
+        path: AppRoutes.teacherReview,
+        builder: (context, state) =>
+            TeacherReviewView(teacher: state.extra! as TeacherToRate),
       ),
     ],
   );

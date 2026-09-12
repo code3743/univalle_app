@@ -14,7 +14,7 @@ final class ServerFailure extends Failure {
   final int? statusCode;
 
   ServerFailure({required super.message, this.statusCode})
-      : super(userMessage: _userMessageFor(statusCode));
+    : super(userMessage: _userMessageFor(statusCode));
 
   static String _userMessageFor(int? statusCode) {
     if (statusCode == 401) return AppStrings.sessionExpired;
@@ -26,17 +26,26 @@ final class ServerFailure extends Failure {
 }
 
 final class NetworkFailure extends Failure {
-  NetworkFailure({required super.message}) : super(userMessage: AppStrings.networkError);
+  NetworkFailure({required super.message})
+    : super(userMessage: AppStrings.networkError);
 }
 
 final class CacheFailure extends Failure {
-  CacheFailure({required super.message}) : super(userMessage: AppStrings.cacheError);
+  CacheFailure({required super.message})
+    : super(userMessage: AppStrings.cacheError);
 }
 
 final class UnknownFailure extends Failure {
-  UnknownFailure({required super.message}) : super(userMessage: AppStrings.genericError);
+  UnknownFailure({required super.message})
+    : super(userMessage: AppStrings.genericError);
 }
 
 final class AuthFailure extends Failure {
   AuthFailure({required super.message}) : super(userMessage: message);
+}
+
+final class BusinessFailure extends Failure {
+  final bool retryable;
+  BusinessFailure({required super.message, this.retryable = true})
+    : super(userMessage: message);
 }
