@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../schedule_strings.dart';
 
-/// Friendly placeholder shown when there's nothing to display, instead of a
-/// bare empty list — e.g. the selected day has no classes.
 class ScheduleEmptyDay extends StatelessWidget {
   const ScheduleEmptyDay({
     super.key,
