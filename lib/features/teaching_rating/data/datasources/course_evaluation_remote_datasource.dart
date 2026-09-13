@@ -256,7 +256,7 @@ class CourseEvaluationRemoteDataSource {
       final rating = answers[question.id];
       if (rating == null) {
         throw BusinessException(
-          message: 'No se ha calificado la pregunta ${i + 1}.',
+          message: TeachingRatingStrings.unansweredQuestion(i + 1),
         );
       }
       data['res_codigo$i'] = '';
@@ -280,7 +280,7 @@ class CourseEvaluationRemoteDataSource {
       ),
     );
     if (response.statusCode != 200) {
-      throw const ServerException(message: 'No se pudo enviar la evaluación.');
+      throw const ServerException(message: TeachingRatingStrings.submitFailed);
     }
   }
 

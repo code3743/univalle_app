@@ -13,6 +13,11 @@ abstract final class ResolutionStrings {
       'Sin prerrequisitos: puedes cursarla en su semestre sin depender de otra.';
   static const noUnlocks = 'Ninguna asignatura depende de esta.';
 
+  static const subjectAreaElective = 'Electiva';
+  static const subjectAreaProfessional = 'Formación profesional';
+  static const subjectAreaBasic = 'Formación básica';
+  static const subjectAreaOther = 'Otra';
+
   static String semesterTitle(int semester) =>
       'Semestre ${semester.toString().padLeft(2, '0')}';
 

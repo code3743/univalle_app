@@ -10,15 +10,13 @@ import '../../../../core/session/current_photo_url_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/utils/name_formatter.dart';
-import '../../../../core/utils/sira_period_formatter.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../../../core/widgets/shortcut_card.dart';
 import '../../../../core/widgets/stat_card.dart';
 import '../../../auth/presentation/viewmodels/auth_view_model.dart';
-import '../../../student_grades/domain/entities/grades.dart';
-import '../../../student_grades/presentation/viewmodels/grades_view_model.dart';
 import '../../../profile/presentation/viewmodels/profile_view_model.dart';
 import '../../home_strings.dart';
+import '../providers/latest_semester_provider.dart';
 import '../widgets/home_top_bar.dart';
 import '../widgets/program_card.dart';
 import '../widgets/quick_access_items.dart';
@@ -26,16 +24,6 @@ import '../widgets/quick_access_items.dart';
 /// Number of quick-access shortcuts shown on Home; the rest are only
 /// reachable from the "Ver todos" screen.
 const _homeQuickAccessCount = 6;
-
-/// Latest (highest year-semester) period among the fetched grades, e.g.
-/// "2026-1". Falls back to null while grades are loading, on error, or when
-/// there's no academic history yet.
-String? _latestSemester(List<Grades>? periods) {
-  if (periods == null || periods.isEmpty) return null;
-  return periods
-      .map((period) => SiraPeriodFormatter.shortCode(period.period))
-      .reduce((a, b) => a.compareTo(b) >= 0 ? a : b);
-}
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
@@ -51,7 +39,7 @@ class HomeView extends ConsumerWidget {
     });
 
     final profileState = ref.watch(profileViewModelProvider);
-    final gradesState = ref.watch(gradesViewModelProvider);
+    final latestSemester = ref.watch(latestSemesterProvider);
     final photoUrl = ref.watch(currentPhotoUrlProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -93,8 +81,7 @@ class HomeView extends ConsumerWidget {
             ProgramCard(
               student: student,
               currentSemester:
-                  _latestSemester(gradesState.value) ??
-                  HomeStrings.currentSemesterUnknown,
+                  latestSemester ?? HomeStrings.currentSemesterUnknown,
               onTap: goToProfile,
             ),
             const SizedBox(height: AppSpacing.md),

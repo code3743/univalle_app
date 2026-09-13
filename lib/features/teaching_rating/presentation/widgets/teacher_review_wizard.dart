@@ -6,9 +6,9 @@ import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/entities/rating_option.dart';
 import '../../domain/entities/teacher_review.dart';
 import '../../teaching_rating_strings.dart';
+import '../viewmodels/review_answers_view_model.dart';
 import '../viewmodels/submit_teacher_review_view_model.dart';
 import '../viewmodels/teachers_to_rate_view_model.dart';
 import 'review_feedback_page.dart';
@@ -28,7 +28,6 @@ class TeacherReviewWizard extends ConsumerStatefulWidget {
 class _TeacherReviewWizardState extends ConsumerState<TeacherReviewWizard> {
   final _pageController = PageController();
   final _feedbackController = TextEditingController();
-  final _answers = <String, RatingOption>{};
   int _currentPage = 0;
 
   @override
@@ -60,7 +59,7 @@ class _TeacherReviewWizardState extends ConsumerState<TeacherReviewWizard> {
         .read(submitTeacherReviewViewModelProvider.notifier)
         .submit(
           review: widget.review,
-          answers: _answers,
+          answers: ref.read(reviewAnswersViewModelProvider),
           feedback: _feedbackController.text.trim(),
         );
   }
@@ -91,6 +90,7 @@ class _TeacherReviewWizardState extends ConsumerState<TeacherReviewWizard> {
     final isSubmitting = ref
         .watch(submitTeacherReviewViewModelProvider)
         .isLoading;
+    final answers = ref.watch(reviewAnswersViewModelProvider);
     final questions = widget.review.questions;
 
     return Column(
@@ -129,9 +129,11 @@ class _TeacherReviewWizardState extends ConsumerState<TeacherReviewWizard> {
               final question = questions[index];
               return ReviewQuestionPage(
                 question: question,
-                selected: _answers[question.id],
+                selected: answers[question.id],
                 onSelected: (rating) {
-                  setState(() => _answers[question.id] = rating);
+                  ref
+                      .read(reviewAnswersViewModelProvider.notifier)
+                      .answer(question.id, rating);
                   _advanceAfterAnswering();
                 },
                 onPrevious: index == 0 ? null : _goToPreviousQuestion,

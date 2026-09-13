@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/schedule_class.dart';
 
 class ScheduleClassTile extends StatelessWidget {
@@ -17,7 +18,7 @@ class ScheduleClassTile extends StatelessWidget {
     final place = _placeText();
 
     return Material(
-      color: Colors.white,
+      color: AppColors.white,
       shadowColor: accent,
       borderRadius: BorderRadius.circular(20),
       elevation: .1,

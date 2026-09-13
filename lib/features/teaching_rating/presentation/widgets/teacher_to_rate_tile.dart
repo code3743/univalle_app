@@ -18,7 +18,7 @@ class TeacherToRateTile extends StatelessWidget {
     const accent = AppColors.accentPink;
 
     return Material(
-      color: Colors.white,
+      color: AppColors.white,
       shadowColor: accent,
       borderRadius: BorderRadius.circular(20),
       elevation: .1,

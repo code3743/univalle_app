@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/constants/asset_paths.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/curriculum.dart';
 import '../../domain/entities/curriculum_subject.dart';
 import '../../resolution_strings.dart';
@@ -27,7 +28,7 @@ class SubjectCard extends StatelessWidget {
     final prerequisiteCount = subject.prerequisiteCodes.length;
 
     return Material(
-      color: Colors.white,
+      color: AppColors.white,
       borderOnForeground: true,
       shadowColor: areaStyle.color,
       borderRadius: BorderRadius.circular(20),

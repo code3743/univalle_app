@@ -20,7 +20,11 @@ abstract final class TeachingRatingStrings {
       '¿Qué tan satisfecho estás con la materia que estás evaluando?';
 
   static const submitSuccess = 'Calificación enviada correctamente.';
+  static const submitFailed = 'No se pudo enviar la evaluación.';
 
   static String questionCounter(int current, int total) =>
       'Pregunta $current de $total';
+
+  static String unansweredQuestion(int questionNumber) =>
+      'No se ha calificado la pregunta $questionNumber.';
 }

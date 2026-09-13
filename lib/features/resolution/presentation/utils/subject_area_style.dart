@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../resolution_strings.dart';
 
 /// Maps SIRA's raw, free-text subject-type column to a small curated set of
 /// curriculum areas so the UI can color-code by area without depending on
@@ -21,7 +22,7 @@ class SubjectAreaStyle {
       return const SubjectAreaStyle._(
         SubjectArea.elective,
         AppColors.accentPurple,
-        'Electiva',
+        ResolutionStrings.subjectAreaElective,
       );
     }
     if (normalized.contains('profesional') ||
@@ -29,7 +30,7 @@ class SubjectAreaStyle {
       return const SubjectAreaStyle._(
         SubjectArea.professional,
         AppColors.accentBlue,
-        'Formación profesional',
+        ResolutionStrings.subjectAreaProfessional,
       );
     }
     if (normalized.contains('básica') ||
@@ -38,13 +39,15 @@ class SubjectAreaStyle {
       return const SubjectAreaStyle._(
         SubjectArea.basic,
         AppColors.accentGreen,
-        'Formación básica',
+        ResolutionStrings.subjectAreaBasic,
       );
     }
     return SubjectAreaStyle._(
       SubjectArea.other,
       AppColors.accentPink,
-      rawSubjectType.isEmpty ? 'Otra' : rawSubjectType,
+      rawSubjectType.isEmpty
+          ? ResolutionStrings.subjectAreaOther
+          : rawSubjectType,
     );
   }
 }
