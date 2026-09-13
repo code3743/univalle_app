@@ -71,7 +71,7 @@ List<QuickAccessItem> quickAccessItems(BuildContext context) {
       iconAsset: AssetPaths.iconUtensils,
       label: HomeStrings.restaurantShortcut,
       accent: AppColors.univalleRed,
-      onTap: showComingSoon,
+      onTap: () => context.push(AppRoutes.restaurant),
     ),
   ];
 }
