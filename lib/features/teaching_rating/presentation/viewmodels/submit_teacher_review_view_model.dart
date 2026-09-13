@@ -1,0 +1,28 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../domain/entities/rating_option.dart';
+import '../../domain/entities/teacher_review.dart';
+import '../providers/teaching_rating_providers.dart';
+
+part 'submit_teacher_review_view_model.g.dart';
+
+@riverpod
+class SubmitTeacherReviewViewModel extends _$SubmitTeacherReviewViewModel {
+  @override
+  Future<bool?> build() async => null;
+
+  Future<void> submit({
+    required TeacherReview review,
+    required Map<String, RatingOption> answers,
+    required String feedback,
+  }) async {
+    state = const AsyncLoading();
+    final result = await ref
+        .read(submitTeacherReviewUseCaseProvider)
+        .call(review: review, answers: answers, feedback: feedback);
+    state = result.fold(
+      onError: (failure) => AsyncError(failure, StackTrace.current),
+      onSuccess: (_) => const AsyncData(true),
+    );
+  }
+}

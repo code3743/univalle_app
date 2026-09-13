@@ -3,7 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/network/sira_dio_provider.dart';
 import '../../../../core/network/uplanner_dio_provider.dart';
 import '../../../../core/storage/local_storage_providers.dart';
-import '../../data/datasources/auth_local_datasource.dart';
 import '../../data/datasources/sira_auth_remote_datasource.dart';
 import '../../data/datasources/uplanner_remote_datasource.dart';
 import '../../data/repositories/auth_repository_impl.dart';
@@ -23,11 +22,6 @@ SiraAuthRemoteDataSource siraAuthRemoteDataSource(Ref ref) {
 @Riverpod(keepAlive: true)
 UplannerRemoteDataSource uplannerRemoteDataSource(Ref ref) {
   return UplannerRemoteDataSource(ref.watch(uplannerDioProvider));
-}
-
-@Riverpod(keepAlive: true)
-AuthLocalDataSource authLocalDataSource(Ref ref) {
-  return AuthLocalDataSource(ref.watch(localStorageServiceProvider));
 }
 
 @Riverpod(keepAlive: true)
