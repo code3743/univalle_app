@@ -10,4 +10,5 @@ abstract final class AppRoutes {
   static const teacherRating = '/teacher-rating';
   static const teacherReview = '/teacher-rating/review';
   static const schedule = '/schedule';
+  static const allFunctionalities = '/functionalities';
 }

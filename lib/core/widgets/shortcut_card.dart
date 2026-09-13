@@ -35,7 +35,10 @@ class ShortcutCard extends StatelessWidget {
                   Container(
                     width: 36,
                     height: 36,
-                    decoration: BoxDecoration(color: colorScheme.surface, shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      shape: BoxShape.circle,
+                    ),
                     child: Center(
                       child: SvgPicture.asset(
                         iconAsset,
@@ -45,17 +48,21 @@ class ShortcutCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Icon(Icons.chevron_right, size: 20, color: colorScheme.onSurfaceVariant),
+                  Icon(
+                    Icons.chevron_right,
+                    size: 20,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ],
               ),
               const SizedBox(height: 10),
               Text(
                 label,
                 maxLines: 2,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: colorScheme.onSurface, fontWeight: FontWeight.w600),
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: colorScheme.onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
