@@ -7,6 +7,7 @@ import '../../features/digital_card/presentation/views/digital_card_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/profile/presentation/views/profile_view.dart';
 import '../../features/resolution/presentation/views/resolution_view.dart';
+import '../../features/schedule/presentation/views/schedule_view.dart';
 import '../../features/student_grades/presentation/views/grades_view.dart';
 import '../../features/student_tabulate/presentation/views/tabulate_view.dart';
 import '../../features/teaching_rating/domain/entities/teacher_to_rate.dart';
@@ -61,6 +62,10 @@ GoRouter appRouter(Ref ref) {
         path: AppRoutes.teacherReview,
         builder: (context, state) =>
             TeacherReviewView(teacher: state.extra! as TeacherToRate),
+      ),
+      GoRoute(
+        path: AppRoutes.schedule,
+        builder: (context, state) => const ScheduleView(),
       ),
     ],
   );
