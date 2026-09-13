@@ -7,6 +7,7 @@ class SubjectModel {
   final int credits;
   final String grade;
   final bool isCanceled;
+  final String campusId;
 
   const SubjectModel({
     required this.code,
@@ -15,14 +16,16 @@ class SubjectModel {
     required this.credits,
     required this.grade,
     required this.isCanceled,
+    required this.campusId,
   });
 
   Subject toEntity() => Subject(
-        code: code,
-        group: group,
-        name: name,
-        credits: credits,
-        grade: grade,
-        isCanceled: isCanceled,
-      );
+    code: code,
+    group: group,
+    name: name,
+    credits: credits,
+    grade: grade,
+    isCanceled: isCanceled,
+    campusId: campusId,
+  );
 }

@@ -82,6 +82,7 @@ class SiraGradesRemoteDataSource {
     return SubjectModel(
       code: cells[0].text.trim(),
       group: cells[1].text.trim(),
+      campusId: cells[2].text.trim(),
       name: name,
       credits: int.tryParse(cells[7].text.trim()) ?? 0,
       grade: habilitacionGrade.isNotEmpty ? habilitacionGrade : finalGrade,
