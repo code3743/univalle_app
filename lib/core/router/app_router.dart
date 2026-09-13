@@ -8,6 +8,8 @@ import '../../features/home/presentation/views/all_shortcuts_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/profile/presentation/views/profile_view.dart';
 import '../../features/resolution/presentation/views/resolution_view.dart';
+import '../../features/restaurant/presentation/views/pending_payment_view.dart';
+import '../../features/restaurant/presentation/views/restaurant_view.dart';
 import '../../features/schedule/presentation/views/schedule_view.dart';
 import '../../features/student_grades/presentation/views/grades_view.dart';
 import '../../features/student_tabulate/presentation/views/tabulate_view.dart';
@@ -67,6 +69,14 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.schedule,
         builder: (context, state) => const ScheduleView(),
+      ),
+      GoRoute(
+        path: AppRoutes.restaurant,
+        builder: (context, state) => const RestaurantView(),
+      ),
+      GoRoute(
+        path: AppRoutes.pendingPayment,
+        builder: (context, state) => const PendingPaymentView(),
       ),
       GoRoute(
         path: AppRoutes.allFunctionalities,
