@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/asset_paths.dart';
-import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../home_strings.dart';
@@ -22,8 +21,6 @@ class QuickAccessItem {
 }
 
 List<QuickAccessItem> quickAccessItems(BuildContext context) {
-  void showComingSoon() => context.showSnack(HomeStrings.comingSoon);
-
   return [
     QuickAccessItem(
       iconAsset: AssetPaths.iconNotebook,
@@ -65,7 +62,7 @@ List<QuickAccessItem> quickAccessItems(BuildContext context) {
       iconAsset: AssetPaths.iconLibrary,
       label: HomeStrings.libraryShortcut,
       accent: AppColors.accentPink,
-      onTap: showComingSoon,
+      onTap: () => context.push(AppRoutes.library),
     ),
     QuickAccessItem(
       iconAsset: AssetPaths.iconUtensils,
