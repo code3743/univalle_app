@@ -1,0 +1,47 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run tests with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.3
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code (riverpod codegen)
+        run: dart run build_runner build
+
+      - name: Run tests with coverage
+        run: flutter test --coverage
+
+      - name: Filter out generated files from coverage
+        run: |
+          sudo apt-get update -y && sudo apt-get install -y lcov
+          lcov --remove coverage/lcov.info \
+            '**/*.g.dart' \
+            '**/*.freezed.dart' \
+            -o coverage/lcov.info
+
+      - name: Report coverage summary
+        run: |
+          lcov --summary coverage/lcov.info | tee coverage_summary.txt
+          {
+            echo "### Coverage summary"
+            echo '```'
+            cat coverage_summary.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
