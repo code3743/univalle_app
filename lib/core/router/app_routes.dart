@@ -11,6 +11,7 @@ abstract final class AppRoutes {
   static const teacherReview = '/teacher-rating/review';
   static const schedule = '/schedule';
   static const restaurant = '/restaurant';
+  static const library = '/library';
   static const pendingPayment = '/restaurant/pending-payment';
   static const allFunctionalities = '/functionalities';
 }

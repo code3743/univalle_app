@@ -6,6 +6,7 @@ import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/digital_card/presentation/views/digital_card_view.dart';
 import '../../features/home/presentation/views/all_shortcuts_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
+import '../../features/library/presentation/views/library_view.dart';
 import '../../features/profile/presentation/views/profile_view.dart';
 import '../../features/resolution/presentation/views/resolution_view.dart';
 import '../../features/restaurant/presentation/views/pending_payment_view.dart';
@@ -77,6 +78,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.pendingPayment,
         builder: (context, state) => const PendingPaymentView(),
+      ),
+      GoRoute(
+        path: AppRoutes.library,
+        builder: (context, state) => const LibraryView(),
       ),
       GoRoute(
         path: AppRoutes.allFunctionalities,
