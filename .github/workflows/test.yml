@@ -10,6 +10,11 @@ jobs:
   test:
     name: Run tests with coverage
     runs-on: ubuntu-latest
+    env:
+      # Ratcheted up phase by phase as the testing plan progresses (target: 80%).
+      # test/coverage_helper_test.dart imports the whole app so every lib/ file
+      # is measured, not just the ones touched by tests.
+      COVERAGE_MIN: 10
     steps:
       - uses: actions/checkout@v5
 
@@ -45,3 +50,9 @@ jobs:
             cat coverage_summary.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Enforce minimum coverage
+        run: |
+          pct=$(grep -oP 'lines\.+: \K[0-9]+(\.[0-9]+)?' coverage_summary.txt)
+          echo "Line coverage: ${pct}% (minimum: ${COVERAGE_MIN}%)"
+          awk -v pct="$pct" -v min="$COVERAGE_MIN" 'BEGIN { exit !(pct >= min) }'
