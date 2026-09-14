@@ -32,6 +32,7 @@ dev_dependencies:
   riverpod_generator: ^4.0.9
   build_runner: ^2.16.1
   flutter_native_splash: ^2.4.8
+  mocktail: ^1.0.4
 
 flutter:
   uses-material-design: true
