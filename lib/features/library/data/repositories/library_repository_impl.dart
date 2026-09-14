@@ -24,7 +24,6 @@ class LibraryRepositoryImpl implements LibraryRepository {
       );
       return Ok(account.toEntity());
     } on AppException catch (e) {
-      print('LibraryRepositoryImpl.getAccount: $e');
       return Err(mapExceptionToFailure(e));
     }
   }
