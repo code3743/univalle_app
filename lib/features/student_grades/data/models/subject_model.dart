@@ -1,69 +1,31 @@
-import 'package:univalle_app/features/student_grades/domain/entities/subject.dart';
+import '../../domain/entities/subject.dart';
 
 class SubjectModel {
-  final String name;
   final String code;
   final String group;
-  final bool isCanceled;
-  final double grade;
-  final bool isEnabled;
+  final String name;
   final int credits;
+  final String grade;
+  final bool isCanceled;
+  final String campusId;
 
-  SubjectModel({
-    required this.name,
+  const SubjectModel({
     required this.code,
     required this.group,
-    required this.isCanceled,
-    required this.grade,
-    required this.isEnabled,
+    required this.name,
     required this.credits,
+    required this.grade,
+    required this.isCanceled,
+    required this.campusId,
   });
 
-  factory SubjectModel.fromJson(Map<String, dynamic> json) {
-    return SubjectModel(
-      name: json['name'],
-      code: json['code'],
-      group: json['group'],
-      isCanceled: json['isCanceled'],
-      grade: json['grade'],
-      isEnabled: json['isEnabled'],
-      credits: json['credits'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'code': code,
-      'group': group,
-      'isCanceled': isCanceled,
-      'grade': grade,
-      'isEnabled': isEnabled,
-      'credits': credits,
-    };
-  }
-
-  Subject toEntity() {
-    return Subject(
-      name: name,
-      code: code,
-      group: group,
-      isCanceled: isCanceled,
-      grade: grade,
-      isEnabled: isEnabled,
-      credits: credits,
-    );
-  }
-
-  factory SubjectModel.fromEntity(Subject entity) {
-    return SubjectModel(
-      name: entity.name,
-      code: entity.code,
-      group: entity.group,
-      isCanceled: entity.isCanceled,
-      grade: entity.grade,
-      isEnabled: entity.isEnabled,
-      credits: entity.credits,
-    );
-  }
+  Subject toEntity() => Subject(
+    code: code,
+    group: group,
+    name: name,
+    credits: credits,
+    grade: grade,
+    isCanceled: isCanceled,
+    campusId: campusId,
+  );
 }

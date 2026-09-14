@@ -1,19 +1,19 @@
-import 'package:univalle_app/features/student_grades/domain/entities/subject.dart';
+import 'subject.dart';
 
 class Grades {
   final String period;
   final double average;
   final int credits;
-  final String porcentageApproved;
-  final bool isWorthy;
+  final String approvedPercentage;
+  final bool hasAcademicMerit;
   final List<Subject> subjects;
 
-  Grades({
+  const Grades({
     required this.period,
     required this.average,
     required this.credits,
-    required this.porcentageApproved,
-    required this.isWorthy,
+    required this.approvedPercentage,
+    required this.hasAcademicMerit,
     required this.subjects,
   });
 }

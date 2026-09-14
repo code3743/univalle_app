@@ -1,9 +1,18 @@
-import 'package:univalle_app/features/teaching_rating/domain/entities/review_subject.dart';
-import 'package:univalle_app/features/teaching_rating/domain/entities/teaching_rating.dart';
+import '../../../../core/error/result.dart';
+import '../entities/rating_option.dart';
+import '../entities/teacher_review.dart';
+import '../entities/teacher_to_rate.dart';
 
-abstract class TeachingRatingRepository {
-  Future<List<TeachingRating>> getTeachingToRatings(
-      String user, String password);
-  Future<ReviewSubject> getReviewSubject(TeachingRating teacher);
-  Future<void> sendTeachingRating(ReviewSubject review);
+abstract interface class TeachingRatingRepository {
+  Future<Result<List<TeacherToRate>>> getTeachersToRate();
+
+  Future<Result<TeacherReview>> getTeacherReview({
+    required TeacherToRate teacher,
+  });
+
+  Future<Result<void>> submitTeacherReview({
+    required TeacherReview review,
+    required Map<String, RatingOption> answers,
+    String? feedback,
+  });
 }

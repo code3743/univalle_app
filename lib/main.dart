@@ -1,33 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:univalle_app/config/themes/app_theme.dart';
-import 'package:univalle_app/config/routers/app_router.dart';
-import 'package:univalle_app/config/providers/shared_preferences_provider.dart';
+
+import 'core/router/app_router.dart';
+import 'core/storage/local_storage_providers.dart';
+import 'core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  return runApp(
+  await initializeDateFormatting('es');
+  final sharedPreferences = await SharedPreferences.getInstance();
+
+  runApp(
     ProviderScope(
       overrides: [
-        sharedPreferencesProvider.overrideWithValue(prefs),
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
-      child: const MyApp(),
+      // Riverpod 3 retries a failed provider automatically (up to 10x with
+      // exponential backoff) by default.
+      retry: (retryCount, error) => null,
+      child: const MainApp(),
     ),
   );
 }
 
-class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+class MainApp extends ConsumerWidget {
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouterProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Univalle App',
-      routerConfig: ref.watch(appRouterProvider),
-      theme: ref.watch(appThemeProvider),
+      routerConfig: router,
+      theme: AppTheme.light,
+      themeMode: ThemeMode.light,
     );
   }
 }

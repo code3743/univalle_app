@@ -1,21 +1,19 @@
 class Subject {
-  final String name;
   final String code;
   final String group;
-  final bool isCanceled;
-  final double grade;
-  final bool isEnabled;
+  final String name;
   final int credits;
-  late bool isApproved;
-  Subject({
-    required this.name,
+  final String grade;
+  final bool isCanceled;
+  final String campusId;
+
+  const Subject({
     required this.code,
     required this.group,
-    required this.isCanceled,
-    required this.grade,
-    required this.isEnabled,
+    required this.name,
     required this.credits,
-  }) {
-    isApproved = grade >= 3;
-  }
+    required this.grade,
+    required this.isCanceled,
+    required this.campusId,
+  });
 }

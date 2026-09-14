@@ -1,6 +1,6 @@
-import 'package:univalle_app/features/student_tabulate/domain/entities/tabulate.dart';
+import '../../../../core/error/result.dart';
+import '../entities/tabulate.dart';
 
-abstract class TabulateRepository {
-  Future<Tabulate> getTabulate(
-      String studentId, String programId, String token);
+abstract interface class TabulateRepository {
+  Future<Result<Tabulate>> getTabulate({required String username});
 }

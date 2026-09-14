@@ -1,9 +1,12 @@
-import 'package:univalle_app/core/domain/entities/student.dart';
+import '../../../../core/error/result.dart';
+import '../entities/auth_session.dart';
 
-abstract class AuthRepository {
-  Future<void> login(String user, String password);
-  Future<void> logout();
-  Future<Student> getStudent();
-  Future<bool> isLogged();
-  Future<void> resetPassword(String user);
+abstract interface class AuthRepository {
+  Future<Result<AuthSession>> login({
+    required String username,
+    required String password,
+  });
+  Future<Result<void>> logout();
+  Future<Result<AuthSession?>> restoreSession();
+  Future<Result<String>> resetPassword({required String username});
 }

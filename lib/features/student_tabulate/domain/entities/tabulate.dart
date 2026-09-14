@@ -1,5 +1,6 @@
 class Tabulate {
-  final String content;
+  final String html;
+  final Uri baseUrl;
 
-  Tabulate({required this.content});
+  const Tabulate({required this.html, required this.baseUrl});
 }

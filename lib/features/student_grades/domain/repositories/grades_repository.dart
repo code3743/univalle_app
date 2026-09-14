@@ -1,5 +1,6 @@
-import 'package:univalle_app/features/student_grades/domain/entities/grades.dart';
+import '../../../../core/error/result.dart';
+import '../entities/grades.dart';
 
-abstract class GradesRepository {
-  Future<List<Grades>> getGrades(String token, String studentId);
+abstract interface class GradesRepository {
+  Future<Result<List<Grades>>> getGrades({required String username});
 }
