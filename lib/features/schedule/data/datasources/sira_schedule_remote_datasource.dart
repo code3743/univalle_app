@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
-import 'package:html/parser.dart' show parse;
+import 'package:html/parser.dart' show parse, parseFragment;
 
 import '../../../../core/constants/schedule_constants.dart';
 import '../../../../core/error/exceptions.dart';
@@ -17,10 +17,12 @@ class SiraScheduleRemoteDataSource {
   const SiraScheduleRemoteDataSource(this._dio);
 
   // Matches a session's day/time/building line when a room is assigned,
-  // e.g. "JUE: 14:00-17:00 , Edf. B13". Hours may be one or two digits
-  // ("8:00" as well as "14:00").
+  // e.g. "JUE: 14:00-17:00 , Edf. B13 (B13) -> SALA 1 -- MG -- MELENDEZ".
+  // Hours may be one or two digits ("8:00" as well as "14:00"). The
+  // location detail after the building code is optional and, when
+  // present, captured whole in group 5 for `_locationLine` to parse.
   static final _sessionWithBuilding = RegExp(
-    r'^(LUN|MAR|MI[EÉ]|JUE|VIE|SAB|DOM):\s*(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s*,\s*Edf\.\s*(.+)$',
+    r'^(LUN|MAR|MI[EÉ]|JUE|VIE|SAB|DOM):\s*(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s*,\s*Edf\.\s*(\S+)\s*(\(.*)?$',
     caseSensitive: false,
   );
 
@@ -32,8 +34,9 @@ class SiraScheduleRemoteDataSource {
     caseSensitive: false,
   );
 
-  // Matches the location line that follows a `_sessionWithBuilding` line,
-  // e.g. "(B13) -> SALA 1 -- MG -- MELENDEZ".
+  // Matches the location detail, e.g. "(B13) -> SALA 1 -- MG -- MELENDEZ" —
+  // usually on the same line as `_sessionWithBuilding` right after the
+  // building code, occasionally (defensively handled) on the next line.
   static final _locationLine = RegExp(
     r'^\([^)]*\)\s*->\s*(.+?)\s*--\s*(.+?)\s*--\s*(.+)$',
   );
@@ -76,11 +79,11 @@ class SiraScheduleRemoteDataSource {
     if (cells.length != 9) return const [];
     if (cells[2].text.trim() != subject.group) return const [];
 
-    final scheduleText = cells[4].text.trim();
-    if (scheduleText.isEmpty) return const [];
+    final scheduleLines = _splitByBreaks(cells[4]);
+    if (scheduleLines.isEmpty) return const [];
 
     final teacher = _parseTeacher(cells[5].text.trim());
-    return _parseSessions(scheduleText)
+    return _parseSessions(scheduleLines)
         .map(
           (session) => ScheduleClassModel(
             subjectCode: subject.code,
@@ -99,18 +102,22 @@ class SiraScheduleRemoteDataSource {
         .toList();
   }
 
-  // The schedule cell packs one or more sessions. When a room is assigned
-  // it's an alternating pair of lines: "JUE: 14:00-17:00 , Edf. B13" then
-  // "(B13) -> SALA 1 -- MG -- MELENDEZ" (the middle "--" segment is an
-  // internal room-type code that isn't meaningful to show the student).
-  // When it isn't, it's a single line: "JUE: 8:00-12:00 ,SIN ESPACIO -- MG".
-  List<_ParsedSession> _parseSessions(String rawText) {
-    final lines = rawText
-        .split('\n')
-        .map((line) => line.trim())
-        .where((line) => line.isNotEmpty)
-        .toList();
+  // The schedule cell packs one or more sessions separated by <br> tags
+  // rather than actual newlines in the source HTML, so lines must be split
+  // on the markup itself — splitting the extracted text on '\n' leaves
+  // every session glued into one string with no separator to find.
+  List<String> _splitByBreaks(Element cell) => cell.innerHtml
+      .split(RegExp(r'<br\s*/?>', caseSensitive: false))
+      .map((fragment) => parseFragment(fragment).text?.trim() ?? '')
+      .where((line) => line.isNotEmpty)
+      .toList();
 
+  // The schedule cell packs one or more sessions, each its own <br>-
+  // separated line: "JUE: 14:00-17:00 , Edf. B13 (B13) -> SALA 1 -- MG --
+  // MELENDEZ" (the middle "--" segment is an internal room-type code that
+  // isn't meaningful to show the student). When no room is assigned yet,
+  // it's just "JUE: 8:00-12:00 ,SIN ESPACIO -- MG" with no location detail.
+  List<_ParsedSession> _parseSessions(List<String> lines) {
     final sessions = <_ParsedSession>[];
     var i = 0;
     while (i < lines.length) {
@@ -118,7 +125,14 @@ class SiraScheduleRemoteDataSource {
       if (withBuilding != null) {
         var room = '';
         var campus = '';
-        if (i + 1 < lines.length) {
+        final sameLineLocation = withBuilding.group(5);
+        if (sameLineLocation != null) {
+          final locationMatch = _locationLine.firstMatch(sameLineLocation);
+          if (locationMatch != null) {
+            room = locationMatch.group(1)!.trim();
+            campus = locationMatch.group(3)!.trim();
+          }
+        } else if (i + 1 < lines.length) {
           final locationMatch = _locationLine.firstMatch(lines[i + 1]);
           if (locationMatch != null) {
             room = locationMatch.group(1)!.trim();

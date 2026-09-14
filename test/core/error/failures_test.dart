@@ -77,4 +77,11 @@ void main() {
     final failure = BusinessFailure(message: 'x', retryable: false);
     expect(failure.retryable, isFalse);
   });
+
+  test('toString includes the internal message', () {
+    expect(
+      NetworkFailure(message: 'boom').toString(),
+      'Failure(message: boom)',
+    );
+  });
 }
