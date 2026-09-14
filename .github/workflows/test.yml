@@ -14,7 +14,7 @@ jobs:
       # Ratcheted up phase by phase as the testing plan progresses (target: 80%).
       # test/coverage_helper_test.dart imports the whole app so every lib/ file
       # is measured, not just the ones touched by tests.
-      COVERAGE_MIN: 10
+      COVERAGE_MIN: 14
     steps:
       - uses: actions/checkout@v5
 
@@ -38,12 +38,12 @@ jobs:
           sudo apt-get update -y && sudo apt-get install -y lcov
           lcov --remove coverage/lcov.info \
             '**/*.g.dart' \
-            '**/*.freezed.dart' \
-            -o coverage/lcov.info
+            -o coverage/lcov.info \
+            --ignore-errors unused,empty
 
       - name: Report coverage summary
         run: |
-          lcov --summary coverage/lcov.info | tee coverage_summary.txt
+          lcov --summary coverage/lcov.info --ignore-errors empty | tee coverage_summary.txt
           {
             echo "### Coverage summary"
             echo '```'
