@@ -12,8 +12,6 @@ import '../../student_grades_strings.dart';
 /// per period, not the official SIRA cumulative average shown on Home.
 class GradesSummary extends StatelessWidget {
   const GradesSummary({super.key, required this.periods});
-
-  /// Must be non-empty.
   final List<Grades> periods;
 
   @override
@@ -38,7 +36,7 @@ class GradesSummary extends StatelessWidget {
             iconAsset: AssetPaths.iconStar,
             label: StudentGradesStrings.bestPeriodLabel,
             value:
-                '${SiraPeriodFormatter.shortCode(bestPeriod.period)} · '
+                '${SiraPeriodFormatter.shortCode(bestPeriod.period).substring(2)} · '
                 '${bestPeriod.average.toStringAsFixed(1)}',
             accent: AppColors.accentAmber,
           ),

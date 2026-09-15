@@ -32,7 +32,8 @@ class ProgramCard extends StatelessWidget {
         onTap: onTap,
         child: Container(
           width: double.infinity,
-          height: _cardHeight,
+
+          constraints: const BoxConstraints(minHeight: _cardHeight),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -43,8 +44,8 @@ class ProgramCard extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
-                top: 12,
-                bottom: 0,
+                top: 10,
+                bottom: -10,
                 right: 0,
                 width: _imageWidth,
                 child: Opacity(
@@ -68,21 +69,26 @@ class ProgramCard extends StatelessWidget {
                   children: [
                     Text(
                       student.programName,
-                      maxLines: 2,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: colorScheme.onPrimary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      student.campus,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onPrimary.withValues(alpha: 0.85),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSpacing.sm,
+                      ),
+                      child: Text(
+                        student.campus,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onPrimary.withValues(alpha: 0.85),
+                        ),
                       ),
                     ),
-                    Spacer(),
+                    //Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
