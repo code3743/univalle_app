@@ -20,6 +20,7 @@ dependencies:
   google_fonts: ^8.2.1
   html: ^0.15.7
   intl: ^0.20.3
+  package_info_plus: ^10.2.1
   riverpod_annotation: ^4.0.7
   shared_preferences: ^2.5.5
   url_launcher: ^6.3.1

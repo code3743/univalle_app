@@ -17,6 +17,7 @@ import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 import '../../../profile/presentation/viewmodels/profile_view_model.dart';
 import '../../home_strings.dart';
 import '../providers/latest_semester_provider.dart';
+import '../widgets/home_footer.dart';
 import '../widgets/home_top_bar.dart';
 import '../widgets/program_card.dart';
 import '../widgets/quick_access_items.dart';
@@ -145,6 +146,8 @@ class HomeView extends ConsumerWidget {
                   )
                   .toList(),
             ),
+            const SizedBox(height: AppSpacing.lg),
+            const HomeFooter(),
           ],
         ),
       ),
