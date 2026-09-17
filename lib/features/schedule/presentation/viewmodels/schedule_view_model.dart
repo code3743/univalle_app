@@ -2,8 +2,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../student_grades/presentation/viewmodels/grades_view_model.dart';
 import '../../domain/entities/schedule_class.dart';
-import '../../domain/entities/schedule_subject.dart';
 import '../providers/schedule_providers.dart';
+import '../utils/schedule_subject_mapper.dart';
 
 part 'schedule_view_model.g.dart';
 
@@ -14,17 +14,7 @@ class ScheduleViewModel extends _$ScheduleViewModel {
     final periods = await ref.watch(gradesViewModelProvider.future);
     if (periods.isEmpty) return [];
 
-    final subjects = periods.last.subjects
-        .where((subject) => !subject.isCanceled && subject.group.isNotEmpty)
-        .map(
-          (subject) => ScheduleSubject(
-            code: subject.code,
-            group: subject.group,
-            campusId: subject.campusId,
-            name: subject.name,
-          ),
-        )
-        .toList();
+    final subjects = scheduleSubjectsFrom(periods.last.subjects);
     if (subjects.isEmpty) return [];
 
     final result = await ref
