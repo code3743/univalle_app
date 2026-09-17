@@ -70,5 +70,11 @@ List<QuickAccessItem> quickAccessItems(BuildContext context) {
       accent: AppColors.univalleRed,
       onTap: () => context.push(AppRoutes.restaurant),
     ),
+    QuickAccessItem(
+      iconAsset: AssetPaths.iconNewspaper,
+      label: HomeStrings.newsShortcut,
+      accent: AppColors.accentBlue,
+      onTap: () => context.push(AppRoutes.news),
+    ),
   ];
 }

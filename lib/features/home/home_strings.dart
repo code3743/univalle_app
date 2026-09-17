@@ -18,6 +18,7 @@ abstract final class HomeStrings {
   static const scheduleShortcut = 'Horario de clases';
   static const libraryShortcut = 'Biblioteca';
   static const restaurantShortcut = 'Central (Meléndez)';
+  static const newsShortcut = 'Noticias';
   static const comingSoon = 'Muy pronto podrás usar esta función.';
   static const allFunctionalitiesTitle = 'Todas las funcionalidades';
   static const repositoryLabel = 'code3743/univalle_app';
