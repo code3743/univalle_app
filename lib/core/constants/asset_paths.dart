@@ -20,4 +20,5 @@ abstract final class AssetPaths {
   static const iconFine = 'assets/svg/icons/circle-dollar-sign.svg';
   static const iconHistory = 'assets/svg/icons/history.svg';
   static const iconGithub = 'assets/svg/icons/github.svg';
+  static const iconNewspaper = 'assets/svg/icons/newspaper.svg';
 }
