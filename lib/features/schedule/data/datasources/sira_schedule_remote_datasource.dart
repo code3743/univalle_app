@@ -63,8 +63,15 @@ class SiraScheduleRemoteDataSource {
     }
 
     final document = parse(latin1.decode(response.data as List<int>));
-    return document
-        .querySelectorAll('table[width="768"]>tbody>tr')
+    // SIRA occasionally renders the programming table twice for the same
+    // query (an identical `table[width="768"]` duplicated in the response).
+    // Scoping to the first one avoids parsing — and thus doubling — every
+    // session in it.
+    final table = document.querySelector('table[width="768"]');
+    if (table == null) return const [];
+
+    return table
+        .querySelectorAll('tbody>tr')
         .expand((row) => _parseGroupRow(row, subject))
         .toList();
   }

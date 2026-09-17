@@ -216,5 +216,38 @@ void main() {
       expect(session.room, '');
       expect(session.campus, '');
     });
+
+    // SIRA sometimes renders the same programming table twice in one
+    // response; only the first should be parsed or every session doubles.
+    test(
+      'does not double sessions when SIRA repeats the table in one response',
+      () async {
+        const subject = ScheduleSubject(
+          code: '204025C',
+          group: '50',
+          campusId: '06',
+          name: 'INGLÉS CON FINES GENERALES Y ACADÉM. I',
+        );
+        const groupRow = '''
+<table width="768"><tbody>
+<tr>
+<td>1</td><td>PERIODO</td><td>50</td><td>8</td>
+<td> LUN: 18:00-22:00 ,SIN ESPACIO -- MG <br></td>
+<td> DOCENTE PRUEBA UNO docente.uno@correounivalle.edu.co</td>
+<td>Programa</td><td></td><td></td>
+</tr>
+</tbody></table>
+''';
+        when(() => dio.post(any(), data: any(named: 'data')))
+            .thenAnswer((_) async => _htmlResponse('$groupRow\n$groupRow'));
+
+        final classes = await dataSource.fetchSchedule(subjects: [subject]);
+
+        expect(classes, hasLength(1));
+        expect(classes.single.day, Weekday.monday);
+        expect(classes.single.startTime, '18:00');
+        expect(classes.single.endTime, '22:00');
+      },
+    );
   });
 }
