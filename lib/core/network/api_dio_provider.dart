@@ -12,9 +12,6 @@ Dio apiDio(Ref ref) {
       baseUrl: ApiConstants.baseUrl,
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 30),
-      // Skips ngrok's browser-warning interstitial page while baseUrl points
-      // at a free-tier tunnel; harmless once it points at the real backend.
-      headers: const {'ngrok-skip-browser-warning': 'true'},
     ),
   );
 }
