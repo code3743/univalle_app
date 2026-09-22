@@ -48,6 +48,15 @@ class _NewsViewState extends ConsumerState<NewsView> {
     }
   }
 
+  Future<void> _onRefresh() async {
+    ref.invalidate(newsViewModelProvider);
+    try {
+      await ref.read(newsViewModelProvider.future);
+    } on Failure {
+      // AsyncValueWidget already surfaces the error state below.
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final newsState = ref.watch(newsViewModelProvider);
@@ -55,31 +64,43 @@ class _NewsViewState extends ConsumerState<NewsView> {
     return AppScaffold(
       title: NewsStrings.title,
       scrollable: false,
-      body: AsyncValueWidget(
-        value: newsState,
-        onRetry: () => ref.invalidate(newsViewModelProvider),
-        data: (feed) => feed.articles.isEmpty
-            ? Center(
-                child: Text(
-                  NewsStrings.emptyMessage,
-                  style: Theme.of(context).textTheme.bodyMedium,
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: AsyncValueWidget(
+          value: newsState,
+          onRetry: () => ref.invalidate(newsViewModelProvider),
+          data: (feed) => feed.articles.isEmpty
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.6,
+                      child: Center(
+                        child: Text(
+                          NewsStrings.emptyMessage,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : ListView.separated(
+                  controller: _scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: feed.articles.length + (feed.hasMore ? 1 : 0),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: AppSpacing.sm),
+                  itemBuilder: (context, index) {
+                    if (index >= feed.articles.length) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        child: Center(child: AppLoadingIndicator()),
+                      );
+                    }
+                    return NewsArticleCard(article: feed.articles[index]);
+                  },
                 ),
-              )
-            : ListView.separated(
-                controller: _scrollController,
-                itemCount: feed.articles.length + (feed.hasMore ? 1 : 0),
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: AppSpacing.sm),
-                itemBuilder: (context, index) {
-                  if (index >= feed.articles.length) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
-                      child: Center(child: AppLoadingIndicator()),
-                    );
-                  }
-                  return NewsArticleCard(article: feed.articles[index]);
-                },
-              ),
+        ),
       ),
     );
   }
