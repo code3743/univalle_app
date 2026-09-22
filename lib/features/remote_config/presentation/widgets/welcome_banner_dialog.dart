@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univalle_app/core/theme/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/extensions/snackbar_extension.dart';
@@ -26,9 +27,8 @@ class WelcomeBannerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Dialog(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: AppColors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       clipBehavior: Clip.antiAlias,
       child: Column(

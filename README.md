@@ -184,8 +184,16 @@ El proyecto usa Riverpod con codegen, así que hace falta generar el código (`*
 
 ```bash
 dart run build_runner build --delete-conflicting-outputs
-flutter run
 ```
+
+La app lee la URL del backend de configuración remota (`lib/core/constants/api_constants.dart`) desde la variable de entorno `API_BASE_URL`, así que hay que pasarla con `--dart-define` al correr o compilar:
+
+```bash
+flutter run --dart-define=API_BASE_URL=https://tu-backend/api
+```
+
+> [!NOTE]
+> Si corrés desde VS Code, configurá el mismo `--dart-define` como `toolArgs` en `.vscode/launch.json` (no versionado) para no tener que pasarlo a mano en cada debug/run.
 
 ## Compilación
 

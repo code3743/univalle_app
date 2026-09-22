@@ -12,7 +12,7 @@ part 'home_overlays_view_model.g.dart';
 /// Decides whether [HomeOverlays] should show the update sheet / welcome
 /// dialog and persists dismissal, so the widget only orchestrates UI
 /// (opening the sheet/dialog) instead of talking to storage directly.
-@riverpod
+@Riverpod(keepAlive: true)
 class HomeOverlaysViewModel extends _$HomeOverlaysViewModel {
   @override
   void build() {}
