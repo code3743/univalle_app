@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/router/app_router.dart';
 import 'core/storage/local_storage_providers.dart';
 import 'core/theme/app_theme.dart';
+import 'features/remote_config/presentation/widgets/remote_config_gate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,8 @@ class MainApp extends ConsumerWidget {
       routerConfig: router,
       theme: AppTheme.light,
       themeMode: ThemeMode.light,
+      builder: (context, child) =>
+          RemoteConfigGate(child: child ?? const SizedBox.shrink()),
     );
   }
 }

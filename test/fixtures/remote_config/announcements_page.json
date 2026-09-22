@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "title": "Nueva funcionalidad",
+      "description": "Ya puedes ver tus notas",
+      "imageUrl": null
+    },
+    {
+      "id": 2,
+      "title": "Otra novedad",
+      "description": "Descripción de la novedad",
+      "imageUrl": "https://example.com/a.png"
+    }
+  ],
+  "page": 1,
+  "limit": 20,
+  "total": 2
+}

@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/asset_paths.dart';
+import '../../../../core/device/app_version_provider.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../home_strings.dart';
-import '../providers/app_version_provider.dart';
 
 class HomeFooter extends ConsumerWidget {
   const HomeFooter({super.key});

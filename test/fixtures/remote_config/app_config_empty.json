@@ -1,0 +1,24 @@
+{
+  "platformEnabled": false,
+  "maintenance": {
+    "enabled": true,
+    "title": "En mantenimiento",
+    "message": "Volvemos pronto"
+  },
+  "update": {
+    "latestVersion": "0.0.0",
+    "updateAvailable": false,
+    "updateRequired": false,
+    "storeUrl": "",
+    "message": ""
+  },
+  "modules": [],
+  "quickAccess": [],
+  "welcome": {
+    "enabled": false,
+    "title": "",
+    "description": "",
+    "imageUrl": null,
+    "linkUrl": null
+  }
+}
