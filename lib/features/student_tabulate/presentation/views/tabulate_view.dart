@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/widgets/app_scaffold.dart';
@@ -20,32 +21,15 @@ class TabulateView extends ConsumerStatefulWidget {
 
 class _TabulateViewState extends ConsumerState<TabulateView> {
   final _controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted);
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    .._fitWideContentToScreen();
 
-  double? _contentHeight;
   String? _loadedHtml;
 
   void _loadIfNeeded(Tabulate tabulate) {
     if (_loadedHtml == tabulate.html) return;
     _loadedHtml = tabulate.html;
-    _contentHeight = null;
-    _controller
-      ..setNavigationDelegate(
-        NavigationDelegate(onPageFinished: (_) => _measureContentHeight()),
-      )
-      ..loadHtmlString(tabulate.html, baseUrl: tabulate.baseUrl.toString());
-  }
-
-  // The document has no intrinsic height in Flutter's layout (it's a native
-  // WebView), so we ask the page itself how tall it rendered and resize the
-  // widget to match, letting the surrounding scroll view reach the full
-  // document instead of clipping it to one screen.
-  Future<void> _measureContentHeight() async {
-    final result = await _controller.runJavaScriptReturningResult(
-      'document.documentElement.scrollHeight',
-    );
-    final height = double.tryParse(result.toString().replaceAll('"', ''));
-    if (mounted && height != null) setState(() => _contentHeight = height);
+    _controller.loadHtmlString(tabulate.html);
   }
 
   @override
@@ -69,17 +53,30 @@ class _TabulateViewState extends ConsumerState<TabulateView> {
     return AppScaffold(
       title: StudentTabulateStrings.title,
       padding: EdgeInsets.zero,
+      scrollable: false,
       body: AsyncValueWidget(
         value: tabulateState,
         onRetry: () => ref.invalidate(tabulateViewModelProvider),
+
         data: (tabulate) {
           _loadIfNeeded(tabulate);
-          return SizedBox(
-            height: _contentHeight ?? MediaQuery.sizeOf(context).height,
-            child: WebViewWidget(controller: _controller),
-          );
+          return SizedBox(child: WebViewWidget(controller: _controller));
         },
       ),
     );
+  }
+}
+
+extension on WebViewController {
+  // The tabulado is a fixed-width (765px) print layout, wider than any
+  // phone screen. iOS's WKWebView already auto-scales content like that to
+  // fit, like Safari does — but Android's WebView defaults to
+  // useWideViewPort=false, which makes it render at 1:1 scale and show only
+  // a cropped slice instead of the whole page shrunk to fit.
+  void _fitWideContentToScreen() {
+    final platform = this.platform;
+    if (platform is AndroidWebViewController) {
+      platform.setUseWideViewPort(true);
+    }
   }
 }
