@@ -9,6 +9,7 @@ import '../../features/home/presentation/views/home_view.dart';
 import '../../features/library/presentation/views/library_view.dart';
 import '../../features/news/presentation/views/news_view.dart';
 import '../../features/profile/presentation/views/profile_view.dart';
+import '../../features/remote_config/presentation/views/announcements_view.dart';
 import '../../features/resolution/presentation/views/resolution_view.dart';
 import '../../features/restaurant/presentation/views/pending_payment_view.dart';
 import '../../features/restaurant/presentation/views/restaurant_view.dart';
@@ -91,6 +92,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.allFunctionalities,
         builder: (context, state) => const AllShortcutsView(),
+      ),
+      GoRoute(
+        path: AppRoutes.announcements,
+        builder: (context, state) => const AnnouncementsView(),
       ),
     ],
   );

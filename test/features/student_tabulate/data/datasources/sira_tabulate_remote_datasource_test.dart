@@ -34,17 +34,30 @@ void main() {
 
   group('fetchTabulate', () {
     test(
-      'returns a mobile-ready document scaled from a real tabulado',
+      'resolves root-relative image and stylesheet paths to absolute URLs',
       () async {
         when(() => dio.post(any(), data: any(named: 'data')))
             .thenAnswer((_) async => _htmlResponse(reportHtml));
 
         final result = await dataSource.fetchTabulate(username: '0000000-3743');
 
-        expect(result, contains('id="mobileWrapper"'));
-        expect(result, contains('name="viewport"'));
-        // The real fixture's frame table is 765px wide.
-        expect(result, contains('calc(100vw / 765px)'));
+        expect(
+          result,
+          contains(
+            'src="https://sira.univalle.edu.co/sra/paquetes/gui/temas/'
+            'univalleRojoAmarillo/imagenes/logo.gif"',
+          ),
+        );
+        expect(
+          result,
+          contains(
+            'href="https://sira.univalle.edu.co/sra/paquetes/gui/temas/'
+            'univalleRojoAmarillo/estilos.css"',
+          ),
+        );
+        // The original print-layout markup is rendered as-is, not reflowed
+        // or wrapped for a mobile viewport.
+        expect(result, isNot(contains('id="mobileWrapper"')));
       },
     );
 

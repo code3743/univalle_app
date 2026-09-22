@@ -13,7 +13,7 @@
 
 ## Descripción
 
-Univalle App nació con el objetivo de centralizar en un solo lugar los distintos servicios que la Universidad del Valle expone hoy en sistemas separados (SIRA, U-Planner, el restaurante universitario, la biblioteca OPAC, evaluación docente), cada uno con su propia sesión y su propia forma de pedir la información. La app se conecta a cada uno de esos sistemas y traduce lo que obtiene a un lenguaje de dominio propio, para que la persona usuaria tenga una sola experiencia consistente sin lidiar con SIRA ni con sus formularios.
+Univalle App nació con el objetivo de centralizar en un solo lugar los distintos servicios que la Universidad del Valle expone hoy en sistemas separados (SIRA, U-Planner, el restaurante universitario, la biblioteca OPAC, evaluación docente, la Agencia de Noticias), cada uno con su propia sesión y su propia forma de pedir la información. La app se conecta a cada uno de esos sistemas y traduce lo que obtiene a un lenguaje de dominio propio, para que la persona usuaria tenga una sola experiencia consistente sin lidiar con SIRA ni con sus formularios.
 
 ## Arquitectura
 
@@ -73,6 +73,7 @@ lib/
     ├── schedule/             # Horario de clases
     ├── teaching_rating/      # Evaluación docente
     ├── digital_card/         # Carné estudiantil digital
+    ├── news/                 # Noticias de la Agencia de Noticias Univalle
     ├── restaurant/           # Tiquetes de almuerzo (en desarrollo)
     └── library/              # Cuenta de biblioteca (en desarrollo)
 ```
@@ -100,6 +101,7 @@ flowchart LR
     REST["Restaurante universitario<br/>(tiquetes de almuerzo)"]
     LIB["Biblioteca OPAC<br/>(cuenta, préstamos)"]
     EVAL["Evaluación docente"]
+    NEWS["Agencia de Noticias Univalle<br/>(noticias)"]
 
     App --> SIRA
     App --> SIRA1
@@ -108,6 +110,7 @@ flowchart LR
     App --> REST
     App --> LIB
     App --> EVAL
+    App --> NEWS
 ```
 
 Y así se ve una petición típica, de punta a punta:
@@ -132,7 +135,7 @@ sequenceDiagram
     VM-->>U: AsyncValue<Entity> renderizado
 ```
 
-De los 7 sistemas externos, U-Planner es la única API JSON real; el resto se scrapea desde HTML, en varios casos en Latin-1 y con un parsing bastante posicional, porque cada sistema expone la información de forma distinta.
+De los 8 sistemas externos, U-Planner es la única API JSON real; el resto se scrapea desde HTML, en varios casos en Latin-1 y con un parsing bastante posicional, porque cada sistema expone la información de forma distinta.
 
 ## Funcionalidades
 
@@ -146,6 +149,7 @@ De los 7 sistemas externos, U-Planner es la única API JSON real; el resto se sc
 | Horario de clases | ✅ |
 | Calificar docentes | ✅ |
 | Carné estudiantil digital | ✅ |
+| Noticias de la Agencia de Noticias Univalle | ✅ |
 | Restaurante universitario (tiquetes de almuerzo) | 🔧 En desarrollo |
 | Biblioteca (cuenta, préstamos) | 🔧 En desarrollo |
 | Enlaces de interés | ❌ Pendiente |
@@ -180,8 +184,16 @@ El proyecto usa Riverpod con codegen, así que hace falta generar el código (`*
 
 ```bash
 dart run build_runner build --delete-conflicting-outputs
-flutter run
 ```
+
+La app lee la URL del backend de configuración remota (`lib/core/constants/api_constants.dart`) desde la variable de entorno `API_BASE_URL`, así que hay que pasarla con `--dart-define` al correr o compilar:
+
+```bash
+flutter run --dart-define=API_BASE_URL=https://tu-backend/api
+```
+
+> [!NOTE]
+> Si corrés desde VS Code, configurá el mismo `--dart-define` como `toolArgs` en `.vscode/launch.json` (no versionado) para no tener que pasarlo a mano en cada debug/run.
 
 ## Compilación
 

@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "key": "grades",
+      "label": "Historial de notas",
+      "icon": "notebook-text",
+      "route": "/grades",
+      "color": "#FF0000"
+    },
+    {
+      "key": "digital_card",
+      "label": "Carné estudiantil",
+      "icon": "id-card",
+      "route": "/digital-card",
+      "color": "#7C3AED"
+    }
+  ],
+  "quickAccess": ["grades", "digital_card"]
+}

@@ -37,7 +37,7 @@ class SiraTabulateRemoteDataSource {
     _relocateHeadElements(document);
     _removeDeadInteractiveElements(document);
     _removeCruft(document);
-    _scaleToFitViewport(document);
+    _absolutizeResourceUrls(document);
 
     return document.outerHtml;
   }
@@ -105,43 +105,19 @@ class SiraTabulateRemoteDataSource {
     }
   }
 
-  // The document is a fixed-width print layout (the frame table is
-  // 765px), and it's a formal university record: reflowing its tables would
-  // change what it actually says fits where, which we don't want to touch.
-  // Instead we wrap the whole body and scale it down as one image would be
-  // scaled: `zoom` (unlike `transform: scale`) affects layout, so the page's
-  // own scrollHeight comes out already shrunk to the device width.
-  void _scaleToFitViewport(Document document) {
-    final designWidth = _frameWidthOf(document);
-
-    document.head!.append(
-      Element.tag('meta')
-        ..attributes['name'] = 'viewport'
-        ..attributes['content'] = 'width=device-width, initial-scale=1',
-    );
-    document.head!.append(
-      Element.tag('style')
-        ..text =
-            '''
-          html, body { margin: 0 !important; overflow-x: hidden; }
-          #mobileWrapper { zoom: calc(100vw / ${designWidth}px); }
-        ''',
-    );
-
-    final body = document.body!;
-    final wrapper = Element.tag('div')..attributes['id'] = 'mobileWrapper';
-    for (final child in List<Node>.from(body.nodes)) {
-      child.remove();
-      wrapper.append(child);
+  // SIRA's markup points at its images and stylesheet with paths relative
+  // to the site root (e.g. "/sra/..."), which only resolve while the page
+  // loads inside sira.univalle.edu.co itself. The <base> tag from
+  // [_relocateHeadElements] covers most WebViews, but rewriting these
+  // explicitly to absolute URLs doesn't depend on <base> support.
+  void _absolutizeResourceUrls(Document document) {
+    final base = Uri.parse(SiraConstants.baseUrl);
+    for (final element in document.querySelectorAll('img, link')) {
+      final attribute = element.localName == 'link' ? 'href' : 'src';
+      final value = element.attributes[attribute];
+      if (value == null || value.isEmpty) continue;
+      element.attributes[attribute] = base.resolve(value).toString();
     }
-    body.append(wrapper);
-  }
-
-  int _frameWidthOf(Document document) {
-    final width = int.tryParse(
-      document.querySelector('#tableFramework')?.attributes['width'] ?? '',
-    );
-    return width ?? 765;
   }
 
   Future<T> _run<T>(Future<T> Function() request) async {

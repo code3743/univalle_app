@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:univalle_app/features/home/presentation/providers/app_version_provider.dart';
+import 'package:univalle_app/core/device/app_version_provider.dart';
 
-import '../../../../helpers/container.dart';
+import '../../helpers/container.dart';
 
 void main() {
   setUp(() {

@@ -1,0 +1,11 @@
+{
+  "platformEnabled": true,
+  "maintenance": { "enabled": false, "title": "", "message": "" },
+  "update": {
+    "latestVersion": "1.0.0",
+    "updateAvailable": false,
+    "updateRequired": false,
+    "storeUrl": "https://play.google.com",
+    "message": ""
+  }
+}

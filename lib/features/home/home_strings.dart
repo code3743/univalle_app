@@ -20,6 +20,8 @@ abstract final class HomeStrings {
   static const restaurantShortcut = 'Central (Meléndez)';
   static const newsShortcut = 'Noticias';
   static const comingSoon = 'Muy pronto podrás usar esta función.';
+  static const announcementsTitle = 'Novedades';
+  static const announcementsEmptyMessage = 'Todavía no hay novedades.';
   static const allFunctionalitiesTitle = 'Todas las funcionalidades';
   static const repositoryLabel = 'code3743/univalle_app';
   static const repositoryUrl = 'https://github.com/code3743/univalle_app';
