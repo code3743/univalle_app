@@ -13,6 +13,7 @@ abstract final class AppRoutes {
   static const restaurant = '/restaurant';
   static const library = '/library';
   static const news = '/news';
+  static const announcements = '/announcements';
   static const pendingPayment = '/restaurant/pending-payment';
   static const allFunctionalities = '/functionalities';
 }
