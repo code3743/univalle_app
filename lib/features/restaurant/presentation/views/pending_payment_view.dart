@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
+import '../../../../core/widgets/shimmer/shimmer_box.dart';
 import '../../domain/entities/restaurant_account.dart';
 import '../../restaurant_strings.dart';
 import '../viewmodels/restaurant_view_model.dart';
@@ -33,6 +34,7 @@ class PendingPaymentView extends ConsumerWidget {
       body: AsyncValueWidget(
         value: accountState,
         onRetry: () => ref.invalidate(restaurantViewModelProvider),
+        skeleton: const ShimmerBox(height: 200, width: double.infinity),
         data: (account) => account.pendingPayment == null
             ? const SizedBox.shrink()
             : PendingPaymentCard(payment: account.pendingPayment!),

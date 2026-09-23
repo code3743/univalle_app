@@ -21,4 +21,9 @@ abstract final class AppColors {
   // don't come from the theme's ColorScheme like everything else.
   static const qrBackground = Color(0xFFFFFFFF);
   static const qrForeground = Color(0xFF000000);
+
+  // Neutral greys for shimmer skeletons — deliberately not derived from
+  // colorScheme.surface*, which carries the red seed's pink cast.
+  static const shimmerBase = Color(0xFFE9EAEE);
+  static const shimmerHighlight = Color(0xFFF5F6F8);
 }

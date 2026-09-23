@@ -12,6 +12,7 @@ import '../viewmodels/schedule_view_model.dart';
 import '../widgets/schedule_class_tile.dart';
 import '../widgets/schedule_day_selector.dart';
 import '../widgets/schedule_empty_day.dart';
+import '../widgets/schedule_skeleton.dart';
 import '../widgets/schedule_timeline_tile.dart';
 
 class ScheduleView extends ConsumerStatefulWidget {
@@ -34,6 +35,7 @@ class _ScheduleViewState extends ConsumerState<ScheduleView> {
       body: AsyncValueWidget(
         value: scheduleState,
         onRetry: () => ref.invalidate(scheduleViewModelProvider),
+        skeleton: const ScheduleSkeleton(),
         data: _buildSchedule,
       ),
     );

@@ -5,9 +5,11 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_empty_view.dart';
-import '../../../../core/widgets/app_loading_indicator.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
+import '../../../../core/widgets/shimmer/app_shimmer.dart';
+import '../../../../core/widgets/shimmer/shimmer_box.dart';
+import '../../../../core/widgets/shimmer/skeleton_list.dart';
 import '../../../home/home_strings.dart';
 import '../viewmodels/announcements_view_model.dart';
 import '../widgets/announcement_card.dart';
@@ -59,6 +61,7 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
       body: AsyncValueWidget(
         value: announcementsState,
         onRetry: () => ref.invalidate(announcementsViewModelProvider),
+        skeleton: const SkeletonList(itemHeight: 96),
         data: (feed) => feed.items.isEmpty
             ? AppEmptyView(
                 icon: Icons.campaign_outlined,
@@ -71,10 +74,7 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
                     const SizedBox(height: AppSpacing.sm),
                 itemBuilder: (context, index) {
                   if (index >= feed.items.length) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
-                      child: Center(child: AppLoadingIndicator()),
-                    );
+                    return const AppShimmer(child: ShimmerBox(height: 96));
                   }
                   return AnnouncementCard(announcement: feed.items[index]);
                 },

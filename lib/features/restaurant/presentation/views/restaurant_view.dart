@@ -13,6 +13,7 @@ import '../../restaurant_strings.dart';
 import '../viewmodels/restaurant_view_model.dart';
 import '../widgets/buy_lunches_form.dart';
 import '../widgets/lunch_ticket_card/lunch_ticket_card.dart';
+import '../widgets/restaurant_skeleton.dart';
 
 class RestaurantView extends ConsumerWidget {
   const RestaurantView({super.key});
@@ -26,6 +27,7 @@ class RestaurantView extends ConsumerWidget {
       body: AsyncValueWidget(
         value: accountState,
         onRetry: () => ref.invalidate(restaurantViewModelProvider),
+        skeleton: const RestaurantSkeleton(),
         data: (account) => Column(
           children: [
             Text(

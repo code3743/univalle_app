@@ -1,4 +1,5 @@
 abstract final class AppStrings {
+  static const loading = 'Cargando';
   static const genericError = 'Algo salió mal, intenta de nuevo.';
   static const retry = 'Reintentar';
   static const networkError =

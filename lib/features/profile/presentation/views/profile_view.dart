@@ -14,6 +14,7 @@ import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 import '../../domain/entities/student.dart';
 import '../../profile_strings.dart';
 import '../viewmodels/profile_view_model.dart';
+import '../widgets/profile_skeleton.dart';
 
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
@@ -30,6 +31,7 @@ class ProfileView extends ConsumerWidget {
         child: AsyncValueWidget(
           value: profileState,
           onRetry: () => ref.invalidate(profileViewModelProvider),
+          skeleton: const ProfileSkeleton(),
           data: (student) => Column(
             children: [
               _Avatar(student: student, photoUrl: photoUrl),

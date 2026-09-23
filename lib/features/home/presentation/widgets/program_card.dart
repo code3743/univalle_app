@@ -88,7 +88,6 @@ class ProgramCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    //Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,

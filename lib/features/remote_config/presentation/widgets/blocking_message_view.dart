@@ -31,7 +31,7 @@ class BlockingMessageView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: AppSpacing.lg, width: double.infinity),
           Icon(icon, size: 40, color: colorScheme.error),
           const SizedBox(height: AppSpacing.md),
           Text(
