@@ -6,6 +6,7 @@ import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../remote_config/domain/entities/app_config.dart';
+import '../../../remote_config/domain/entities/app_module.dart';
 import '../../../remote_config/presentation/utils/module_style.dart';
 import '../../home_strings.dart';
 
@@ -16,6 +17,7 @@ class QuickAccessItem {
     required this.label,
     required this.accent,
     required this.onTap,
+    this.disabled = false,
   });
 
   final String key;
@@ -23,6 +25,7 @@ class QuickAccessItem {
   final String label;
   final Color accent;
   final VoidCallback onTap;
+  final bool disabled;
 }
 
 /// Routes the app actually has screens for; a server-sent module pointing
@@ -66,15 +69,18 @@ List<QuickAccessItem> quickAccessItems(
           iconAsset: moduleIconAsset(module.icon),
           label: module.label,
           accent: moduleColor(module.color),
-          onTap: () => _goTo(context, module.route),
+          disabled: module.disabled,
+          onTap: () => _goTo(context, module),
         ),
       )
       .toList();
 }
 
-void _goTo(BuildContext context, String route) {
-  if (_knownRoutes.contains(route)) {
-    context.push(route);
+void _goTo(BuildContext context, AppModule module) {
+  if (module.disabled) {
+    context.showSnack(module.disabledMessage ?? HomeStrings.comingSoon);
+  } else if (_knownRoutes.contains(module.route)) {
+    context.push(module.route);
   } else {
     context.showSnack(HomeStrings.comingSoon);
   }

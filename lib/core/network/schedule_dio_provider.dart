@@ -1,13 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../constants/schedule_constants.dart';
+import 'univalle_trusted_http_client.dart';
 
 part 'schedule_dio_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 Dio scheduleDio(Ref ref) {
-  return Dio(
+  final dio = Dio(
     BaseOptions(
       baseUrl: ScheduleConstants.baseUrl,
       contentType: 'application/x-www-form-urlencoded',
@@ -17,4 +19,8 @@ Dio scheduleDio(Ref ref) {
       receiveTimeout: const Duration(seconds: 30),
     ),
   );
+  dio.httpClientAdapter = IOHttpClientAdapter(
+    createHttpClient: createUnivalleTrustedHttpClient,
+  );
+  return dio;
 }

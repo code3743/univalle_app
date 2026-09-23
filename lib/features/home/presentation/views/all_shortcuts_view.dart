@@ -30,6 +30,7 @@ class AllShortcutsView extends ConsumerWidget {
                 label: item.label,
                 accent: item.accent,
                 onTap: item.onTap,
+                disabled: item.disabled,
               ),
             )
             .toList(),

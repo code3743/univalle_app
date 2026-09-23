@@ -45,6 +45,13 @@ class SiraScheduleRemoteDataSource {
   // name with no separator, e.g. "JOSE LUIS UNAS GOMEZjose.unas@correo...".
   static final _email = RegExp(r'[\w.+-]+@[\w-]+(?:\.[\w-]+)+');
 
+  // SIRA occasionally times out or errors on an individual subject request
+  // under load. Each subject is fetched and retried independently (see
+  // `_fetchSubjectSchedule`), so a retry here never re-fetches a subject
+  // that already succeeded.
+  static const _maxAttemptsPerSubject = 3;
+  static const _retryDelay = Duration(milliseconds: 500);
+
   Future<List<ScheduleClassModel>> fetchSchedule({
     required List<ScheduleSubject> subjects,
   }) async {
@@ -53,6 +60,20 @@ class SiraScheduleRemoteDataSource {
   }
 
   Future<List<ScheduleClassModel>> _fetchSubjectSchedule(
+    ScheduleSubject subject,
+  ) async {
+    for (var attempt = 1; ; attempt++) {
+      try {
+        return await _fetchSubjectScheduleOnce(subject);
+      } on AppException catch (e) {
+        final isTransient = e is NetworkException || e is ServerException;
+        if (!isTransient || attempt >= _maxAttemptsPerSubject) rethrow;
+        await Future.delayed(_retryDelay * attempt);
+      }
+    }
+  }
+
+  Future<List<ScheduleClassModel>> _fetchSubjectScheduleOnce(
     ScheduleSubject subject,
   ) async {
     final response = await _run(

@@ -135,17 +135,78 @@ void main() {
       );
     });
 
-    test('maps a DioException to an AppException', () async {
-      when(() => dio.post(any(), data: any(named: 'data'))).thenThrow(
-        DioException(
-          requestOptions: RequestOptions(path: ScheduleConstants.path),
-          type: DioExceptionType.connectionTimeout,
-        ),
+    test(
+      'maps a DioException to an AppException after exhausting retries',
+      () async {
+        when(() => dio.post(any(), data: any(named: 'data'))).thenThrow(
+          DioException(
+            requestOptions: RequestOptions(path: ScheduleConstants.path),
+            type: DioExceptionType.connectionTimeout,
+          ),
+        );
+
+        await expectLater(
+          () => dataSource.fetchSchedule(subjects: [_subjectWithSchedule]),
+          throwsA(isA<NetworkException>()),
+        );
+
+        verify(() => dio.post(any(), data: any(named: 'data'))).called(3);
+      },
+    );
+
+    test('retries only the subject whose request failed, not one that already '
+        'succeeded', () async {
+      const flakySubject = ScheduleSubject(
+        code: '204025C',
+        group: '50',
+        campusId: '06',
+        name: 'INGLÉS CON FINES GENERALES Y ACADÉM. I',
+      );
+      const flakySubjectRow = '''
+<table width="768"><tbody>
+<tr>
+<td>1</td><td>PERIODO</td><td>50</td><td>8</td>
+<td> LUN: 18:00-22:00 ,SIN ESPACIO -- MG <br></td>
+<td> DOCENTE PRUEBA UNO docente.uno@correounivalle.edu.co</td>
+<td>Programa</td><td></td><td></td>
+</tr>
+</tbody></table>
+''';
+
+      var succeedingSubjectCalls = 0;
+      var flakySubjectCalls = 0;
+      when(() => dio.post(any(), data: any(named: 'data')))
+          .thenAnswer((invocation) async {
+            final body = invocation.namedArguments[#data] as String;
+            if (body.contains('agp_asi_codigo=${flakySubject.code}')) {
+              flakySubjectCalls++;
+              if (flakySubjectCalls < 3) {
+                throw DioException(
+                  requestOptions: RequestOptions(path: ScheduleConstants.path),
+                  type: DioExceptionType.connectionTimeout,
+                );
+              }
+              return _htmlResponse(flakySubjectRow);
+            }
+            succeedingSubjectCalls++;
+            return _htmlResponse(scheduleHtml);
+          });
+
+      final classes = await dataSource.fetchSchedule(
+        subjects: [_subjectWithSchedule, flakySubject],
       );
 
+      // The healthy subject's request only fired once: it was never
+      // re-fetched because of the other subject's failures/retries.
+      expect(succeedingSubjectCalls, 1);
+      expect(flakySubjectCalls, 3);
       expect(
-        () => dataSource.fetchSchedule(subjects: [_subjectWithSchedule]),
-        throwsA(isA<NetworkException>()),
+        classes.where((c) => c.subjectCode == flakySubject.code),
+        hasLength(1),
+      );
+      expect(
+        classes.where((c) => c.subjectCode == _subjectWithSchedule.code),
+        hasLength(2),
       );
     });
 

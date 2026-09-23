@@ -6,6 +6,8 @@ class AppModuleModel {
   final String icon;
   final String route;
   final String color;
+  final bool disabled;
+  final String? disabledMessage;
 
   const AppModuleModel({
     required this.key,
@@ -13,6 +15,8 @@ class AppModuleModel {
     required this.icon,
     required this.route,
     required this.color,
+    this.disabled = false,
+    this.disabledMessage,
   });
 
   factory AppModuleModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +26,8 @@ class AppModuleModel {
       icon: json['icon'] as String,
       route: json['route'] as String,
       color: json['color'] as String,
+      disabled: json['disabled'] as bool? ?? false,
+      disabledMessage: json['disabledMessage'] as String?,
     );
   }
 
@@ -31,8 +37,17 @@ class AppModuleModel {
     'icon': icon,
     'route': route,
     'color': color,
+    'disabled': disabled,
+    'disabledMessage': disabledMessage,
   };
 
-  AppModule toEntity() =>
-      AppModule(key: key, label: label, icon: icon, route: route, color: color);
+  AppModule toEntity() => AppModule(
+    key: key,
+    label: label,
+    icon: icon,
+    route: route,
+    color: color,
+    disabled: disabled,
+    disabledMessage: disabledMessage,
+  );
 }

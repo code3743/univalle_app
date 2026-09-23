@@ -19,6 +19,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return value.when(
+      skipLoadingOnRefresh: false,
       data: data,
       loading: () => const AppLoadingIndicator(),
       error: (error, stackTrace) => AppErrorView(error: error, onRetry: onRetry),

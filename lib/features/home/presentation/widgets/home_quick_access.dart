@@ -52,6 +52,7 @@ class HomeQuickAccess extends StatelessWidget {
           crossAxisSpacing: AppSpacing.md,
           childAspectRatio: 0.85,
           children: quickAccessItems(context, config)
+              .where((item) => !item.disabled)
               .take(_homeQuickAccessCount)
               .map(
                 (item) => ShortcutCard(
