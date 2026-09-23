@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:univalle_app/core/constants/app_strings.dart';
-import 'package:univalle_app/core/widgets/app_loading_indicator.dart';
 import 'package:univalle_app/features/home/home_strings.dart';
 import 'package:univalle_app/features/home/presentation/widgets/modules_state_builder.dart';
 import 'package:univalle_app/features/home/presentation/widgets/quick_access_items.dart';
+import 'package:univalle_app/features/home/presentation/widgets/quick_access_skeleton.dart';
 import 'package:univalle_app/features/remote_config/domain/entities/app_config.dart';
 import 'package:univalle_app/features/remote_config/domain/entities/app_module.dart';
 import 'package:univalle_app/features/remote_config/domain/entities/welcome_banner.dart';
@@ -42,7 +42,7 @@ Widget _grid(BuildContext context, List<QuickAccessItem> items) =>
     Text('items:${items.length}');
 
 void main() {
-  testWidgets('loading with no prior value shows the loading indicator', (
+  testWidgets('loading with no prior value shows the loading skeleton', (
     tester,
   ) async {
     await tester.pumpApp(
@@ -53,7 +53,7 @@ void main() {
       ),
     );
 
-    expect(find.byType(AppLoadingIndicator), findsOneWidget);
+    expect(find.byType(QuickAccessSkeleton), findsOneWidget);
   });
 
   testWidgets('a null config shows the unavailable state with a retry button', (
@@ -104,44 +104,41 @@ void main() {
     expect(find.text(HomeStrings.modulesEmptyTitle), findsOneWidget);
   });
 
-  testWidgets(
-    'retrying after a null config keeps showing the loading indicator '
-    'until the retry resolves',
-    (tester) async {
-      var callCount = 0;
-      late Completer<AppConfig?> retryCompleter;
-      final configProvider = FutureProvider.autoDispose<AppConfig?>((ref) {
-        callCount++;
-        if (callCount == 1) return Future.value(null);
-        retryCompleter = Completer<AppConfig?>();
-        return retryCompleter.future;
-      });
+  testWidgets('retrying after a null config keeps showing the loading skeleton '
+      'until the retry resolves', (tester) async {
+    var callCount = 0;
+    late Completer<AppConfig?> retryCompleter;
+    final configProvider = FutureProvider.autoDispose<AppConfig?>((ref) {
+      callCount++;
+      if (callCount == 1) return Future.value(null);
+      retryCompleter = Completer<AppConfig?>();
+      return retryCompleter.future;
+    });
 
-      await tester.pumpApp(
-        Consumer(
-          builder: (context, ref, _) => ModulesStateBuilder(
-            config: ref.watch(configProvider),
-            onRetry: () => ref.invalidate(configProvider),
-            builder: _grid,
-          ),
+    await tester.pumpApp(
+      Consumer(
+        builder: (context, ref, _) => ModulesStateBuilder(
+          config: ref.watch(configProvider),
+          onRetry: () => ref.invalidate(configProvider),
+          builder: _grid,
         ),
-      );
-      await tester.pump();
+      ),
+    );
+    await tester.pump();
 
-      expect(find.text(HomeStrings.modulesUnavailableTitle), findsOneWidget);
+    expect(find.text(HomeStrings.modulesUnavailableTitle), findsOneWidget);
 
-      await tester.tap(find.text(AppStrings.retry));
-      await tester.pump();
+    await tester.tap(find.text(AppStrings.retry));
+    await tester.pump();
 
-      expect(find.byType(AppLoadingIndicator), findsOneWidget);
-      expect(find.text(HomeStrings.modulesUnavailableTitle), findsNothing);
+    expect(find.byType(QuickAccessSkeleton), findsOneWidget);
+    expect(find.text(HomeStrings.modulesUnavailableTitle), findsNothing);
 
-      retryCompleter.complete(_config([_module('a')]));
-      await tester.pumpAndSettle();
+    retryCompleter.complete(_config([_module('a')]));
+    await tester.pumpAndSettle();
 
-      expect(find.text('items:1'), findsOneWidget);
-    },
-  );
+    expect(find.text('items:1'), findsOneWidget);
+  });
 
   testWidgets('modules present builds the grid with them', (tester) async {
     await tester.pumpApp(
