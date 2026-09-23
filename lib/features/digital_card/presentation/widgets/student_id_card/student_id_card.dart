@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univalle_app/core/theme/app_colors.dart';
 
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/utils/name_formatter.dart';
@@ -48,7 +49,7 @@ class StudentIdCard extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: colorScheme.surface,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(28),
           boxShadow: [
             BoxShadow(

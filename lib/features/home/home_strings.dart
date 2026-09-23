@@ -10,16 +10,13 @@ abstract final class HomeStrings {
   static const creditsLabel = 'Créditos acumulados';
   static const quickAccess = 'Accesos rápidos';
   static const viewAll = 'Ver todos';
-  static const gradesShortcut = 'Historial de notas';
-  static const studentCardShortcut = 'Carné estudiantil';
-  static const tabuladoShortcut = 'Tabulado';
-  static const resolutionShortcut = 'Resolución';
-  static const teacherRatingShortcut = 'Calificar docente';
-  static const scheduleShortcut = 'Horario de clases';
-  static const libraryShortcut = 'Biblioteca';
-  static const restaurantShortcut = 'Central (Meléndez)';
-  static const newsShortcut = 'Noticias';
   static const comingSoon = 'Muy pronto podrás usar esta función.';
+  static const modulesUnavailableTitle = 'No pudimos cargar los módulos';
+  static const modulesUnavailableMessage =
+      'Revisa tu conexión e inténtalo de nuevo.';
+  static const modulesEmptyTitle = 'Aún no hay módulos habilitados';
+  static const modulesEmptyMessage =
+      'Pronto habilitaremos nuevas funcionalidades para ti.';
   static const announcementsTitle = 'Novedades';
   static const announcementsEmptyMessage = 'Todavía no hay novedades.';
   static const allFunctionalitiesTitle = 'Todas las funcionalidades';
