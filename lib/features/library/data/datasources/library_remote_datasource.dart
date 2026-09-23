@@ -41,7 +41,7 @@ class LibraryRemoteDataSource {
   Future<void> _authenticate(String code) async {
     await _cookieJar.deleteAll();
 
-    final homeResponse = await _run(() => _dio.get(''));
+    final homeResponse = await _run(() => _dio.get('/'));
     final homeDocument = parse(homeResponse.data as String);
 
     final sessionId = _extractSessionId(homeDocument);

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/app_empty_view.dart';
 import '../../../../core/widgets/app_loading_indicator.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
@@ -59,11 +60,9 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
         value: announcementsState,
         onRetry: () => ref.invalidate(announcementsViewModelProvider),
         data: (feed) => feed.items.isEmpty
-            ? Center(
-                child: Text(
-                  HomeStrings.announcementsEmptyMessage,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
+            ? AppEmptyView(
+                icon: Icons.campaign_outlined,
+                title: HomeStrings.announcementsEmptyMessage,
               )
             : ListView.separated(
                 controller: _scrollController,

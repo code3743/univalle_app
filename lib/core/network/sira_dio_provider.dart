@@ -1,9 +1,11 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../constants/sira_constants.dart';
+import 'univalle_trusted_http_client.dart';
 
 part 'sira_dio_provider.g.dart';
 
@@ -24,5 +26,8 @@ Dio siraDio(Ref ref) {
     ),
   );
   dio.interceptors.add(CookieManager(cookieJar));
+  dio.httpClientAdapter = IOHttpClientAdapter(
+    createHttpClient: createUnivalleTrustedHttpClient,
+  );
   return dio;
 }

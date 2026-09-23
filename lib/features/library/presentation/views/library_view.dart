@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/asset_paths.dart';
-import '../../../../core/router/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../../../core/widgets/info_card.dart';
-import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 import '../../domain/entities/library_loan_record.dart';
 import '../../library_strings.dart';
 import '../viewmodels/library_view_model.dart';
@@ -22,14 +19,6 @@ class LibraryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<AsyncValue<bool>>(authViewModelProvider, (previous, next) {
-      next.whenOrNull(
-        data: (isLoggedIn) {
-          if (!isLoggedIn) context.go(AppRoutes.login);
-        },
-      );
-    });
-
     final accountState = ref.watch(libraryViewModelProvider);
 
     return AppScaffold(

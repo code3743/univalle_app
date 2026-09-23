@@ -7,7 +7,6 @@ import '../../../../core/router/app_routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
-import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 import '../../domain/entities/teacher_to_rate.dart';
 import '../../teaching_rating_strings.dart';
 import '../viewmodels/teachers_to_rate_view_model.dart';
@@ -19,14 +18,6 @@ class TeachersToRateView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<AsyncValue<bool>>(authViewModelProvider, (previous, next) {
-      next.whenOrNull(
-        data: (isLoggedIn) {
-          if (!isLoggedIn) context.go(AppRoutes.login);
-        },
-      );
-    });
-
     final teachersState = ref.watch(teachersToRateViewModelProvider);
 
     void openReview(TeacherToRate teacher) {

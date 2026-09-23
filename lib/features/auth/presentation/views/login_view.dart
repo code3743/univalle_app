@@ -52,9 +52,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     ref.listen<AsyncValue<bool>>(authViewModelProvider, (previous, next) {
       next.whenOrNull(
-        data: (isLoggedIn) {
-          if (isLoggedIn) context.go(AppRoutes.home);
-        },
         error: (error, _) {
           final message = error is Failure
               ? error.userMessage

@@ -11,7 +11,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/utils/name_formatter.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../../../core/widgets/stat_card.dart';
-import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 import '../../../profile/presentation/viewmodels/profile_view_model.dart';
 import '../../../remote_config/presentation/viewmodels/remote_config_view_model.dart';
 import '../../../remote_config/presentation/widgets/home_overlays.dart';
@@ -28,18 +27,10 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<AsyncValue<bool>>(authViewModelProvider, (previous, next) {
-      next.whenOrNull(
-        data: (isLoggedIn) {
-          if (!isLoggedIn) context.go(AppRoutes.login);
-        },
-      );
-    });
-
     final profileState = ref.watch(profileViewModelProvider);
     final latestSemester = ref.watch(latestSemesterProvider);
     final photoUrl = ref.watch(currentPhotoUrlProvider);
-    final config = ref.watch(remoteConfigViewModelProvider).value;
+    final configState = ref.watch(remoteConfigViewModelProvider);
 
     void goToProfile() => context.push(AppRoutes.profile);
     void goToAllShortcuts() => context.push(AppRoutes.allFunctionalities);
@@ -52,7 +43,7 @@ class HomeView extends ConsumerWidget {
         data: (student) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HomeOverlays(config: config),
+            HomeOverlays(config: configState.value),
             HomeTopBar(
               onNotifications: goToAnnouncements,
               onAvatarTap: goToProfile,
@@ -91,7 +82,11 @@ class HomeView extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
-            HomeQuickAccess(config: config, onViewAll: goToAllShortcuts),
+            HomeQuickAccess(
+              config: configState,
+              onViewAll: goToAllShortcuts,
+              onRetry: () => ref.invalidate(remoteConfigViewModelProvider),
+            ),
             const SizedBox(height: AppSpacing.lg),
             const HomeFooter(),
           ],
