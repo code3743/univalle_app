@@ -6,6 +6,7 @@ import '../../../../core/widgets/async_value_widget.dart';
 import '../../domain/entities/teacher_to_rate.dart';
 import '../../teaching_rating_strings.dart';
 import '../viewmodels/teacher_review_view_model.dart';
+import '../widgets/teacher_review_skeleton.dart';
 import '../widgets/teacher_review_wizard.dart';
 
 class TeacherReviewView extends ConsumerWidget {
@@ -23,6 +24,7 @@ class TeacherReviewView extends ConsumerWidget {
       body: AsyncValueWidget(
         value: reviewState,
         onRetry: () => ref.invalidate(teacherReviewViewModelProvider(teacher)),
+        skeleton: const TeacherReviewSkeleton(),
         data: (review) => TeacherReviewWizard(review: review),
       ),
     );

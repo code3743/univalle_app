@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/widgets/app_empty_view.dart';
-import '../../../../core/widgets/app_loading_indicator.dart';
+import '../../../../core/widgets/shimmer/app_shimmer.dart';
 import '../../../remote_config/domain/entities/app_config.dart';
 import '../../home_strings.dart';
 import 'quick_access_items.dart';
+import 'quick_access_skeleton.dart';
 
 /// Renders modules from `AsyncValue<AppConfig?>`, distinguishing the states
 /// a `.value`-only read can't tell apart: still loading, unavailable (fetch
@@ -37,7 +38,7 @@ class ModulesStateBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (config.isLoading && config.value == null) {
-      return const AppLoadingIndicator();
+      return const AppShimmer(child: QuickAccessSkeleton());
     }
 
     final appConfig = config.value;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -39,9 +38,9 @@ class PendingPaymentCard extends ConsumerWidget {
             ? RestaurantStrings.paymentConfirmed
             : RestaurantStrings.paymentStillPending,
       );
-    } catch (e) {
+    } on Failure catch (failure) {
       if (!context.mounted) return;
-      context.showSnack(e is Failure ? e.userMessage : AppStrings.genericError);
+      context.showSnack(failure.userMessage);
     }
   }
 

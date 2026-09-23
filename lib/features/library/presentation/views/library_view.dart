@@ -12,6 +12,7 @@ import '../../library_strings.dart';
 import '../viewmodels/library_view_model.dart';
 import '../widgets/library_empty_state.dart';
 import '../widgets/library_record_tile.dart';
+import '../widgets/library_skeleton.dart';
 import '../widgets/library_tab_bar.dart';
 
 class LibraryView extends ConsumerWidget {
@@ -27,6 +28,7 @@ class LibraryView extends ConsumerWidget {
       body: AsyncValueWidget(
         value: accountState,
         onRetry: () => ref.invalidate(libraryViewModelProvider),
+        skeleton: const LibrarySkeleton(),
         data: (account) => DefaultTabController(
           length: 2,
           child: Column(

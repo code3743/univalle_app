@@ -7,6 +7,7 @@ import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../student_grades_strings.dart';
 import '../viewmodels/grades_view_model.dart';
+import '../widgets/grades_skeleton.dart';
 import '../widgets/grades_summary.dart';
 import '../widgets/period_grades_section.dart';
 
@@ -30,6 +31,7 @@ class GradesView extends ConsumerWidget {
       body: AsyncValueWidget(
         value: gradesState,
         onRetry: () => ref.invalidate(gradesViewModelProvider),
+        skeleton: const GradesSkeleton(),
         data: (periods) {
           if (periods.isEmpty) {
             return Center(

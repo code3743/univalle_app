@@ -6,7 +6,7 @@ import '../providers/auth_providers.dart';
 
 part 'auth_view_model.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AuthViewModel extends _$AuthViewModel {
   @override
   Future<bool> build() async {

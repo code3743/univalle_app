@@ -19,6 +19,7 @@ import '../providers/latest_semester_provider.dart';
 import '../widgets/home_footer.dart';
 import '../widgets/home_greeting.dart';
 import '../widgets/home_quick_access.dart';
+import '../widgets/home_skeleton.dart';
 import '../widgets/home_top_bar.dart';
 import '../widgets/program_card.dart';
 
@@ -40,6 +41,7 @@ class HomeView extends ConsumerWidget {
       body: AsyncValueWidget(
         value: profileState,
         onRetry: () => ref.invalidate(profileViewModelProvider),
+        skeleton: const HomeSkeleton(),
         data: (student) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

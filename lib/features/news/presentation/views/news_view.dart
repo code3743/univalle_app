@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/widgets/app_loading_indicator.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
+import '../../../../core/widgets/shimmer/app_shimmer.dart';
+import '../../../../core/widgets/shimmer/shimmer_box.dart';
+import '../../../../core/widgets/shimmer/skeleton_list.dart';
 import '../../news_strings.dart';
 import '../viewmodels/news_view_model.dart';
 import '../widgets/news_article_card.dart';
@@ -69,6 +71,7 @@ class _NewsViewState extends ConsumerState<NewsView> {
         child: AsyncValueWidget(
           value: newsState,
           onRetry: () => ref.invalidate(newsViewModelProvider),
+          skeleton: const SkeletonList(itemHeight: 112),
           data: (feed) => feed.articles.isEmpty
               ? ListView(
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -92,10 +95,7 @@ class _NewsViewState extends ConsumerState<NewsView> {
                       const SizedBox(height: AppSpacing.sm),
                   itemBuilder: (context, index) {
                     if (index >= feed.articles.length) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
-                        child: Center(child: AppLoadingIndicator()),
-                      );
+                      return const AppShimmer(child: ShimmerBox(height: 112));
                     }
                     return NewsArticleCard(article: feed.articles[index]);
                   },
