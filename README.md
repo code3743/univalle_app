@@ -1,4 +1,10 @@
 <p align="center">
+  <a href="https://play.google.com/store/apps/details?id=dev.jotalopez.univalle_app">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es-419_badge_web_generic.png" height="80" alt="Disponible en Google Play" />
+  </a>
+</p>
+
+<p align="center">
   <img src="assets/svg/univalle_logo.svg" width="96" alt="Universidad del Valle" />
 </p>
 
