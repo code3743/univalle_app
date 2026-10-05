@@ -118,12 +118,13 @@ class _LoanList extends ConsumerWidget {
                 .read(libraryViewModelProvider.notifier)
                 .renewLoan(loan.code);
             if (!context.mounted) return;
-            context.showSnack(
-              result.fold(
-                onError: (failure) => failure.userMessage,
-                onSuccess: (dueDate) =>
-                    '${LibraryStrings.renewSuccess} $dueDate',
+            result.fold(
+              onError: (failure) => context.showSnack(
+                failure.userMessage,
+                duration: const Duration(seconds: 8),
               ),
+              onSuccess: (dueDate) =>
+                  context.showSnack('${LibraryStrings.renewSuccess} $dueDate'),
             );
           },
         );
