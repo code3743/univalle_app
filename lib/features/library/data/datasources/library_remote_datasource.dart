@@ -11,6 +11,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/dio_exception_mapper.dart';
 import '../../library_strings.dart';
 import '../models/library_account_model.dart';
+import '../models/library_loan_model.dart';
 import '../models/library_loan_record_model.dart';
 
 class LibraryRemoteDataSource {
@@ -36,6 +37,38 @@ class LibraryRemoteDataSource {
       await _cookieJar.deleteAll();
       rethrow;
     }
+  }
+
+  Future<String> renewLoan({required String barcode}) async {
+    final response = await _run(
+      () => _dio.get(
+        '${LibraryConstants.renewPath}${Uri.encodeQueryComponent(barcode)}',
+        options: Options(headers: {'referer': LibraryConstants.baseUrl}),
+      ),
+    );
+    return _parseRenewal(response.data as String);
+  }
+
+  // The endpoint answers with plain text: the new due date on success, or a
+  // "could not be renewed" sentence followed by the reason on failure.
+  String _parseRenewal(String body) {
+    final text = (parse(body).body?.text ?? body).trim();
+    if (text.isEmpty) {
+      throw const ServerException(message: LibraryStrings.renewUnavailable);
+    }
+    final match = RegExp(
+      r'no pudo ser renovado[^:]*:\s*(.*)',
+      caseSensitive: false,
+      dotAll: true,
+    ).firstMatch(text);
+    if (match != null) {
+      final reason = match.group(1)!.trim();
+      throw BusinessException(
+        message: reason.isEmpty ? LibraryStrings.renewUnavailable : reason,
+        retryable: false,
+      );
+    }
+    return text;
   }
 
   Future<void> _authenticate(String code) async {
@@ -112,17 +145,36 @@ class LibraryRemoteDataSource {
 
     return LibraryAccountModel(
       currentFine: fineElement.text.trim(),
-      currentLoans: _parseRecords(
-        document,
-        LibraryConstants.currentLoansTableSelector,
-      ),
+      currentLoans: _parseLoans(document),
       history: _parseRecords(document, LibraryConstants.historyTableSelector),
     );
   }
 
-  // Both the "on loan" and "history" tabs render the same table shape
-  // (barcode, title, location, a column we don't use, date) — only the
-  // container id differs.
+  // Columns: barcode, title, location, due date, fine, renew icon.
+  List<LibraryLoanModel> _parseLoans(Document document) {
+    final rows =
+        document
+            .querySelector(LibraryConstants.currentLoansTableSelector)
+            ?.querySelectorAll('tr') ??
+        <Element>[];
+    final loans = <LibraryLoanModel>[];
+    for (var i = 1; i < rows.length; i++) {
+      final cells = rows[i].querySelectorAll('td');
+      if (cells.length < 5) continue;
+      loans.add(
+        LibraryLoanModel(
+          code: cells[0].text.trim(),
+          title: cells[1].text.trim(),
+          location: cells[2].text.trim(),
+          dueDate: cells[3].text.trim(),
+          fine: cells[4].text.trim(),
+        ),
+      );
+    }
+    return loans;
+  }
+
+  // History rows: barcode, title, location, transaction type, date.
   List<LibraryLoanRecordModel> _parseRecords(
     Document document,
     String tableSelector,

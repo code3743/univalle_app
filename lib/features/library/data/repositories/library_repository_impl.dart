@@ -27,4 +27,13 @@ class LibraryRepositoryImpl implements LibraryRepository {
       return Err(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Result<String>> renewLoan(String barcode) async {
+    try {
+      return Ok(await _remote.renewLoan(barcode: barcode));
+    } on AppException catch (e) {
+      return Err(mapExceptionToFailure(e));
+    }
+  }
 }

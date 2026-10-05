@@ -1,9 +1,10 @@
 import '../../domain/entities/library_account.dart';
+import 'library_loan_model.dart';
 import 'library_loan_record_model.dart';
 
 class LibraryAccountModel {
   final String currentFine;
-  final List<LibraryLoanRecordModel> currentLoans;
+  final List<LibraryLoanModel> currentLoans;
   final List<LibraryLoanRecordModel> history;
 
   const LibraryAccountModel({
