@@ -15,8 +15,8 @@ import 'package:univalle_app/features/auth/domain/entities/auth_session.dart';
 import 'package:univalle_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:univalle_app/features/auth/presentation/providers/auth_providers.dart';
 import 'package:univalle_app/features/auth/presentation/viewmodels/auth_view_model.dart';
-import 'package:univalle_app/features/remote_config/domain/entities/app_config.dart';
-import 'package:univalle_app/features/remote_config/domain/entities/welcome_banner.dart';
+import 'package:univalle_app/core/domain/entities/app_config.dart';
+import 'package:univalle_app/core/domain/entities/welcome_banner.dart';
 import 'package:univalle_app/features/remote_config/domain/repositories/remote_config_repository.dart';
 import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
 

@@ -12,7 +12,7 @@ import 'package:univalle_app/features/schedule/domain/repositories/schedule_repo
 import 'package:univalle_app/features/schedule/presentation/providers/schedule_providers.dart';
 import 'package:univalle_app/features/schedule/presentation/viewmodels/schedule_view_model.dart';
 import 'package:univalle_app/features/student_grades/domain/entities/grades.dart';
-import 'package:univalle_app/features/student_grades/domain/entities/subject.dart';
+import 'package:univalle_app/core/domain/entities/subject.dart';
 import 'package:univalle_app/features/student_grades/domain/repositories/grades_repository.dart';
 import 'package:univalle_app/features/student_grades/presentation/providers/grades_providers.dart';
 

@@ -1,7 +1,7 @@
 import '../../../../core/error/exception_mapper.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
-import '../../domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../../domain/entities/announcements_page.dart';
 import '../../domain/repositories/remote_config_repository.dart';
 import '../datasources/remote_config_local_datasource.dart';

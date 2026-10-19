@@ -1,6 +1,6 @@
 import 'package:html/dom.dart';
 
-import '../../../../core/network/parsers/equivalences_table_parser.dart';
+import '../../../../core/parsers/equivalences_table_parser.dart';
 import '../../../../core/network/sira_academic_record_client.dart';
 import '../../student_grades_strings.dart';
 import '../models/academic_history_model.dart';

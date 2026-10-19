@@ -1,5 +1,5 @@
 import '../../../../core/error/result.dart';
-import '../entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../entities/announcements_page.dart';
 
 abstract interface class RemoteConfigRepository {

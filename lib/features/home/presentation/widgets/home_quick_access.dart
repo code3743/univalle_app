@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/shortcut_card.dart';
-import '../../../remote_config/domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../../home_strings.dart';
 import 'modules_state_builder.dart';
 import 'quick_access_items.dart';

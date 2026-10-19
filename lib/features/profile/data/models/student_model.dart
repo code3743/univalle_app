@@ -1,4 +1,4 @@
-import '../../domain/entities/student.dart';
+import '../../../../core/domain/entities/student.dart';
 
 class StudentModel {
   final String documentId;
@@ -22,13 +22,13 @@ class StudentModel {
   });
 
   Student toEntity() => Student(
-        documentId: documentId,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        programName: programName,
-        campus: campus,
-        average: average,
-        accumulatedCredits: accumulatedCredits,
-      );
+    documentId: documentId,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    programName: programName,
+    campus: campus,
+    average: average,
+    accumulatedCredits: accumulatedCredits,
+  );
 }

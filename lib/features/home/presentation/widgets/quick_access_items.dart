@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
-import '../../../remote_config/domain/entities/app_config.dart';
-import '../../../remote_config/domain/entities/app_module.dart';
+import '../../../../core/domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_module.dart';
 import '../utils/module_style.dart';
 import '../../home_strings.dart';
 

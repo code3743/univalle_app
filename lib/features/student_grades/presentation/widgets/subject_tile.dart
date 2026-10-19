@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/grade_value.dart';
-import '../../domain/entities/subject.dart';
+import '../../../../core/domain/entities/subject.dart';
 import '../../student_grades_strings.dart';
 
 class SubjectTile extends StatelessWidget {

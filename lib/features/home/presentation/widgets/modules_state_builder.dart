@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/widgets/app_empty_view.dart';
 import '../../../../core/widgets/shimmer/app_shimmer.dart';
-import '../../../remote_config/domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../../home_strings.dart';
 import 'quick_access_items.dart';
 import 'quick_access_skeleton.dart';

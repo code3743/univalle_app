@@ -8,7 +8,7 @@ import '../../../../core/constants/campus.dart';
 import '../../../../core/constants/sira_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/dio_exception_mapper.dart';
-import '../../../../core/network/parsers/equivalences_table_parser.dart';
+import '../../../../core/parsers/equivalences_table_parser.dart';
 import '../../../../core/network/sira_academic_record_client.dart';
 import '../../profile_strings.dart';
 import '../models/student_model.dart';

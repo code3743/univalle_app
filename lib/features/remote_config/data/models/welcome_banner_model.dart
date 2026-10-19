@@ -1,4 +1,4 @@
-import '../../domain/entities/welcome_banner.dart';
+import '../../../../core/domain/entities/welcome_banner.dart';
 
 class WelcomeBannerModel {
   final bool enabled;

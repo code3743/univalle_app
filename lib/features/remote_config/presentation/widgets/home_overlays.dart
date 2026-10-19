@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../viewmodels/home_overlays_view_model.dart';
 import 'update_available_sheet.dart';
 import 'welcome_banner_dialog.dart';

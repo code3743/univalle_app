@@ -4,7 +4,7 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/widgets/app_logo.dart';
 import '../../../../../core/widgets/user_avatar.dart';
-import '../../../../profile/domain/entities/student.dart';
+import '../../../../../core/domain/entities/student.dart';
 import '../../../digital_card_strings.dart';
 import 'header_shine.dart';
 

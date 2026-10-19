@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/device/app_platform_provider.dart';
 import '../../../../core/device/app_version_provider.dart';
-import '../../domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../providers/remote_config_providers.dart';
 
 part 'remote_config_view_model.g.dart';

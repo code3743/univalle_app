@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/asset_paths.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../profile/domain/entities/student.dart';
+import '../../../../core/domain/entities/student.dart';
 import '../../home_strings.dart';
 
 class ProgramCard extends StatelessWidget {

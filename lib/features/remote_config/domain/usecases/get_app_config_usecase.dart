@@ -1,5 +1,5 @@
 import '../../../../core/error/result.dart';
-import '../entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../repositories/remote_config_repository.dart';
 
 class GetAppConfigUseCase {
