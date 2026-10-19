@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../../remote_config_strings.dart';
 
 class UpdateAvailableSheet extends StatelessWidget {

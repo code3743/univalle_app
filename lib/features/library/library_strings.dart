@@ -6,6 +6,12 @@ abstract final class LibraryStrings {
   static const emptyLoans = 'No tienes ejemplares prestados actualmente.';
   static const emptyHistory = 'Aún no tienes préstamos registrados.';
 
+  static const dueDateLabel = 'Vence';
+  static const fineLabel = 'Multa';
+  static const renewAction = 'Renovar';
+  static const renewSuccess = 'Ejemplar renovado. Nueva fecha de vencimiento:';
+  static const renewUnavailable = 'No pudimos renovar el ejemplar.';
+
   static const noSessionId = 'No se pudo iniciar sesión con la biblioteca.';
   static const invalidCredentials =
       'No se pudo iniciar sesión con la biblioteca.';

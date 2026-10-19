@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/entities/welcome_banner.dart' as domain;
+import '../../../../core/domain/entities/welcome_banner.dart' as domain;
 import '../../remote_config_strings.dart';
 
 /// The image is the point of this dialog, so it takes the full width up

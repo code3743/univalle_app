@@ -1,4 +1,4 @@
-import '../../domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import 'app_module_model.dart';
 import 'welcome_banner_model.dart';
 

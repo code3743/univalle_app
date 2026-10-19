@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/extensions/snackbar_extension.dart';
-import '../../domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../../remote_config_strings.dart';
 import '../widgets/blocking_message_view.dart';
 

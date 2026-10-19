@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:univalle_app/core/constants/asset_paths.dart';
 import 'package:univalle_app/core/theme/app_colors.dart';
-import 'package:univalle_app/features/remote_config/presentation/utils/module_style.dart';
+import 'package:univalle_app/features/home/presentation/utils/module_style.dart';
 
 void main() {
   group('moduleIconAsset', () {

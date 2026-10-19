@@ -7,6 +7,7 @@ import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../student_grades_strings.dart';
 import '../viewmodels/grades_view_model.dart';
+import '../widgets/equivalences_shortcut.dart';
 import '../widgets/grades_skeleton.dart';
 import '../widgets/grades_summary.dart';
 import '../widgets/period_grades_section.dart';
@@ -32,7 +33,8 @@ class GradesView extends ConsumerWidget {
         value: gradesState,
         onRetry: () => ref.invalidate(gradesViewModelProvider),
         skeleton: const GradesSkeleton(),
-        data: (periods) {
+        data: (history) {
+          final periods = history.periods;
           if (periods.isEmpty) {
             return Center(
               child: Text(
@@ -46,6 +48,7 @@ class GradesView extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GradesSummary(periods: periods),
+              const EquivalencesShortcut(),
               const SizedBox(height: AppSpacing.lg),
               for (final (index, period) in periods.indexed) ...[
                 PeriodGradesSection(

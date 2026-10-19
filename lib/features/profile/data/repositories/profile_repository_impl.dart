@@ -1,7 +1,7 @@
 import '../../../../core/error/exception_mapper.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
-import '../../domain/entities/student.dart';
+import '../../../../core/domain/entities/student.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../datasources/sira_profile_remote_datasource.dart';
 

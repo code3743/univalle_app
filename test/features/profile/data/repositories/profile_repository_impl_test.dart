@@ -6,7 +6,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/profile/data/datasources/sira_profile_remote_datasource.dart';
 import 'package:univalle_app/features/profile/data/models/student_model.dart';
 import 'package:univalle_app/features/profile/data/repositories/profile_repository_impl.dart';
-import 'package:univalle_app/features/profile/domain/entities/student.dart';
+import 'package:univalle_app/core/domain/entities/student.dart';
 
 class MockSiraProfileRemoteDataSource extends Mock
     implements SiraProfileRemoteDataSource {}

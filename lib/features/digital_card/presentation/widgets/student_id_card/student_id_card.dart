@@ -3,7 +3,7 @@ import 'package:univalle_app/core/theme/app_colors.dart';
 
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/utils/name_formatter.dart';
-import '../../../../profile/domain/entities/student.dart';
+import '../../../../../core/domain/entities/student.dart';
 import '../../../digital_card_strings.dart';
 import 'barcode_strip.dart';
 import 'id_card_header.dart';

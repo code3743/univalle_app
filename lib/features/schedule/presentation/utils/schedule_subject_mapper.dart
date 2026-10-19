@@ -1,4 +1,4 @@
-import '../../../student_grades/domain/entities/subject.dart';
+import '../../../../core/domain/entities/subject.dart';
 import '../../domain/entities/schedule_subject.dart';
 
 /// Derives the current period's lookup keys for the schedule from grades

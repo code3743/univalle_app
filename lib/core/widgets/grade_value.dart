@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../student_grades_strings.dart';
+import '../constants/app_strings.dart';
+import '../theme/app_colors.dart';
 
 /// Renders a subject's raw grade text, parsing it only for display.
 ///
@@ -24,9 +24,11 @@ class GradeValue extends StatelessWidget {
     final isValidGrade = grade != null && grade >= 0 && grade <= 5;
 
     return Text(
-      rawGrade.isEmpty ? StudentGradesStrings.noGradeValue : rawGrade,
+      rawGrade.isEmpty ? AppStrings.noGradeValue : rawGrade,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        color: isValidGrade ? _colorFor(grade, colorScheme) : colorScheme.onSurfaceVariant,
+        color: isValidGrade
+            ? _colorFor(grade, colorScheme)
+            : colorScheme.onSurfaceVariant,
         fontWeight: FontWeight.bold,
       ),
     );

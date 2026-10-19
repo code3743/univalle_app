@@ -1,4 +1,4 @@
-import 'subject.dart';
+import '../../../../core/domain/entities/subject.dart';
 
 class Grades {
   final String period;

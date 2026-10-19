@@ -6,6 +6,7 @@ import '../../data/datasources/library_remote_datasource.dart';
 import '../../data/repositories/library_repository_impl.dart';
 import '../../domain/repositories/library_repository.dart';
 import '../../domain/usecases/get_library_account_usecase.dart';
+import '../../domain/usecases/renew_library_loan_usecase.dart';
 
 part 'library_providers.g.dart';
 
@@ -28,4 +29,9 @@ LibraryRepository libraryRepository(Ref ref) {
 @Riverpod(keepAlive: true)
 GetLibraryAccountUseCase getLibraryAccountUseCase(Ref ref) {
   return GetLibraryAccountUseCase(ref.watch(libraryRepositoryProvider));
+}
+
+@Riverpod(keepAlive: true)
+RenewLibraryLoanUseCase renewLibraryLoanUseCase(Ref ref) {
+  return RenewLibraryLoanUseCase(ref.watch(libraryRepositoryProvider));
 }

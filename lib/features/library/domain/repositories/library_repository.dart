@@ -3,4 +3,5 @@ import '../entities/library_account.dart';
 
 abstract interface class LibraryRepository {
   Future<Result<LibraryAccount>> getAccount();
+  Future<Result<String>> renewLoan(String barcode);
 }

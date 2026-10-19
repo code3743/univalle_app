@@ -1,4 +1,4 @@
-import '../../domain/entities/app_module.dart';
+import '../../../../core/domain/entities/app_module.dart';
 
 class AppModuleModel {
   final String key;

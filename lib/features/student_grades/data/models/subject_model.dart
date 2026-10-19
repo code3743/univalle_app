@@ -1,4 +1,4 @@
-import '../../domain/entities/subject.dart';
+import '../../../../core/domain/entities/subject.dart';
 
 class SubjectModel {
   final String code;

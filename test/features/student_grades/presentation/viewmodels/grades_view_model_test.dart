@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:univalle_app/features/student_grades/domain/entities/academic_history.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
@@ -21,6 +22,8 @@ const _grades = Grades(
   hasAcademicMerit: false,
   subjects: [],
 );
+
+const _history = AcademicHistory(periods: [_grades], equivalences: []);
 
 void main() {
   late MockGradesRepository repository;
@@ -44,13 +47,13 @@ void main() {
 
   test('returns the grades for the current session username', () async {
     when(() => repository.getGrades(username: 'jdoe'))
-        .thenAnswer((_) async => const Ok([_grades]));
+        .thenAnswer((_) async => const Ok(_history));
     final container = createContainer(overrides: overridesWith(repository));
     container.read(currentUsernameProvider.notifier).set('jdoe');
 
     final result = await container.read(gradesViewModelProvider.future);
 
-    expect(result, [_grades]);
+    expect(result, _history);
   });
 
   test('throws the failure when the repository call fails', () async {

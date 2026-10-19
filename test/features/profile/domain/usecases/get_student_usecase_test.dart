@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
-import 'package:univalle_app/features/profile/domain/entities/student.dart';
+import 'package:univalle_app/core/domain/entities/student.dart';
 import 'package:univalle_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:univalle_app/features/profile/domain/usecases/get_student_usecase.dart';
 

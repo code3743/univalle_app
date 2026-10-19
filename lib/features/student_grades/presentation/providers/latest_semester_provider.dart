@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/utils/sira_period_formatter.dart';
-import '../../../student_grades/presentation/viewmodels/grades_view_model.dart';
+import '../viewmodels/grades_view_model.dart';
 
 part 'latest_semester_provider.g.dart';
 
@@ -10,7 +10,7 @@ part 'latest_semester_provider.g.dart';
 /// academic history yet.
 @riverpod
 String? latestSemester(Ref ref) {
-  final periods = ref.watch(gradesViewModelProvider).value;
+  final periods = ref.watch(gradesViewModelProvider).value?.periods;
   if (periods == null || periods.isEmpty) return null;
 
   return periods

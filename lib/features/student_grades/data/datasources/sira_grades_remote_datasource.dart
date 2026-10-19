@@ -1,26 +1,40 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
-import 'package:html/parser.dart' show parse;
 
-import '../../../../core/constants/sira_constants.dart';
-import '../../../../core/error/exceptions.dart';
-import '../../../../core/network/dio_exception_mapper.dart';
+import '../../../../core/parsers/equivalences_table_parser.dart';
+import '../../../../core/network/sira_academic_record_client.dart';
 import '../../student_grades_strings.dart';
+import '../models/academic_history_model.dart';
+import '../models/equivalence_model.dart';
 import '../models/grades_model.dart';
 import '../models/subject_model.dart';
 
 class SiraGradesRemoteDataSource {
-  final Dio _dio;
-  const SiraGradesRemoteDataSource(this._dio);
+  final SiraAcademicRecordClient _client;
+  const SiraGradesRemoteDataSource(this._client);
 
-  Future<List<GradesModel>> fetchGrades({required String username}) async {
-    final report = await _fetchFullReport(_studentCodeFrom(username));
+  Future<AcademicHistoryModel> fetchGrades({required String username}) async {
+    final report = await _client.fetchFullReport(
+      studentCode: _studentCodeFrom(username),
+      unavailableMessage: StudentGradesStrings.gradesUnavailable,
+    );
     final periodTables = report.querySelectorAll(
       'table[cellspacing="1"]>tbody',
     );
-    return periodTables.map(_parsePeriod).whereType<GradesModel>().toList();
+    return AcademicHistoryModel(
+      periods: periodTables.map(_parsePeriod).whereType<GradesModel>().toList(),
+      equivalences: parseEquivalences(report)
+          .map(
+            (row) => EquivalenceModel(
+              code: row.code,
+              name: row.name,
+              grade: row.grade,
+              typology: row.typology,
+              component: row.component,
+              credits: row.credits,
+            ),
+          )
+          .toList(),
+    );
   }
 
   String _studentCodeFrom(String username) => username.split('-').first;
@@ -88,51 +102,5 @@ class SiraGradesRemoteDataSource {
       grade: habilitacionGrade.isNotEmpty ? habilitacionGrade : finalGrade,
       isCanceled: cells[10].text.trim().contains('CANCELACIÓN'),
     );
-  }
-
-  Future<Document> _fetchFullReport(String studentCode) async {
-    final formResponse = await _run(
-      () => _dio.post(
-        SiraConstants.academicRecordPath,
-        data: {
-          'accion': 'Consultar Historial',
-          'codigo_estudiante': studentCode,
-          'modulo': 'Academica',
-          'x': '22',
-          'y': '21',
-        },
-      ),
-    );
-
-    final formDocument = parse(latin1.decode(formResponse.data as List<int>));
-    final formData = <String, String>{};
-    for (final input in formDocument.querySelectorAll('form > input')) {
-      final name = input.attributes['name'];
-      final value = input.attributes['value'];
-      if (name != null && value != null) formData[name] = value;
-    }
-    formData['TipoCarpeta'] = 'COMPLETA';
-    formData['DetalleCarpeta'] = 'COMPLETA';
-    formData['accion'] = 'Generar Carpeta';
-
-    final reportResponse = await _run(
-      () => _dio.post(SiraConstants.academicRecordPath, data: formData),
-    );
-
-    if (reportResponse.statusCode != 200) {
-      throw const ServerException(
-        message: StudentGradesStrings.gradesUnavailable,
-      );
-    }
-
-    return parse(latin1.decode(reportResponse.data as List<int>));
-  }
-
-  Future<T> _run<T>(Future<T> Function() request) async {
-    try {
-      return await request();
-    } on DioException catch (e) {
-      throw mapDioException(e);
-    }
   }
 }

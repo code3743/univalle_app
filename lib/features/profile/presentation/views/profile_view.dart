@@ -11,7 +11,7 @@ import '../../../../core/utils/name_formatter.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../../../core/widgets/user_avatar.dart';
 import '../../../auth/presentation/viewmodels/auth_view_model.dart';
-import '../../domain/entities/student.dart';
+import '../../../../core/domain/entities/student.dart';
 import '../../profile_strings.dart';
 import '../viewmodels/profile_view_model.dart';
 import '../widgets/profile_skeleton.dart';

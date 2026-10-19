@@ -8,6 +8,8 @@ import '../../../../core/constants/campus.dart';
 import '../../../../core/constants/sira_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/dio_exception_mapper.dart';
+import '../../../../core/parsers/equivalences_table_parser.dart';
+import '../../../../core/network/sira_academic_record_client.dart';
 import '../../profile_strings.dart';
 import '../models/student_model.dart';
 
@@ -27,7 +29,8 @@ typedef _AcademicRecord = ({
 
 class SiraProfileRemoteDataSource {
   final Dio _dio;
-  const SiraProfileRemoteDataSource(this._dio);
+  final SiraAcademicRecordClient _client;
+  const SiraProfileRemoteDataSource(this._dio, this._client);
 
   Future<StudentModel> fetchStudent({required String username}) async {
     final contact = await _fetchContactInfo();
@@ -60,7 +63,9 @@ class SiraProfileRemoteDataSource {
     );
 
     if (response.statusCode != 200) {
-      throw const ServerException(message: ProfileStrings.studentInfoUnavailable);
+      throw const ServerException(
+        message: ProfileStrings.studentInfoUnavailable,
+      );
     }
 
     final document = parse(latin1.decode(response.data as List<int>));
@@ -81,67 +86,57 @@ class SiraProfileRemoteDataSource {
   }
 
   Future<_AcademicRecord> _fetchAcademicRecord(String studentCode) async {
-    final formResponse = await _run(
-      () => _dio.post(
-        SiraConstants.academicRecordPath,
-        data: {
-          'accion': 'Consultar Historial',
-          'codigo_estudiante': studentCode,
-          'modulo': 'Academica',
-          'x': '22',
-          'y': '21',
-        },
-      ),
+    final recordDocument = await _client.fetchFullReport(
+      studentCode: studentCode,
+      unavailableMessage: ProfileStrings.studentInfoUnavailable,
     );
-
-    final formDocument = parse(latin1.decode(formResponse.data as List<int>));
-    final formData = <String, String>{};
-    for (final input in formDocument.querySelectorAll('form > input')) {
-      final name = input.attributes['name'];
-      final value = input.attributes['value'];
-      if (name != null && value != null) formData[name] = value;
-    }
-    formData['TipoCarpeta'] = 'COMPLETA';
-    formData['DetalleCarpeta'] = 'COMPLETA';
-    formData['accion'] = 'Generar Carpeta';
-
-    final recordResponse = await _run(
-      () => _dio.post(SiraConstants.academicRecordPath, data: formData),
-    );
-
-    if (recordResponse.statusCode != 200) {
-      throw const ServerException(message: ProfileStrings.studentInfoUnavailable);
-    }
-
-    final recordDocument = parse(latin1.decode(recordResponse.data as List<int>));
-    final lines = recordDocument
+    final lines =
+        recordDocument
             .querySelector('font')
             ?.text
             .trim()
             .split('\n')
             .map((line) => line.trim())
             .where((line) => line.isNotEmpty)
-            .map((line) => line.split(':').length > 1 ? line.split(':')[1].trim() : '')
+            .map(
+              (line) =>
+                  line.split(':').length > 1 ? line.split(':')[1].trim() : '',
+            )
             .toList() ??
         const <String>[];
 
     // Third line format: "programId-campusCode-...-programName".
-    final programFields = lines.length > 2 ? lines[2].split('-') : const <String>[];
+    final programFields = lines.length > 2
+        ? lines[2].split('-')
+        : const <String>[];
     if (programFields.length < 4) {
-      throw const ServerException(message: ProfileStrings.studentInfoUnavailable);
+      throw const ServerException(
+        message: ProfileStrings.studentInfoUnavailable,
+      );
     }
 
-    final averageText = recordDocument.querySelector('.error > font')?.text.trim();
+    final averageText = recordDocument
+        .querySelector('.error > font')
+        ?.text
+        .trim();
     final creditsCells = recordDocument.querySelectorAll(
       'td[title="Acumulado: Número de Créditos Aprobados Acumulados"]',
     );
-    final creditsText = creditsCells.isNotEmpty ? creditsCells.last.text.trim() : null;
+    final creditsText = creditsCells.isNotEmpty
+        ? creditsCells.last.text.trim()
+        : null;
+
+    // SIRA's cumulative approved credits exclude equivalences (homologated
+    // subjects), which are listed in a separate table of the same report.
+    final equivalenceCredits = parseEquivalences(recordDocument)
+        .fold<int>(0, (sum, item) => sum + item.credits);
 
     return (
       campusCode: programFields[1].trim(),
       programName: programFields[3].trim(),
       average: double.tryParse(averageText ?? '') ?? 0,
-      accumulatedCredits: int.tryParse(creditsText ?? '') ?? 0,
+      accumulatedCredits:
+          (int.tryParse(creditsText ?? '') ?? 0) + equivalenceCredits,
     );
   }
 

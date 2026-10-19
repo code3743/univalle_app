@@ -1,6 +1,6 @@
 import '../../../../core/error/result.dart';
-import '../entities/grades.dart';
+import '../entities/academic_history.dart';
 
 abstract interface class GradesRepository {
-  Future<Result<List<Grades>>> getGrades({required String username});
+  Future<Result<AcademicHistory>> getGrades({required String username});
 }

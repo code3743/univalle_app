@@ -24,6 +24,7 @@ void main() {
   late LibraryRemoteDataSource dataSource;
   late String sessionHtml;
   late String accountHtml;
+  late String accountWithLoansHtml;
 
   setUpAll(() {
     registerFallbackValue(<String, dynamic>{});
@@ -32,6 +33,9 @@ void main() {
         .readAsStringSync();
     accountHtml = File('test/fixtures/library/opac_account.html')
         .readAsStringSync();
+    accountWithLoansHtml = File(
+      'test/fixtures/library/opac_account_with_loans.html',
+    ).readAsStringSync();
   });
 
   setUp(() {
@@ -44,6 +48,7 @@ void main() {
     String? sessionResponse,
     String? loginResponse,
     String? accountResponse,
+    String? renewResponse,
   }) {
     // A single stub routes by path: the home page GET (`_dio.get('')`)
     // passes no `options` while the account page GET does, and mocktail's
@@ -55,6 +60,9 @@ void main() {
           final path = invocation.positionalArguments[0] as String;
           if (path == LibraryConstants.accountPath) {
             return _stringResponse(accountResponse ?? accountHtml);
+          }
+          if (path.startsWith(LibraryConstants.renewPath)) {
+            return _stringResponse(renewResponse ?? '');
           }
           return _stringResponse(sessionResponse ?? sessionHtml);
         });
@@ -71,6 +79,21 @@ void main() {
   }
 
   group('fetchAccount', () {
+    test('parses current loans with due date and fine', () async {
+      stubAuthAndAccount(accountResponse: accountWithLoansHtml);
+
+      final account = await dataSource.fetchAccount(username: '0000000-3743');
+
+      expect(account.currentLoans, hasLength(2));
+      final first = account.currentLoans.first;
+      expect(first.code, '0443869');
+      expect(first.location, 'Biblioteca Sede Tulua');
+      expect(first.dueDate, '03-Nov-2026');
+      expect(first.fine, '0.00');
+      expect(account.currentLoans.last.fine, '1500.00');
+      expect(account.history, hasLength(4));
+    });
+
     test('parses the fine and loan history from a real OPAC account', () async {
       stubAuthAndAccount();
 
@@ -172,6 +195,53 @@ void main() {
       expect(
         () => dataSource.fetchAccount(username: '0000000-3743'),
         throwsA(isA<NetworkException>()),
+      );
+    });
+  });
+
+  group('renewLoan', () {
+    test('returns the new due date on success', () async {
+      stubAuthAndAccount(renewResponse: '10-Dec-2026\n');
+
+      final dueDate = await dataSource.renewLoan(barcode: '0443869');
+
+      expect(dueDate, '10-Dec-2026');
+      verify(
+        () => dio.get(
+          '${LibraryConstants.renewPath}0443869',
+          options: any(named: 'options'),
+        ),
+      ).called(1);
+    });
+
+    test('throws a non-retryable BusinessException with the cause', () async {
+      stubAuthAndAccount(
+        renewResponse:
+            'El Ejemplar No pudo ser Renovado por la(s) siguiente(s) '
+            'causa(s): La nueva fecha de devolución es la misma o anterior '
+            'a la fecha de devolución que actualmente tiene el ejemplar.',
+      );
+
+      await expectLater(
+        dataSource.renewLoan(barcode: '0443869'),
+        throwsA(
+          isA<BusinessException>()
+              .having((e) => e.retryable, 'retryable', isFalse)
+              .having(
+                (e) => e.message,
+                'message',
+                startsWith('La nueva fecha de devolución'),
+              ),
+        ),
+      );
+    });
+
+    test('throws when the response is empty', () async {
+      stubAuthAndAccount(renewResponse: '  ');
+
+      await expectLater(
+        dataSource.renewLoan(barcode: '0443869'),
+        throwsA(isA<ServerException>()),
       );
     });
   });

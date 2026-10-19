@@ -1,5 +1,5 @@
 import '../../../../core/error/result.dart';
-import '../entities/student.dart';
+import '../../../../core/domain/entities/student.dart';
 import '../repositories/profile_repository.dart';
 
 class GetStudentUseCase {

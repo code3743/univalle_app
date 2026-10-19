@@ -10,7 +10,7 @@ import 'package:univalle_app/features/remote_config/data/datasources/remote_conf
 import 'package:univalle_app/features/remote_config/data/datasources/remote_config_remote_datasource.dart';
 import 'package:univalle_app/features/remote_config/data/models/app_config_model.dart';
 import 'package:univalle_app/features/remote_config/data/repositories/remote_config_repository_impl.dart';
-import 'package:univalle_app/features/remote_config/domain/entities/app_config.dart';
+import 'package:univalle_app/core/domain/entities/app_config.dart';
 
 class MockRemoteConfigRemoteDataSource extends Mock
     implements RemoteConfigRemoteDataSource {}

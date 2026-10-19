@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:univalle_app/features/home/home_strings.dart';
 import 'package:univalle_app/features/home/presentation/widgets/quick_access_items.dart';
-import 'package:univalle_app/features/remote_config/domain/entities/app_config.dart';
-import 'package:univalle_app/features/remote_config/domain/entities/app_module.dart';
-import 'package:univalle_app/features/remote_config/domain/entities/welcome_banner.dart';
+import 'package:univalle_app/core/domain/entities/app_config.dart';
+import 'package:univalle_app/core/domain/entities/app_module.dart';
+import 'package:univalle_app/core/domain/entities/welcome_banner.dart';
 
 import '../../../../helpers/pump_app.dart';
 

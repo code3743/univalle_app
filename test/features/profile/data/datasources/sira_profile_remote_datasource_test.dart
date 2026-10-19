@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/constants/sira_constants.dart';
 import 'package:univalle_app/core/error/exceptions.dart';
+import 'package:univalle_app/core/network/sira_academic_record_client.dart';
 import 'package:univalle_app/features/profile/data/datasources/sira_profile_remote_datasource.dart';
 
 class MockDio extends Mock implements Dio {}
@@ -15,6 +16,8 @@ class MockDio extends Mock implements Dio {}
 // instead of recapturing the same page.
 const _academicRecordFixture =
     'test/fixtures/student_grades/academic_record_report.html';
+const _equivalencesFixture =
+    'test/fixtures/student_grades/academic_record_with_equivalences.html';
 const _contactInfoFixture = 'test/fixtures/profile/contact_info.html';
 
 const _academicRecordFormHtml = '''
@@ -46,7 +49,10 @@ void main() {
 
   setUp(() {
     dio = MockDio();
-    dataSource = SiraProfileRemoteDataSource(dio);
+    dataSource = SiraProfileRemoteDataSource(
+      dio,
+      SiraAcademicRecordClient(dio),
+    );
   });
 
   void stubFetchStudent({int? contactInfoStatusCode, int? recordStatusCode}) {
@@ -86,6 +92,19 @@ void main() {
         expect(student.campus, 'Tuluá');
         expect(student.average, 4.38);
         expect(student.accumulatedCredits, 157);
+      },
+    );
+
+    test(
+      'adds the credits of equivalences to the accumulated credits',
+      () async {
+        academicRecordHtml = File(_equivalencesFixture).readAsStringSync();
+        stubFetchStudent();
+
+        final student = await dataSource.fetchStudent(username: '0000000-3743');
+
+        // 101 approved credits reported by SIRA + 44 from equivalences.
+        expect(student.accumulatedCredits, 145);
       },
     );
 

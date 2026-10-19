@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/app_config.dart';
+import '../../../../core/domain/entities/app_config.dart';
 import '../viewmodels/remote_config_view_model.dart';
 import '../views/maintenance_view.dart';
 import '../views/update_required_view.dart';

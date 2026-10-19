@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/error/exceptions.dart';
 import 'package:univalle_app/core/constants/sira_constants.dart';
+import 'package:univalle_app/core/network/sira_academic_record_client.dart';
 import 'package:univalle_app/features/student_grades/data/datasources/sira_grades_remote_datasource.dart';
 import 'package:univalle_app/features/student_grades/student_grades_strings.dart';
 
@@ -45,25 +46,41 @@ void main() {
 
   setUp(() {
     dio = MockDio();
-    dataSource = SiraGradesRemoteDataSource(dio);
+    dataSource = SiraGradesRemoteDataSource(SiraAcademicRecordClient(dio));
   });
 
-  void stubReport({int statusCode = 200}) {
+  void stubReport({int statusCode = 200, String? html}) {
     when(() => dio.post(any(), data: any(named: 'data')))
         .thenAnswer((invocation) async {
           final data = invocation.namedArguments[#data];
           if (data is Map && data['accion'] == 'Generar Carpeta') {
-            return _htmlResponse(reportHtml, statusCode: statusCode);
+            return _htmlResponse(html ?? reportHtml, statusCode: statusCode);
           }
           return _htmlResponse(_formPageHtml);
         });
   }
 
   group('fetchGrades', () {
+    test('does not treat the equivalences table as a period', () async {
+      final equivalencesHtml = File(
+        'test/fixtures/student_grades/academic_record_with_equivalences.html',
+      ).readAsStringSync();
+      stubReport(html: equivalencesHtml);
+
+      final grades = (await dataSource.fetchGrades(username: '0000000-3743'))
+          .periods;
+
+      expect(
+        grades.where((g) => g.subjects.any((s) => s.code == '111021C')),
+        isEmpty,
+      );
+    });
+
     test('parses every period from a real SIRA academic record', () async {
       stubReport();
 
-      final grades = await dataSource.fetchGrades(username: '0000000-3743');
+      final grades = (await dataSource.fetchGrades(username: '0000000-3743'))
+          .periods;
 
       expect(grades, hasLength(10));
     });
@@ -71,7 +88,8 @@ void main() {
     test('parses a completed period\'s summary and subjects', () async {
       stubReport();
 
-      final grades = await dataSource.fetchGrades(username: '0000000-3743');
+      final grades = (await dataSource.fetchGrades(username: '0000000-3743'))
+          .periods;
 
       final first = grades.first;
       expect(first.period, 'FEBRERO/2022 - JUNIO/2022');
@@ -92,7 +110,8 @@ void main() {
     test('flags a period with an academic merit distinction', () async {
       stubReport();
 
-      final grades = await dataSource.fetchGrades(username: '0000000-3743');
+      final grades = (await dataSource.fetchGrades(username: '0000000-3743'))
+          .periods;
 
       expect(grades[1].period, 'AGOSTO/2022 - DICIEMBRE/2022');
       expect(grades[1].hasAcademicMerit, isTrue);
@@ -101,7 +120,8 @@ void main() {
     test('marks a subject canceled mid-semester with a blank grade', () async {
       stubReport();
 
-      final grades = await dataSource.fetchGrades(username: '0000000-3743');
+      final grades = (await dataSource.fetchGrades(username: '0000000-3743'))
+          .periods;
 
       final canceledPeriod = grades[5];
       expect(canceledPeriod.period, 'AGOSTO/2024 - DICIEMBRE/2024');
@@ -118,7 +138,8 @@ void main() {
       () async {
         stubReport();
 
-        final grades = await dataSource.fetchGrades(username: '0000000-3743');
+        final grades = (await dataSource.fetchGrades(username: '0000000-3743'))
+            .periods;
 
         final current = grades.last;
         expect(current.period, 'AGOSTO/2026 - DICIEMBRE/2026');

@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
-import 'package:univalle_app/features/profile/domain/entities/student.dart';
+import 'package:univalle_app/core/domain/entities/student.dart';
 import 'package:univalle_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:univalle_app/features/profile/presentation/providers/profile_providers.dart';
 import 'package:univalle_app/features/profile/presentation/viewmodels/profile_view_model.dart';
