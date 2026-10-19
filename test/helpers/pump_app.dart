@@ -48,6 +48,7 @@ extension PumpApp on WidgetTester {
         child: MaterialApp.router(theme: AppTheme.light, routerConfig: router),
       ),
     );
+    await pump();
     return router;
   }
 }
