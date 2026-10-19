@@ -6,6 +6,7 @@ import '../../features/auth/presentation/views/forgot_password_view.dart';
 import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/auth/presentation/viewmodels/auth_view_model.dart';
 import '../../features/digital_card/presentation/views/digital_card_view.dart';
+import '../../features/student_grades/presentation/views/equivalences_view.dart';
 import '../../features/home/presentation/views/all_shortcuts_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/library/presentation/views/library_view.dart';
@@ -104,6 +105,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.grades,
         builder: (context, state) => const GradesView(),
+      ),
+      GoRoute(
+        path: AppRoutes.equivalences,
+        builder: (context, state) => const EquivalencesView(),
       ),
       GoRoute(
         path: AppRoutes.digitalCard,

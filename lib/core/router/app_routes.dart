@@ -5,6 +5,7 @@ abstract final class AppRoutes {
   static const profile = '/profile';
   static const forgotPassword = '/forgot-password';
   static const grades = '/grades';
+  static const equivalences = '/equivalences';
   static const digitalCard = '/digital-card';
   static const tabulate = '/tabulated';
   static const resolution = '/resolution';
