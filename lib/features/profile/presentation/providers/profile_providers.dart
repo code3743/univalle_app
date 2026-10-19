@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../core/network/sira_academic_record_client.dart';
 import '../../../../core/network/sira_dio_provider.dart';
 import '../../data/datasources/sira_profile_remote_datasource.dart';
 import '../../data/repositories/profile_repository_impl.dart';
@@ -10,7 +11,10 @@ part 'profile_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 SiraProfileRemoteDataSource siraProfileRemoteDataSource(Ref ref) {
-  return SiraProfileRemoteDataSource(ref.watch(siraDioProvider));
+  return SiraProfileRemoteDataSource(
+    ref.watch(siraDioProvider),
+    ref.watch(siraAcademicRecordClientProvider),
+  );
 }
 
 @Riverpod(keepAlive: true)

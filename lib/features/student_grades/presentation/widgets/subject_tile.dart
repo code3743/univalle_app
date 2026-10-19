@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/widgets/grade_value.dart';
 import '../../domain/entities/subject.dart';
 import '../../student_grades_strings.dart';
-import 'grade_value.dart';
 
 class SubjectTile extends StatelessWidget {
   const SubjectTile({super.key, required this.subject});
@@ -31,9 +31,8 @@ class SubjectTile extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle.toString(),
-        style: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(color: colorScheme.onSurfaceVariant),
+        style: Theme.of(context).textTheme.bodySmall
+            ?.copyWith(color: colorScheme.onSurfaceVariant),
       ),
       trailing: GradeValue(rawGrade: subject.grade),
     );

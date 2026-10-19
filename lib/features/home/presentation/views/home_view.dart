@@ -15,7 +15,7 @@ import '../../../profile/presentation/viewmodels/profile_view_model.dart';
 import '../../../remote_config/presentation/viewmodels/remote_config_view_model.dart';
 import '../../../remote_config/presentation/widgets/home_overlays.dart';
 import '../../home_strings.dart';
-import '../providers/latest_semester_provider.dart';
+import '../../../student_grades/presentation/providers/latest_semester_provider.dart';
 import '../widgets/home_footer.dart';
 import '../widgets/home_greeting.dart';
 import '../widgets/home_quick_access.dart';

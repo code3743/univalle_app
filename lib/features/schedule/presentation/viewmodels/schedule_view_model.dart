@@ -11,7 +11,8 @@ part 'schedule_view_model.g.dart';
 class ScheduleViewModel extends _$ScheduleViewModel {
   @override
   Future<List<ScheduleClass>> build() async {
-    final periods = await ref.watch(gradesViewModelProvider.future);
+    final history = await ref.watch(gradesViewModelProvider.future);
+    final periods = history.periods;
     if (periods.isEmpty) return [];
 
     final subjects = scheduleSubjectsFrom(periods.last.subjects);

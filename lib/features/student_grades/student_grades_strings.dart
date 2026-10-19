@@ -13,5 +13,13 @@ abstract final class StudentGradesStrings {
   static const groupLabel = 'Grupo';
   static const creditsUnit = 'créditos';
   static const canceledLabel = 'Cancelada';
-  static const noGradeValue = '—';
+
+  static const equivalencesTitle = 'Equivalencias';
+  static const equivalencesEmpty = 'No tienes equivalencias registradas.';
+  static const equivalencesSubjectsLabel = 'Materias homologadas';
+  static const equivalencesCreditsLabel = 'Créditos homologados';
+
+  static String equivalencesShortcutLabel(int subjects, int credits) =>
+      '$equivalencesTitle · ${subjects == 1 ? '1 materia' : '$subjects materias'} · '
+      '$credits $creditsUnit';
 }
