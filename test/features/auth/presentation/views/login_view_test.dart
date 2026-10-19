@@ -84,30 +84,33 @@ void main() {
   testWidgets('logs in with the trimmed username and stores the session', (
     tester,
   ) async {
-    when(() => repository.login(username: 'jdoe', password: 'secret'))
-        .thenAnswer((_) async => const Ok(AuthSession(username: 'jdoe')));
+    when(
+      () => repository.login(username: '2012345-3744', password: 'secret'),
+    ).thenAnswer((_) async => const Ok(AuthSession(username: '2012345-3744')));
     await pumpView(tester);
 
-    await tester.enterText(field(AuthStrings.usernameLabel), '  jdoe ');
+    await tester.enterText(field(AuthStrings.usernameLabel), '  2012345-3744 ');
     await tester.enterText(field(AuthStrings.passwordLabel), 'secret');
     await tester.tap(find.text(AuthStrings.submit));
     await tester.pumpAndSettle();
 
-    verify(() => repository.login(username: 'jdoe', password: 'secret'))
+    verify(() => repository.login(username: '2012345-3744', password: 'secret'))
         .called(1);
     final container = ProviderScope.containerOf(
       tester.element(find.byType(LoginView)),
     );
-    expect(container.read(currentUsernameProvider), 'jdoe');
+    expect(container.read(currentUsernameProvider), '2012345-3744');
   });
 
   testWidgets('shows the failure message when the login fails', (tester) async {
-    when(() => repository.login(username: 'jdoe', password: 'bad')).thenAnswer(
-      (_) async => Err(AuthFailure(message: AuthStrings.invalidCredentials)),
-    );
+    when(() => repository.login(username: '2012345-3744', password: 'bad'))
+        .thenAnswer(
+          (_) async =>
+              Err(AuthFailure(message: AuthStrings.invalidCredentials)),
+        );
     await pumpView(tester);
 
-    await tester.enterText(field(AuthStrings.usernameLabel), 'jdoe');
+    await tester.enterText(field(AuthStrings.usernameLabel), '2012345-3744');
     await tester.enterText(field(AuthStrings.passwordLabel), 'bad');
     await tester.tap(find.text(AuthStrings.submit));
     await tester.pumpAndSettle();
@@ -117,11 +120,11 @@ void main() {
 
   testWidgets('shows a progress state while logging in', (tester) async {
     final completer = Completer<Result<AuthSession>>();
-    when(() => repository.login(username: 'jdoe', password: 'secret'))
+    when(() => repository.login(username: '2012345-3744', password: 'secret'))
         .thenAnswer((_) => completer.future);
     await pumpView(tester);
 
-    await tester.enterText(field(AuthStrings.usernameLabel), 'jdoe');
+    await tester.enterText(field(AuthStrings.usernameLabel), '2012345-3744');
     await tester.enterText(field(AuthStrings.passwordLabel), 'secret');
     await tester.tap(find.text(AuthStrings.submit));
     await tester.pump();

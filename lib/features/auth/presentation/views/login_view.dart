@@ -9,6 +9,7 @@ import '../../../../core/router/app_routes.dart';
 import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../auth_strings.dart';
+import '../utils/username_validator.dart';
 import '../viewmodels/auth_view_model.dart';
 
 class LoginView extends ConsumerStatefulWidget {
@@ -94,9 +95,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   hintText: AuthStrings.usernameHint,
                 ),
                 textInputAction: TextInputAction.next,
-                validator: (value) => (value == null || value.trim().isEmpty)
-                    ? AuthStrings.usernameRequired
-                    : null,
+                validator: validateUsername,
               ),
               const SizedBox(height: 16),
               TextFormField(

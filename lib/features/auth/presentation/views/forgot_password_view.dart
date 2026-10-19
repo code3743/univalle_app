@@ -9,6 +9,7 @@ import '../../../../core/router/app_routes.dart';
 import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../auth_strings.dart';
+import '../utils/username_validator.dart';
 import '../viewmodels/reset_password_view_model.dart';
 import '../widgets/reset_password_success_dialog.dart';
 
@@ -108,9 +109,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
                 ),
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) => _submit(isLoading),
-                validator: (value) => (value == null || value.trim().isEmpty)
-                    ? AuthStrings.usernameRequired
-                    : null,
+                validator: validateUsername,
               ),
               const SizedBox(height: 24),
               FilledButton(

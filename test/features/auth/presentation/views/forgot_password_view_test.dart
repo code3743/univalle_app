@@ -46,11 +46,11 @@ void main() {
   testWidgets('shows the success dialog and returns to login on accept', (
     tester,
   ) async {
-    when(() => repository.resetPassword(username: 'jdoe'))
+    when(() => repository.resetPassword(username: '2012345-3744'))
         .thenAnswer((_) async => const Ok('j***@correounivalle.edu.co'));
     await pumpView(tester);
 
-    await tester.enterText(find.byType(TextFormField), ' jdoe ');
+    await tester.enterText(find.byType(TextFormField), ' 2012345-3744 ');
     await tester.tap(
       find.widgetWithText(FilledButton, AuthStrings.resetPasswordSubmit),
     );
@@ -66,11 +66,11 @@ void main() {
   });
 
   testWidgets('shows the failure message when the reset fails', (tester) async {
-    when(() => repository.resetPassword(username: 'jdoe'))
+    when(() => repository.resetPassword(username: '2012345-3744'))
         .thenAnswer((_) async => Err(NetworkFailure(message: 'down')));
     await pumpView(tester);
 
-    await tester.enterText(find.byType(TextFormField), 'jdoe');
+    await tester.enterText(find.byType(TextFormField), '2012345-3744');
     await tester.tap(
       find.widgetWithText(FilledButton, AuthStrings.resetPasswordSubmit),
     );
@@ -90,14 +90,14 @@ void main() {
   });
 
   testWidgets('submits from the keyboard action too', (tester) async {
-    when(() => repository.resetPassword(username: 'jdoe'))
+    when(() => repository.resetPassword(username: '2012345-3744'))
         .thenAnswer((_) async => const Ok('j***@correounivalle.edu.co'));
     await pumpView(tester);
 
-    await tester.enterText(find.byType(TextFormField), 'jdoe');
+    await tester.enterText(find.byType(TextFormField), '2012345-3744');
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
 
-    verify(() => repository.resetPassword(username: 'jdoe')).called(1);
+    verify(() => repository.resetPassword(username: '2012345-3744')).called(1);
   });
 }

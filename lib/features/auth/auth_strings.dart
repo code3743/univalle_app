@@ -4,6 +4,8 @@ abstract final class AuthStrings {
   static const usernameLabel = 'Usuario';
   static const usernameHint = 'Código-programa';
   static const usernameRequired = 'Ingresa tu usuario.';
+  static const usernameInvalid =
+      'Usa el formato código-programa, por ejemplo 2259394-3743.';
   static const passwordLabel = 'Contraseña';
   static const passwordRequired = 'Ingresa tu contraseña.';
   static const loggingIn = 'Iniciando sesión...';
