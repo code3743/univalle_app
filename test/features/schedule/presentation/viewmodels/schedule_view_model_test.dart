@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:univalle_app/features/student_grades/domain/entities/academic_history.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
@@ -58,8 +59,9 @@ void main() {
   ];
 
   test('returns an empty schedule when there are no grading periods', () async {
-    when(() => gradesRepository.getGrades(username: 'jdoe'))
-        .thenAnswer((_) async => const Ok([]));
+    when(() => gradesRepository.getGrades(username: 'jdoe')).thenAnswer(
+      (_) async => const Ok(AcademicHistory(periods: [], equivalences: [])),
+    );
     final container = createContainer(
       overrides: overridesWith(
         schedule: scheduleRepository,
@@ -87,9 +89,14 @@ void main() {
       campusId: '1',
     );
     when(() => gradesRepository.getGrades(username: 'jdoe')).thenAnswer(
-      (_) async => Ok([
-        _grades([canceled]),
-      ]),
+      (_) async => Ok(
+        AcademicHistory(
+          periods: [
+            _grades([canceled]),
+          ],
+          equivalences: const [],
+        ),
+      ),
     );
     final container = createContainer(
       overrides: overridesWith(
@@ -111,9 +118,14 @@ void main() {
     'fetches the schedule for the latest period\'s enrolled subjects',
     () async {
       when(() => gradesRepository.getGrades(username: 'jdoe')).thenAnswer(
-        (_) async => Ok([
-          _grades([_enrolledSubject]),
-        ]),
+        (_) async => Ok(
+          AcademicHistory(
+            periods: [
+              _grades([_enrolledSubject]),
+            ],
+            equivalences: const [],
+          ),
+        ),
       );
       const scheduleClass = ScheduleClass(
         subjectCode: '101',
@@ -157,9 +169,14 @@ void main() {
 
   test('throws the failure when fetching the schedule fails', () async {
     when(() => gradesRepository.getGrades(username: 'jdoe')).thenAnswer(
-      (_) async => Ok([
-        _grades([_enrolledSubject]),
-      ]),
+      (_) async => Ok(
+        AcademicHistory(
+          periods: [
+            _grades([_enrolledSubject]),
+          ],
+          equivalences: const [],
+        ),
+      ),
     );
     final failure = NetworkFailure(message: 'down');
     when(() => scheduleRepository.getSchedule(subjects: any(named: 'subjects')))

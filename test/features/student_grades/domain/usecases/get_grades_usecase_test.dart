@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
+import 'package:univalle_app/features/student_grades/domain/entities/academic_history.dart';
 import 'package:univalle_app/features/student_grades/domain/entities/grades.dart';
 import 'package:univalle_app/features/student_grades/domain/repositories/grades_repository.dart';
 import 'package:univalle_app/features/student_grades/domain/usecases/get_grades_usecase.dart';
@@ -18,22 +19,25 @@ void main() {
   });
 
   test('forwards the username to the repository', () async {
-    const grades = [
-      Grades(
-        period: 'Feb/22 – Jun/22',
-        average: 4.1,
-        credits: 18,
-        approvedPercentage: '100%',
-        hasAcademicMerit: false,
-        subjects: [],
-      ),
-    ];
+    const grades = AcademicHistory(
+      periods: [
+        Grades(
+          period: 'Feb/22 – Jun/22',
+          average: 4.1,
+          credits: 18,
+          approvedPercentage: '100%',
+          hasAcademicMerit: false,
+          subjects: [],
+        ),
+      ],
+      equivalences: [],
+    );
     when(() => repository.getGrades(username: 'jperez'))
         .thenAnswer((_) async => const Ok(grades));
 
     final result = await useCase.call(username: 'jperez');
 
-    expect((result as Ok<List<Grades>>).value, grades);
+    expect((result as Ok<AcademicHistory>).value, grades);
     verify(() => repository.getGrades(username: 'jperez')).called(1);
   });
 
@@ -44,6 +48,6 @@ void main() {
 
     final result = await useCase.call(username: 'jperez');
 
-    expect((result as Err<List<Grades>>).failure, failure);
+    expect((result as Err<AcademicHistory>).failure, failure);
   });
 }
