@@ -11,6 +11,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/router/app_router.dart';
 import 'package:univalle_app/core/router/app_routes.dart';
 import 'package:univalle_app/core/theme/app_theme.dart';
+import 'package:univalle_app/features/auth/presentation/views/login_view.dart';
 import 'package:univalle_app/features/auth/domain/entities/auth_session.dart';
 import 'package:univalle_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:univalle_app/features/auth/presentation/providers/auth_providers.dart';
@@ -21,6 +22,7 @@ import 'package:univalle_app/features/remote_config/domain/repositories/remote_c
 import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
 
 import '../../helpers/container.dart';
+import '../../helpers/pump_app.dart' show stubbedRoutePaths;
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
@@ -247,5 +249,64 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('LOGIN'), findsOneWidget);
+  });
+
+  group('appRouterProvider', () {
+    test('declares a route for every AppRoutes path', () {
+      final container = createContainer(
+        overrides: [
+          authRepositoryProvider.overrideWithValue(MockAuthRepository()),
+          remoteConfigRepositoryProvider.overrideWithValue(
+            MockRemoteConfigRepository(),
+          ),
+          appPlatformProvider.overrideWithValue('android'),
+        ],
+      );
+
+      final router = container.read(appRouterProvider);
+      final paths = router.configuration.routes
+          .whereType<GoRoute>()
+          .map((route) => route.path)
+          .toSet();
+
+      expect(paths, stubbedRoutePaths.toSet()..add(AppRoutes.home));
+    });
+
+    testWidgets('boots through splash and lands on the real Login view', (
+      tester,
+    ) async {
+      final authRepository = MockAuthRepository();
+      final remoteConfigRepository = MockRemoteConfigRepository();
+      when(() => authRepository.restoreSession())
+          .thenAnswer((_) async => const Ok(null));
+      when(
+        () => remoteConfigRepository.getConfig(
+          platform: any(named: 'platform'),
+          version: any(named: 'version'),
+        ),
+      ).thenAnswer((_) async => Ok(_config()));
+      final container = createContainer(
+        overrides: [
+          authRepositoryProvider.overrideWithValue(authRepository),
+          remoteConfigRepositoryProvider.overrideWithValue(
+            remoteConfigRepository,
+          ),
+          appPlatformProvider.overrideWithValue('android'),
+        ],
+      );
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: MaterialApp.router(
+            theme: AppTheme.light,
+            routerConfig: container.read(appRouterProvider),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LoginView), findsOneWidget);
+    });
   });
 }
