@@ -85,7 +85,7 @@ class PendingPaymentCard extends ConsumerWidget {
             label: RestaurantStrings.expirationDateLabel,
             value: payment.expirationDate,
           ),
-          Spacer(),
+          const Spacer(),
 
           Text(payment.message, textAlign: TextAlign.center),
 

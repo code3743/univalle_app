@@ -54,7 +54,7 @@ class IdCardHeader extends StatelessWidget {
                   children: [
                     const AppLogo(size: 28),
                     const SizedBox(width: AppSpacing.sm),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,

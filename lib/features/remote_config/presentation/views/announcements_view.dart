@@ -63,7 +63,7 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
         onRetry: () => ref.invalidate(announcementsViewModelProvider),
         skeleton: const SkeletonList(itemHeight: 96),
         data: (feed) => feed.items.isEmpty
-            ? AppEmptyView(
+            ? const AppEmptyView(
                 icon: Icons.campaign_outlined,
                 title: HomeStrings.announcementsEmptyMessage,
               )

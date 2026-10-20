@@ -29,7 +29,7 @@ void main() {
 
   testWidgets('LibraryTabBar labels both tabs', (tester) async {
     await tester.pumpApp(
-      DefaultTabController(length: 2, child: const LibraryTabBar()),
+      const DefaultTabController(length: 2, child: LibraryTabBar()),
     );
 
     expect(find.text(LibraryStrings.loansTab), findsOneWidget);

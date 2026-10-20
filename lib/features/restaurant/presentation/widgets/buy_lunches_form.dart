@@ -112,7 +112,7 @@ class _BuyLunchesFormState extends ConsumerState<BuyLunchesForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(RestaurantStrings.totalToPayLabel),
+              const Text(RestaurantStrings.totalToPayLabel),
               Text(
                 LunchMoneyFormatter.format(total),
                 style: Theme.of(context).textTheme.titleMedium

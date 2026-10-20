@@ -45,10 +45,10 @@ class HomeQuickAccess extends StatelessWidget {
             if (hasItems)
               TextButton(
                 onPressed: onViewAll,
-                child: Row(
+                child: const Row(
                   children: [
                     Text(HomeStrings.viewAll),
-                    const Icon(Icons.chevron_right, size: 18),
+                    Icon(Icons.chevron_right, size: 18),
                   ],
                 ),
               ),

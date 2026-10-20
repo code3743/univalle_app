@@ -8,15 +8,15 @@ class RestaurantSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const ShimmerBox(height: 14, width: 220),
-        const SizedBox(height: AppSpacing.md),
-        const ShimmerBox(height: 260, width: double.infinity, radius: 24),
-        const SizedBox(height: AppSpacing.lg),
-        const ShimmerBox(height: 56, width: double.infinity, radius: 20),
-        const SizedBox(height: AppSpacing.lg),
-        const ShimmerBox(height: 14, width: 260),
+        ShimmerBox(height: 14, width: 220),
+        SizedBox(height: AppSpacing.md),
+        ShimmerBox(height: 260, width: double.infinity, radius: 24),
+        SizedBox(height: AppSpacing.lg),
+        ShimmerBox(height: 56, width: double.infinity, radius: 20),
+        SizedBox(height: AppSpacing.lg),
+        ShimmerBox(height: 14, width: 260),
       ],
     );
   }
