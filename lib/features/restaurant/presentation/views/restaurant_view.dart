@@ -42,7 +42,7 @@ class RestaurantView extends ConsumerWidget {
             const SizedBox(height: AppSpacing.lg),
             account.pendingPayment == null
                 ? BuyLunchesForm(account: account)
-                : _ConfirmPaymentCta(),
+                : const _ConfirmPaymentCta(),
             const SizedBox(height: AppSpacing.lg),
             Text(
               RestaurantStrings.noPaymentDisclaimer,

@@ -9,14 +9,14 @@ class LibrarySkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ShimmerBox(height: 76, width: double.infinity, radius: 20),
-        const SizedBox(height: AppSpacing.lg),
-        const ShimmerBox(height: 32, width: double.infinity),
-        const SizedBox(height: AppSpacing.md),
-        const Expanded(child: SkeletonList()),
+        ShimmerBox(height: 76, width: double.infinity, radius: 20),
+        SizedBox(height: AppSpacing.lg),
+        ShimmerBox(height: 32, width: double.infinity),
+        SizedBox(height: AppSpacing.md),
+        Expanded(child: SkeletonList()),
       ],
     );
   }

@@ -19,7 +19,7 @@ class MockRemoteConfigRepository extends Mock
 
 String _fingerprintOf(WelcomeBanner banner) {
   final raw = '${banner.title}|${banner.description}|${banner.imageUrl ?? ''}';
-  return md5.convert(utf8.encode(raw)).toString();
+  return sha256.convert(utf8.encode(raw)).toString();
 }
 
 void main() {

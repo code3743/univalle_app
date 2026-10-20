@@ -55,7 +55,7 @@ class ModulesStateBuilder extends StatelessWidget {
     final filtered = filter == null ? items : items.where(filter!).toList();
 
     if (filtered.isEmpty) {
-      return AppEmptyView(
+      return const AppEmptyView(
         icon: Icons.apps_outlined,
         title: HomeStrings.modulesEmptyTitle,
         message: HomeStrings.modulesEmptyMessage,

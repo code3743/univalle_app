@@ -39,12 +39,12 @@ class TeachersToRateView extends ConsumerWidget {
       body: AsyncValueWidget(
         value: teachersState,
         onRetry: () => ref.invalidate(teachersToRateViewModelProvider),
-        skeleton: Column(
+        skeleton: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ShimmerBox(height: 58, width: double.infinity, radius: 20),
-            const SizedBox(height: AppSpacing.lg),
-            const SkeletonList(),
+            ShimmerBox(height: 58, width: double.infinity, radius: 20),
+            SizedBox(height: AppSpacing.lg),
+            SkeletonList(),
           ],
         ),
         data: (teachers) {

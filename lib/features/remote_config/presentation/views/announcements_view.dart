@@ -62,24 +62,31 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
         value: announcementsState,
         onRetry: () => ref.invalidate(announcementsViewModelProvider),
         skeleton: const SkeletonList(itemHeight: 96),
-        data: (feed) => feed.items.isEmpty
-            ? AppEmptyView(
-                icon: Icons.campaign_outlined,
-                title: HomeStrings.announcementsEmptyMessage,
-              )
-            : ListView.separated(
-                controller: _scrollController,
-                itemCount: feed.items.length + (feed.hasMore ? 1 : 0),
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: AppSpacing.sm),
-                itemBuilder: (context, index) {
-                  if (index >= feed.items.length) {
-                    return const AppShimmer(child: ShimmerBox(height: 96));
-                  }
-                  return AnnouncementCard(announcement: feed.items[index]);
-                },
-              ),
+        data: _buildFeed,
       ),
+    );
+  }
+
+  Widget _buildFeed(AnnouncementsFeed feed) {
+    if (feed.items.isEmpty) {
+      return const AppEmptyView(
+        icon: Icons.campaign_outlined,
+        title: HomeStrings.announcementsEmptyMessage,
+      );
+    }
+
+    final loaderCount = feed.hasMore ? 1 : 0;
+    return ListView.separated(
+      controller: _scrollController,
+      itemCount: feed.items.length + loaderCount,
+      separatorBuilder: (context, index) =>
+          const SizedBox(height: AppSpacing.sm),
+      itemBuilder: (context, index) {
+        if (index >= feed.items.length) {
+          return const AppShimmer(child: ShimmerBox(height: 96));
+        }
+        return AnnouncementCard(announcement: feed.items[index]);
+      },
     );
   }
 }

@@ -23,19 +23,19 @@ class _InfoTileSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Row(
         children: [
-          const ShimmerBox.circle(24),
-          const SizedBox(width: AppSpacing.md),
+          ShimmerBox.circle(24),
+          SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ShimmerBox(width: 160, height: 16),
-                const SizedBox(height: 6),
-                const ShimmerBox(width: 100, height: 12),
+                ShimmerBox(width: 160, height: 16),
+                SizedBox(height: 6),
+                ShimmerBox(width: 100, height: 12),
               ],
             ),
           ),

@@ -48,7 +48,7 @@ class PeriodGradesSection extends StatelessWidget {
                         ),
                         if (grades.hasAcademicMerit) ...[
                           const SizedBox(width: 6),
-                          Tooltip(
+                          const Tooltip(
                             message: StudentGradesStrings.academicMeritTooltip,
                             triggerMode: TooltipTriggerMode.tap,
                             child: Icon(
@@ -61,7 +61,7 @@ class PeriodGradesSection extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 2),
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       SiraPeriodFormatter.format(grades.period),
                       style: Theme.of(context).textTheme.bodySmall
@@ -69,7 +69,7 @@ class PeriodGradesSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

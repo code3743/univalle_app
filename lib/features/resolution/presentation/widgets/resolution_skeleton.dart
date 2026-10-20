@@ -8,20 +8,20 @@ class ResolutionSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             Expanded(child: ShimmerBox(height: 76, radius: 20)),
-            const SizedBox(width: AppSpacing.sm),
+            SizedBox(width: AppSpacing.sm),
             Expanded(child: ShimmerBox(height: 76, radius: 20)),
           ],
         ),
-        const SizedBox(height: AppSpacing.lg),
-        const _SemesterSectionSkeleton(),
-        const SizedBox(height: AppSpacing.lg),
-        const _SemesterSectionSkeleton(),
+        SizedBox(height: AppSpacing.lg),
+        _SemesterSectionSkeleton(),
+        SizedBox(height: AppSpacing.lg),
+        _SemesterSectionSkeleton(),
       ],
     );
   }

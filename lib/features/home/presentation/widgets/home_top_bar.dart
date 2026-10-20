@@ -25,7 +25,7 @@ class HomeTopBar extends StatelessWidget {
     return Row(
       children: [
         const AppLogo(size: 36),
-        SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: AppSpacing.sm),
         Text(
           HomeStrings.universityName,
           style: Theme.of(context).textTheme.titleSmall

@@ -72,36 +72,43 @@ class _NewsViewState extends ConsumerState<NewsView> {
           value: newsState,
           onRetry: () => ref.invalidate(newsViewModelProvider),
           skeleton: const SkeletonList(itemHeight: 112),
-          data: (feed) => feed.articles.isEmpty
-              ? ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.6,
-                      child: Center(
-                        child: Text(
-                          NewsStrings.emptyMessage,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : ListView.separated(
-                  controller: _scrollController,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: feed.articles.length + (feed.hasMore ? 1 : 0),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: AppSpacing.sm),
-                  itemBuilder: (context, index) {
-                    if (index >= feed.articles.length) {
-                      return const AppShimmer(child: ShimmerBox(height: 112));
-                    }
-                    return NewsArticleCard(article: feed.articles[index]);
-                  },
-                ),
+          data: _buildFeed,
         ),
       ),
+    );
+  }
+
+  Widget _buildFeed(NewsFeed feed) {
+    if (feed.articles.isEmpty) {
+      return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height * 0.6,
+            child: Center(
+              child: Text(
+                NewsStrings.emptyMessage,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    final loaderCount = feed.hasMore ? 1 : 0;
+    return ListView.separated(
+      controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemCount: feed.articles.length + loaderCount,
+      separatorBuilder: (context, index) =>
+          const SizedBox(height: AppSpacing.sm),
+      itemBuilder: (context, index) {
+        if (index >= feed.articles.length) {
+          return const AppShimmer(child: ShimmerBox(height: 112));
+        }
+        return NewsArticleCard(article: feed.articles[index]);
+      },
     );
   }
 }
