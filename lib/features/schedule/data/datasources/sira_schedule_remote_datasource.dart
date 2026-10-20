@@ -151,60 +151,51 @@ class SiraScheduleRemoteDataSource {
     while (i < lines.length) {
       final withBuilding = _sessionWithBuilding.firstMatch(lines[i]);
       if (withBuilding != null) {
-        var room = '';
-        var campus = '';
         final sameLineLocation = withBuilding.group(5);
-        if (sameLineLocation != null) {
-          final locationMatch = _locationLine.firstMatch(sameLineLocation);
-          if (locationMatch != null) {
-            room = locationMatch.group(1)!.trim();
-            campus = locationMatch.group(3)!.trim();
-          }
-        } else if (i + 1 < lines.length) {
-          final locationMatch = _locationLine.firstMatch(lines[i + 1]);
-          if (locationMatch != null) {
-            room = locationMatch.group(1)!.trim();
-            campus = locationMatch.group(3)!.trim();
-            i++;
-          }
-        }
+        final locationSource =
+            sameLineLocation ?? (i + 1 < lines.length ? lines[i + 1] : null);
+        final location = locationSource == null
+            ? null
+            : _locationLine.firstMatch(locationSource);
+        // A location on the following line belongs to this session, so that
+        // line must not be parsed again as a session of its own.
+        if (sameLineLocation == null && location != null) i++;
 
-        final day = Weekday.fromSiraCode(withBuilding.group(1)!);
-        if (day != null) {
-          sessions.add(
-            _ParsedSession(
-              day: day,
-              startTime: _normalizeTime(withBuilding.group(2)!),
-              endTime: _normalizeTime(withBuilding.group(3)!),
-              building: withBuilding.group(4)!.trim(),
-              room: room,
-              campus: campus,
-            ),
-          );
-        }
-        i++;
-        continue;
-      }
-
-      final withoutBuilding = _sessionWithoutBuilding.firstMatch(lines[i]);
-      if (withoutBuilding != null) {
-        final day = Weekday.fromSiraCode(withoutBuilding.group(1)!);
-        if (day != null) {
-          sessions.add(
-            _ParsedSession(
-              day: day,
-              startTime: _normalizeTime(withoutBuilding.group(2)!),
-              endTime: _normalizeTime(withoutBuilding.group(3)!),
-              building: '',
-              room: '',
-              campus: '',
-            ),
-          );
-        }
+        final session = _buildSession(
+          withBuilding,
+          building: withBuilding.group(4)!.trim(),
+          room: location?.group(1)!.trim() ?? '',
+          campus: location?.group(3)!.trim() ?? '',
+        );
+        if (session != null) sessions.add(session);
+      } else {
+        final withoutBuilding = _sessionWithoutBuilding.firstMatch(lines[i]);
+        final session = withoutBuilding == null
+            ? null
+            : _buildSession(withoutBuilding);
+        if (session != null) sessions.add(session);
       }
       i++;
     }
     return sessions;
+  }
+
+  _ParsedSession? _buildSession(
+    RegExpMatch match, {
+    String building = '',
+    String room = '',
+    String campus = '',
+  }) {
+    final day = Weekday.fromSiraCode(match.group(1)!);
+    if (day == null) return null;
+    return _ParsedSession(
+      day: day,
+      startTime: _normalizeTime(match.group(2)!),
+      endTime: _normalizeTime(match.group(3)!),
+      building: building,
+      room: room,
+      campus: campus,
+    );
   }
 
   // SIRA renders single-digit hours without a leading zero ("8:00"); pad
