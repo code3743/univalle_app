@@ -4,8 +4,7 @@ abstract final class AuthStrings {
   static const usernameLabel = 'Usuario';
   static const usernameHint = 'Código-programa';
   static const usernameRequired = 'Ingresa tu usuario.';
-  static const usernameInvalid =
-      'Usa el formato código-programa, por ejemplo 2259394-3743.';
+  static const usernameInvalid = 'Usa el formato código-programa.';
   static const passwordLabel = 'Contraseña';
   static const passwordRequired = 'Ingresa tu contraseña.';
   static const loggingIn = 'Iniciando sesión...';
@@ -21,6 +20,8 @@ abstract final class AuthStrings {
   static const resetPasswordSubtitle =
       'Ingresa tu usuario y te enviaremos instrucciones para restablecer tu contraseña.';
   static const resetPasswordSubmit = 'Recuperar contraseña';
+  static String resetPasswordRetryIn(int seconds) =>
+      'Reintentar en ${seconds}s';
   static const backToLogin = 'Volver al inicio de sesión';
   static const accept = 'Aceptar';
   static const resetPasswordSuccessTitle = 'Correo enviado';
