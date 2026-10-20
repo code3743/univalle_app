@@ -14,6 +14,15 @@
   App móvil no oficial para estudiantes de la Universidad del Valle (Colombia): centraliza notas, horario, tabulado, currículo, carné digital, restaurante universitario y biblioteca en una sola interfaz.
 </p>
 
+<p align="center">
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=alert_status" alt="Quality Gate Status" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=coverage" alt="Coverage" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=bugs" alt="Bugs" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=code_smells" alt="Code Smells" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=security_rating" alt="Security Rating" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=sqale_rating" alt="Maintainability Rating" /></a>
+</p>
+
 > [!IMPORTANT]
 > Proyecto en fase de desarrollo activo. Ver [Funcionalidades](#funcionalidades) para el estado real de cada módulo.
 
