@@ -16,8 +16,8 @@ abstract final class StudentGradesStrings {
 
   static const equivalencesTitle = 'Equivalencias';
   static const equivalencesEmpty = 'No tienes equivalencias registradas.';
-  static const equivalencesSubjectsLabel = 'Materias homologadas';
-  static const equivalencesCreditsLabel = 'Créditos homologados';
+  static const equivalencesSubjectsLabel = 'Materias';
+  static const equivalencesCreditsLabel = 'Créditos';
 
   static String equivalencesShortcutLabel(int subjects, int credits) =>
       '$equivalencesTitle · ${subjects == 1 ? '1 materia' : '$subjects materias'} · '
