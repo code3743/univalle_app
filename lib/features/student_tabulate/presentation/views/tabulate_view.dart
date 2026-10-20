@@ -8,6 +8,7 @@ import '../../../../core/widgets/async_value_widget.dart';
 import '../../domain/entities/tabulate.dart';
 import '../../student_tabulate_strings.dart';
 import '../viewmodels/tabulate_view_model.dart';
+import '../widgets/tabulate_navigation_policy.dart';
 
 class TabulateView extends ConsumerStatefulWidget {
   const TabulateView({super.key});
@@ -19,6 +20,9 @@ class TabulateView extends ConsumerStatefulWidget {
 class _TabulateViewState extends ConsumerState<TabulateView> {
   final _controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setNavigationDelegate(
+      NavigationDelegate(onNavigationRequest: tabulateNavigationDecision),
+    )
     .._fitWideContentToScreen();
 
   String? _loadedHtml;
