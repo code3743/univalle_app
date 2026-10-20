@@ -156,9 +156,9 @@ De los 8 sistemas externos, U-Planner es la única API JSON real; el resto se sc
 | Calificar docentes | ✅ |
 | Carné estudiantil digital | ✅ |
 | Noticias de la Agencia de Noticias Univalle | ✅ |
-| Restaurante universitario (tiquetes de almuerzo) | 🔧 En desarrollo |
-| Biblioteca (cuenta, préstamos) | 🔧 En desarrollo |
-| Enlaces de interés | ❌ Pendiente |
+| Restaurante universitario (tiquetes de almuerzo) | 🧪 En pruebas |
+| Biblioteca (cuenta, préstamos) | ✅ |
+| Enlaces de interés | 📅 Planificado |
 
 Todas las funcionalidades, incluidas las pendientes, ya tienen su acceso directo en la pantalla de inicio (`Ver todos`); las que aún no están listas muestran un aviso de "muy pronto" en vez de un elemento sin respuesta.
 

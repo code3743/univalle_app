@@ -1,7 +1,7 @@
 name: univalle_app
-description: "A new Flutter project."
+description: "Unofficial mobile app for Universidad del Valle students: grades, schedule, library, restaurant and more, built on SIRA data."
 publish_to: 'none'
-version: 0.1.0+2
+version: 0.2.0+3
 
 environment:
   sdk: ^3.13.3
