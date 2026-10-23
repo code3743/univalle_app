@@ -214,6 +214,20 @@ void main() {
       ).called(1);
     });
 
+    test('extracts the date from the HTML fragment and drops the script', () async {
+      stubAuthAndAccount(
+        renewResponse:
+            'El Ejemplar: 0443869 fue renovado hasta 4 Noviembre 2026<br/>\n'
+            "<script language='javascript'>\n"
+            "  \$('#retdate0443869').load(g_cgi + '?action=displayRetDate');\n"
+            '</script>',
+      );
+
+      final dueDate = await dataSource.renewLoan(barcode: '0443869');
+
+      expect(dueDate, '04-Nov-2026');
+    });
+
     test('throws a non-retryable BusinessException with the cause', () async {
       stubAuthAndAccount(
         renewResponse:
