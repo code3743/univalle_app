@@ -104,7 +104,7 @@ features/<feature>/
 
 ## Flujo de datos: web scraping
 
-No hay backend propio: cada feature con datos reales de la universidad negocia su propia sesión (cookie) contra el sistema que le corresponde.
+No hay un backend intermedio para los datos de la universidad: cada feature negocia su propia sesión (cookie) contra el sistema que le corresponde. El único backend propio es [univalle-api](https://github.com/code3743/univalle-api), que solo sirve la configuración remota de la app.
 
 ```mermaid
 flowchart LR
@@ -201,7 +201,7 @@ El proyecto usa Riverpod con codegen, así que hace falta generar el código (`*
 dart run build_runner build --delete-conflicting-outputs
 ```
 
-La app lee la URL del backend de configuración remota (`lib/core/constants/api_constants.dart`) desde la variable de entorno `API_BASE_URL`, así que hay que pasarla con `--dart-define` al correr o compilar:
+La app lee la URL del backend de configuración remota ([univalle-api](https://github.com/code3743/univalle-api); ver `lib/core/constants/api_constants.dart`) desde la variable de entorno `API_BASE_URL`, así que hay que pasarla con `--dart-define` al correr o compilar:
 
 ```bash
 flutter run --dart-define=API_BASE_URL=https://tu-backend/api
