@@ -49,10 +49,13 @@ class LibraryRemoteDataSource {
     return _parseRenewal(response.data as String);
   }
 
-  // The endpoint answers with plain text: the new due date on success, or a
-  // "could not be renewed" sentence followed by the reason on failure.
+  // The endpoint answers with an HTML fragment: "...fue renovado hasta
+  // 4 Noviembre 2026" followed by an inline <script> (which must not leak
+  // into the text), or a "could not be renewed" sentence with the reason.
   String _parseRenewal(String body) {
-    final text = (parse(body).body?.text ?? body).trim();
+    final document = parse(body);
+    document.querySelectorAll('script').forEach((script) => script.remove());
+    final text = (document.body?.text ?? '').trim();
     if (text.isEmpty) {
       throw const ServerException(message: LibraryStrings.renewUnavailable);
     }
@@ -68,7 +71,23 @@ class LibraryRemoteDataSource {
         retryable: false,
       );
     }
-    return text;
+    return _normalizeRenewedDate(text);
+  }
+
+  // Rewrites "4 Noviembre 2026" as "04-Nov-2026", the format the loans table
+  // uses, so the renewed row doesn't change style. Unknown shapes pass through.
+  String _normalizeRenewedDate(String text) {
+    final match = RegExp(
+      r'renovado hasta\s+(\d{1,2})\s+(\p{L}+)\s+(\d{4})',
+      caseSensitive: false,
+      unicode: true,
+    ).firstMatch(text);
+    if (match == null) return text;
+    final month =
+        LibraryConstants.monthAbbreviations[match.group(2)!.toLowerCase()];
+    if (month == null) return text;
+    final day = match.group(1)!.padLeft(2, '0');
+    return '$day-$month-${match.group(3)}';
   }
 
   Future<void> _authenticate(String code) async {

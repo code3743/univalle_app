@@ -149,35 +149,50 @@ class SiraScheduleRemoteDataSource {
     final sessions = <_ParsedSession>[];
     var i = 0;
     while (i < lines.length) {
-      final withBuilding = _sessionWithBuilding.firstMatch(lines[i]);
-      if (withBuilding != null) {
-        final sameLineLocation = withBuilding.group(5);
-        final locationSource =
-            sameLineLocation ?? (i + 1 < lines.length ? lines[i + 1] : null);
-        final location = locationSource == null
-            ? null
-            : _locationLine.firstMatch(locationSource);
-        // A location on the following line belongs to this session, so that
-        // line must not be parsed again as a session of its own.
-        if (sameLineLocation == null && location != null) i++;
-
-        final session = _buildSession(
-          withBuilding,
-          building: withBuilding.group(4)!.trim(),
-          room: location?.group(1)!.trim() ?? '',
-          campus: location?.group(3)!.trim() ?? '',
-        );
-        if (session != null) sessions.add(session);
-      } else {
-        final withoutBuilding = _sessionWithoutBuilding.firstMatch(lines[i]);
-        final session = withoutBuilding == null
-            ? null
-            : _buildSession(withoutBuilding);
-        if (session != null) sessions.add(session);
-      }
-      i++;
+      final nextLine = i + 1 < lines.length ? lines[i + 1] : null;
+      final parsed = _parseSessionAt(lines[i], nextLine);
+      if (parsed.session != null) sessions.add(parsed.session!);
+      // A location on the following line belongs to this session, so that
+      // line must not be parsed again as a session of its own.
+      i += parsed.consumedNextLine ? 2 : 1;
     }
     return sessions;
+  }
+
+  ({_ParsedSession? session, bool consumedNextLine}) _parseSessionAt(
+    String line,
+    String? nextLine,
+  ) {
+    final withBuilding = _sessionWithBuilding.firstMatch(line);
+    if (withBuilding != null) return _parseWithBuilding(withBuilding, nextLine);
+
+    final withoutBuilding = _sessionWithoutBuilding.firstMatch(line);
+    final session = withoutBuilding == null
+        ? null
+        : _buildSession(withoutBuilding);
+    return (session: session, consumedNextLine: false);
+  }
+
+  ({_ParsedSession? session, bool consumedNextLine}) _parseWithBuilding(
+    RegExpMatch match,
+    String? nextLine,
+  ) {
+    final sameLineLocation = match.group(5);
+    final locationSource = sameLineLocation ?? nextLine;
+    final location = locationSource == null
+        ? null
+        : _locationLine.firstMatch(locationSource);
+
+    final session = _buildSession(
+      match,
+      building: match.group(4)!.trim(),
+      room: location?.group(1)!.trim() ?? '',
+      campus: location?.group(3)!.trim() ?? '',
+    );
+    return (
+      session: session,
+      consumedNextLine: sameLineLocation == null && location != null,
+    );
   }
 
   _ParsedSession? _buildSession(

@@ -14,6 +14,15 @@
   App móvil no oficial para estudiantes de la Universidad del Valle (Colombia): centraliza notas, horario, tabulado, currículo, carné digital, restaurante universitario y biblioteca en una sola interfaz.
 </p>
 
+<p align="center">
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=alert_status" alt="Quality Gate Status" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=coverage" alt="Coverage" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=bugs" alt="Bugs" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=code_smells" alt="Code Smells" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=security_rating" alt="Security Rating" /></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=code3743_univalle_app"><img src="https://sonarcloud.io/api/project_badges/measure?project=code3743_univalle_app&metric=sqale_rating" alt="Maintainability Rating" /></a>
+</p>
+
 > [!IMPORTANT]
 > Proyecto en fase de desarrollo activo. Ver [Funcionalidades](#funcionalidades) para el estado real de cada módulo.
 
@@ -95,7 +104,7 @@ features/<feature>/
 
 ## Flujo de datos: web scraping
 
-No hay backend propio: cada feature con datos reales de la universidad negocia su propia sesión (cookie) contra el sistema que le corresponde.
+No hay un backend intermedio para los datos de la universidad: cada feature negocia su propia sesión (cookie) contra el sistema que le corresponde. El único backend propio es [univalle-api](https://github.com/code3743/univalle-api), que solo sirve la configuración remota de la app.
 
 ```mermaid
 flowchart LR
@@ -192,7 +201,7 @@ El proyecto usa Riverpod con codegen, así que hace falta generar el código (`*
 dart run build_runner build --delete-conflicting-outputs
 ```
 
-La app lee la URL del backend de configuración remota (`lib/core/constants/api_constants.dart`) desde la variable de entorno `API_BASE_URL`, así que hay que pasarla con `--dart-define` al correr o compilar:
+La app lee la URL del backend de configuración remota ([univalle-api](https://github.com/code3743/univalle-api); ver `lib/core/constants/api_constants.dart`) desde la variable de entorno `API_BASE_URL`, así que hay que pasarla con `--dart-define` al correr o compilar:
 
 ```bash
 flutter run --dart-define=API_BASE_URL=https://tu-backend/api

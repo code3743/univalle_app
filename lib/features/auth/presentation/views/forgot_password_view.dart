@@ -10,6 +10,7 @@ import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../auth_strings.dart';
 import '../utils/username_validator.dart';
+import '../viewmodels/reset_password_cooldown_view_model.dart';
 import '../viewmodels/reset_password_view_model.dart';
 import '../widgets/reset_password_success_dialog.dart';
 
@@ -25,6 +26,12 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
   final _usernameController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _usernameController.addListener(() => setState(() {}));
+  }
+
+  @override
   void dispose() {
     _usernameController.dispose();
     super.dispose();
@@ -38,8 +45,8 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
     }
   }
 
-  void _submit(bool isLoading) {
-    if (isLoading) return;
+  void _submit(bool isBlocked) {
+    if (isBlocked) return;
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
     ref
@@ -77,6 +84,10 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
 
     final state = ref.watch(resetPasswordViewModelProvider);
     final isLoading = state.isLoading;
+    final cooldown = ref.watch(
+      resetPasswordCooldownViewModelProvider(_usernameController.text.trim()),
+    );
+    final isBlocked = isLoading || cooldown > 0;
 
     return AppScaffold(
       body: Center(
@@ -108,12 +119,12 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
                   hintText: AuthStrings.usernameHint,
                 ),
                 textInputAction: TextInputAction.done,
-                onFieldSubmitted: (_) => _submit(isLoading),
+                onFieldSubmitted: (_) => _submit(isBlocked),
                 validator: validateUsername,
               ),
               const SizedBox(height: 24),
               FilledButton(
-                onPressed: isLoading ? null : () => _submit(isLoading),
+                onPressed: isBlocked ? null : () => _submit(isBlocked),
                 child: isLoading
                     ? const Row(
                         mainAxisSize: MainAxisSize.min,
@@ -127,7 +138,11 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
                           Text(AuthStrings.resetPasswordSubmit),
                         ],
                       )
-                    : const Text(AuthStrings.resetPasswordSubmit),
+                    : Text(
+                        cooldown > 0
+                            ? AuthStrings.resetPasswordRetryIn(cooldown)
+                            : AuthStrings.resetPasswordSubmit,
+                      ),
               ),
               const SizedBox(height: 8),
               TextButton(

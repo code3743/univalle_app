@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../providers/auth_providers.dart';
+import 'reset_password_cooldown_view_model.dart';
 
 part 'reset_password_view_model.g.dart';
 
@@ -11,7 +12,10 @@ class ResetPasswordViewModel extends _$ResetPasswordViewModel {
 
   Future<void> resetPassword({required String username}) async {
     state = const AsyncLoading();
-    final result = await ref.read(resetPasswordUseCaseProvider).call(username: username);
+    ref.read(resetPasswordCooldownViewModelProvider(username).notifier).start();
+    final result = await ref
+        .read(resetPasswordUseCaseProvider)
+        .call(username: username);
     state = result.fold(
       onError: (failure) => AsyncError(failure, StackTrace.current),
       onSuccess: (email) => AsyncData(email),
