@@ -70,15 +70,12 @@ void main() {
     final image = tester.widget<Image>(find.byType(Image));
     final context = tester.element(find.byType(Image));
 
-    final loading = image.loadingBuilder!(
-      context,
-      const SizedBox(),
-      const ImageChunkEvent(cumulativeBytesLoaded: 1, expectedTotalBytes: 10),
-    );
-    final loaded = image.loadingBuilder!(
+    final loading = image.frameBuilder!(context, const SizedBox(), null, false);
+    final loaded = image.frameBuilder!(
       context,
       const SizedBox(key: Key('done')),
-      null,
+      0,
+      false,
     );
     final errored = image.errorBuilder!(context, Exception('x'), null);
 
