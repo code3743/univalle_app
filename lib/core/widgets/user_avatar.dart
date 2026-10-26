@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../network/univalle_network_image.dart';
+
 /// Circular avatar that shows a network photo when one is available,
 /// falling back to an initials badge while it loads, on error, or when no
 /// photo URL is given at all — the photo is always optional.
@@ -38,14 +40,14 @@ class UserAvatar extends StatelessWidget {
       child: SizedBox(
         width: radius * 2,
         height: radius * 2,
-        child: Image.network(
-          photoUrl,
+        child: Image(
+          image: UnivalleNetworkImage(photoUrl),
           fit: BoxFit.cover,
           alignment: Alignment.topCenter,
           errorBuilder: (context, error, stackTrace) =>
               _initialsAvatar(context),
-          loadingBuilder: (context, child, progress) =>
-              progress == null ? child : _initialsAvatar(context),
+          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
+              frame == null ? _initialsAvatar(context) : child,
         ),
       ),
     );
