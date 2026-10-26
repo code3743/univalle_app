@@ -1,7 +1,7 @@
 name: univalle_app
 description: "Unofficial mobile app for Universidad del Valle students: grades, schedule, library, restaurant and more, built on SIRA data."
 publish_to: 'none'
-version: 0.2.0+3
+version: 0.2.1+3
 
 environment:
   sdk: ^3.13.3
