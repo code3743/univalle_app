@@ -29,35 +29,79 @@ void main() {
 
   setUp(() {
     dio = MockDio();
+    when(() => dio.get<List<int>>(any())).thenAnswer(
+      (_) async => Response(
+        requestOptions: RequestOptions(path: ''),
+        statusCode: 200,
+        data: <int>[],
+      ),
+    );
     dataSource = SiraTabulateRemoteDataSource(dio);
   });
 
   group('fetchTabulate', () {
     test(
-      'resolves root-relative image and stylesheet paths to absolute URLs',
+      'embeds images and stylesheets fetched through the trusted Dio',
+      () async {
+        when(() => dio.post(any(), data: any(named: 'data')))
+            .thenAnswer((_) async => _htmlResponse(reportHtml));
+        when(() => dio.get<List<int>>(any())).thenAnswer((invocation) async {
+          final url = invocation.positionalArguments.first as String;
+          return Response(
+            requestOptions: RequestOptions(path: url),
+            statusCode: 200,
+            data: url.endsWith('.css')
+                ? utf8.encode('body{margin:0}')
+                : [1, 2, 3],
+          );
+        });
+
+        final result = await dataSource.fetchTabulate(username: '0000000-3743');
+
+        expect(result, contains('src="data:image/gif;base64,AQID"'));
+        expect(result, contains('<style>body{margin:0}</style>'));
+        expect(result, isNot(contains('estilos.css')));
+        expect(result, isNot(contains('id="mobileWrapper"')));
+      },
+    );
+
+    test('keeps the absolute URL when a resource cannot be fetched', () async {
+      when(() => dio.post(any(), data: any(named: 'data')))
+          .thenAnswer((_) async => _htmlResponse(reportHtml));
+      when(() => dio.get<List<int>>(any())).thenThrow(
+        DioException(
+          requestOptions: RequestOptions(path: ''),
+          type: DioExceptionType.badCertificate,
+        ),
+      );
+
+      final result = await dataSource.fetchTabulate(username: '0000000-3743');
+
+      expect(
+        result,
+        contains(
+          'src="https://sira.univalle.edu.co/sra/paquetes/gui/temas/'
+          'univalleRojoAmarillo/imagenes/logo.gif"',
+        ),
+      );
+      expect(
+        result,
+        contains(
+          'href="https://sira.univalle.edu.co/sra/paquetes/gui/temas/'
+          'univalleRojoAmarillo/estilos.css"',
+        ),
+      );
+    });
+
+    test(
+      'fits the fixed-width report to the screen with a viewport meta',
       () async {
         when(() => dio.post(any(), data: any(named: 'data')))
             .thenAnswer((_) async => _htmlResponse(reportHtml));
 
         final result = await dataSource.fetchTabulate(username: '0000000-3743');
 
-        expect(
-          result,
-          contains(
-            'src="https://sira.univalle.edu.co/sra/paquetes/gui/temas/'
-            'univalleRojoAmarillo/imagenes/logo.gif"',
-          ),
-        );
-        expect(
-          result,
-          contains(
-            'href="https://sira.univalle.edu.co/sra/paquetes/gui/temas/'
-            'univalleRojoAmarillo/estilos.css"',
-          ),
-        );
-        // The original print-layout markup is rendered as-is, not reflowed
-        // or wrapped for a mobile viewport.
-        expect(result, isNot(contains('id="mobileWrapper"')));
+        expect(result, contains('name="viewport" content="width=765"'));
       },
     );
 

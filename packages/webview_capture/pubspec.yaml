@@ -1,0 +1,25 @@
+name: webview_capture
+description: Captures the full document of a webview_flutter Android WebView as a PNG.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.13.3
+  flutter: '>=3.3.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  webview_flutter_android: ^4.14.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: dev.jotalopez.webview_capture
+        pluginClass: WebviewCapturePlugin

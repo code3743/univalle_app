@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
+import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/async_value_widget.dart';
 import '../../domain/entities/tabulate.dart';
 import '../../student_tabulate_strings.dart';
+import '../services/tabulate_image_saver.dart';
 import '../viewmodels/tabulate_view_model.dart';
 import '../widgets/tabulate_navigation_policy.dart';
 
@@ -25,7 +27,19 @@ class _TabulateViewState extends ConsumerState<TabulateView> {
     )
     .._fitWideContentToScreen();
 
+  final _imageSaver = const TabulateImageSaver();
   String? _loadedHtml;
+
+  Future<void> _saveAsImage() async {
+    final platform = _controller.platform;
+    if (platform is! AndroidWebViewController) return;
+    try {
+      await _imageSaver.save(webViewIdentifier: platform.webViewIdentifier);
+      if (mounted) context.showSnack(StudentTabulateStrings.saved);
+    } on Object {
+      if (mounted) context.showSnack(StudentTabulateStrings.saveFailed);
+    }
+  }
 
   void _loadIfNeeded(Tabulate tabulate) {
     if (_loadedHtml == tabulate.html) return;
@@ -45,6 +59,14 @@ class _TabulateViewState extends ConsumerState<TabulateView> {
 
     return AppScaffold(
       title: StudentTabulateStrings.title,
+      actions: [
+        if (tabulateState.hasValue)
+          IconButton(
+            icon: const Icon(Icons.download_outlined),
+            tooltip: StudentTabulateStrings.saveTooltip,
+            onPressed: _saveAsImage,
+          ),
+      ],
       padding: EdgeInsets.zero,
       scrollable: false,
       body: AsyncValueWidget(

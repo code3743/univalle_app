@@ -349,6 +349,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  gal:
+    dependency: "direct main"
+    description:
+      name: gal
+      sha256: f71e79840fe023a21f2f949771375444b6efcd34b9e625d5f4f5504971380a77
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3"
   glob:
     dependency: transitive
     description:
@@ -1090,6 +1098,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  webview_capture:
+    dependency: "direct main"
+    description:
+      path: "packages/webview_capture"
+      relative: true
+    source: path
+    version: "0.0.1"
   webview_flutter:
     dependency: "direct main"
     description:
@@ -1107,7 +1122,7 @@ packages:
     source: hosted
     version: "4.14.1"
   webview_flutter_platform_interface:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: webview_flutter_platform_interface
       sha256: "1221c1b12f5278791042f2ec2841743784cf25c5a644e23d6680e5d718824f04"
