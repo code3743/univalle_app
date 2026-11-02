@@ -52,7 +52,8 @@ class HomeFooter extends ConsumerWidget {
               ),
             ),
           ),
-          if (version != null) Text('v$version', style: mutedStyle),
+          if (version != null)
+            Text(HomeStrings.versionLabel(version), style: mutedStyle),
         ],
       ),
     );
