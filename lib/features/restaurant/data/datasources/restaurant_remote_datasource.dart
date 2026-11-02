@@ -45,7 +45,20 @@ class RestaurantRemoteDataSource {
         ),
       ),
     );
-    await _run(() => _dio.get(RestaurantConstants.homePath));
+    final postLoginResponse = await _run(
+      () => _dio.get(RestaurantConstants.homePath),
+    );
+    final postLoginDocument = parse(postLoginResponse.data as String);
+    final notice = postLoginDocument
+        .querySelector('#unvContenidoCentral > div > div')
+        ?.text
+        .trim();
+    if (notice == RestaurantConstants.firstTicketNotice) {
+      throw const BusinessException(
+        message: RestaurantStrings.firstTicketAtBoxOffice,
+        retryable: false,
+      );
+    }
   }
 
   Future<RestaurantAccountModel> fetchAccount({

@@ -70,6 +70,7 @@ const stubbedRoutePaths = [
   AppRoutes.library,
   AppRoutes.news,
   AppRoutes.announcements,
+  AppRoutes.restaurantTickets,
   AppRoutes.pendingPayment,
   AppRoutes.allFunctionalities,
 ];

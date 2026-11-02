@@ -16,6 +16,7 @@ import '../../features/remote_config/presentation/views/announcements_view.dart'
 import '../../features/remote_config/presentation/viewmodels/remote_config_view_model.dart';
 import '../../features/resolution/presentation/views/resolution_view.dart';
 import '../../features/restaurant/presentation/views/pending_payment_view.dart';
+import '../../features/restaurant/presentation/views/restaurant_menu_view.dart';
 import '../../features/restaurant/presentation/views/restaurant_view.dart';
 import '../../features/schedule/presentation/views/schedule_view.dart';
 import '../../features/splash/presentation/views/splash_view.dart';
@@ -137,6 +138,10 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.restaurant,
+        builder: (context, state) => const RestaurantMenuView(),
+      ),
+      GoRoute(
+        path: AppRoutes.restaurantTickets,
         builder: (context, state) => const RestaurantView(),
       ),
       GoRoute(

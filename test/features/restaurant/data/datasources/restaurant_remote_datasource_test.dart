@@ -77,6 +77,40 @@ void main() {
   }
 
   group('fetchAccount', () {
+    test('throws a non-retryable BusinessException when the portal asks for a '
+        'first purchase at the box office', () async {
+      when(() => dio.get(any())).thenAnswer((invocation) async {
+        final path = invocation.positionalArguments[0] as String;
+        return _response(
+          path == RestaurantConstants.homePath
+              ? '<div id="unvContenidoCentral"><div><div>'
+                    ' ${RestaurantConstants.firstTicketNotice} '
+                    '</div></div></div>'
+              : _loginHtml,
+        );
+      });
+      when(
+        () => dio.post(
+          any(),
+          data: any(named: 'data'),
+          options: any(named: 'options'),
+        ),
+      ).thenAnswer((_) async => _response(''));
+
+      await expectLater(
+        dataSource.fetchAccount(username: 'u', password: 'p'),
+        throwsA(
+          isA<BusinessException>()
+              .having(
+                (e) => e.message,
+                'message',
+                RestaurantStrings.firstTicketAtBoxOffice,
+              )
+              .having((e) => e.retryable, 'retryable', false),
+        ),
+      );
+    });
+
     test(
       'logs in when no profile is selected and parses the account',
       () async {
