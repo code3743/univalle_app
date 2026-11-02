@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../domain/entities/news_article.dart';
-import '../providers/news_providers.dart';
+import '../../di/news_providers.dart';
 
 part 'news_view_model.g.dart';
 
