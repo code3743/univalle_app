@@ -1,5 +1,11 @@
 abstract final class RestaurantStrings {
   static const title = 'Restaurante';
+  static const menuTitle = 'Menú de la semana';
+  static const menuSubjectToChange = 'Sujeto a cambios';
+  static const buyTicketsLabel = 'Comprar tickets';
+  static String noService(String reason) =>
+      'Sin servicio: ${reason.toLowerCase()}';
+
   static const cafeteriaOnlyNotice =
       'Esta opción aplica únicamente para las sedes en Cali.';
   static const accumulatedLunches = 'Almuerzos acumulados';
@@ -37,6 +43,16 @@ abstract final class RestaurantStrings {
   static const paymentConfirmed = '¡Tu pago fue confirmado!';
   static const paymentStillPending =
       'Tu pago aún no se refleja, intenta de nuevo en unos minutos.';
+
+  static const firstTicketAtBoxOffice =
+      'Para comprar tu primer ticket debes acercarte a la taquilla central. '
+      'Después de eso podrás comprar tus almuerzos desde la app.';
+
+  static const menuUnavailable =
+      'No pudimos mostrar el menú. Consúltalo en el sitio del restaurante.';
+  static const menuSiteLabel = 'Ver en el sitio';
+  static const cannotOpenMenuSite =
+      'No pudimos abrir el sitio del restaurante.';
 
   static const noPaymentLink = 'No se pudo generar el enlace de pago.';
   static const noToken = 'No se pudo obtener el token de acceso.';
