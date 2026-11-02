@@ -23,7 +23,7 @@ class LibraryRepositoryImpl implements LibraryRepository {
         username: credentials.username,
       );
       return Ok(account.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }
@@ -32,7 +32,7 @@ class LibraryRepositoryImpl implements LibraryRepository {
   Future<Result<String>> renewLoan(String barcode) async {
     try {
       return Ok(await _remote.renewLoan(barcode: barcode));
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

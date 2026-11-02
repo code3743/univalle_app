@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/error/result.dart';
 import '../../domain/entities/library_account.dart';
-import '../providers/library_providers.dart';
+import '../../di/library_providers.dart';
 
 part 'library_view_model.g.dart';
 

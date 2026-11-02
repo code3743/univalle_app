@@ -6,7 +6,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/library/domain/entities/library_account.dart';
 import 'package:univalle_app/features/library/domain/entities/library_loan.dart';
 import 'package:univalle_app/features/library/domain/repositories/library_repository.dart';
-import 'package:univalle_app/features/library/presentation/providers/library_providers.dart';
+import 'package:univalle_app/features/library/di/library_providers.dart';
 import 'package:univalle_app/features/library/presentation/viewmodels/library_view_model.dart';
 
 import '../../../../helpers/container.dart';
