@@ -1,5 +1,4 @@
 import '../../../../core/error/exception_mapper.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
 import '../../../../core/domain/entities/student.dart';
 import '../../domain/repositories/profile_repository.dart';
@@ -14,7 +13,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final student = await _remote.fetchStudent(username: username);
       return Ok(student.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }
