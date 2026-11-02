@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../providers/auth_providers.dart';
+import '../../di/auth_providers.dart';
 import 'reset_password_cooldown_view_model.dart';
 
 part 'reset_password_view_model.g.dart';

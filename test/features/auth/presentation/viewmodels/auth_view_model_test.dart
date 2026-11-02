@@ -8,7 +8,7 @@ import 'package:univalle_app/core/session/current_photo_url_provider.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
 import 'package:univalle_app/features/auth/domain/entities/auth_session.dart';
 import 'package:univalle_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:univalle_app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:univalle_app/features/auth/di/auth_providers.dart';
 import 'package:univalle_app/features/auth/presentation/viewmodels/auth_view_model.dart';
 
 import '../../../../helpers/container.dart';

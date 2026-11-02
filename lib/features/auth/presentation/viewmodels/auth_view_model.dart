@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/session/current_photo_url_provider.dart';
 import '../../../../core/session/current_username_provider.dart';
-import '../providers/auth_providers.dart';
+import '../../di/auth_providers.dart';
 
 part 'auth_view_model.g.dart';
 

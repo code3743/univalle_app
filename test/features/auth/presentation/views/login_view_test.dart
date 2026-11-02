@@ -11,7 +11,7 @@ import 'package:univalle_app/core/router/app_routes.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
 import 'package:univalle_app/features/auth/auth_strings.dart';
 import 'package:univalle_app/features/auth/domain/entities/auth_session.dart';
-import 'package:univalle_app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:univalle_app/features/auth/di/auth_providers.dart';
 import 'package:univalle_app/features/auth/presentation/views/login_view.dart';
 
 import '../../../../helpers/pump_app.dart';

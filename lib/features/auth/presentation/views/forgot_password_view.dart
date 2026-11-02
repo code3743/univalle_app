@@ -6,10 +6,11 @@ import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
-import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/app_scaffold.dart';
+import '../../../../core/widgets/loading_filled_button.dart';
 import '../../auth_strings.dart';
 import '../utils/username_validator.dart';
+import '../widgets/auth_header.dart';
 import '../viewmodels/reset_password_cooldown_view_model.dart';
 import '../viewmodels/reset_password_view_model.dart';
 import '../widgets/reset_password_success_dialog.dart';
@@ -97,20 +98,10 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Center(child: AppLogo(size: 72)),
-              const SizedBox(height: 24),
-              Text(
-                AuthStrings.resetPasswordTitle,
-                style: Theme.of(context).textTheme.headlineSmall,
-                textAlign: TextAlign.center,
+              const AuthHeader(
+                title: AuthStrings.resetPasswordTitle,
+                subtitle: AuthStrings.resetPasswordSubtitle,
               ),
-              const SizedBox(height: 8),
-              Text(
-                AuthStrings.resetPasswordSubtitle,
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
               TextFormField(
                 controller: _usernameController,
                 enabled: !isLoading,
@@ -123,26 +114,13 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
                 validator: validateUsername,
               ),
               const SizedBox(height: 24),
-              FilledButton(
+              LoadingFilledButton(
+                label: cooldown > 0
+                    ? AuthStrings.resetPasswordRetryIn(cooldown)
+                    : AuthStrings.resetPasswordSubmit,
+                loadingLabel: AuthStrings.resetPasswordSubmit,
+                isLoading: isLoading,
                 onPressed: isBlocked ? null : () => _submit(isBlocked),
-                child: isLoading
-                    ? const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                          SizedBox(width: 12),
-                          Text(AuthStrings.resetPasswordSubmit),
-                        ],
-                      )
-                    : Text(
-                        cooldown > 0
-                            ? AuthStrings.resetPasswordRetryIn(cooldown)
-                            : AuthStrings.resetPasswordSubmit,
-                      ),
               ),
               const SizedBox(height: 8),
               TextButton(

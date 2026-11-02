@@ -12,7 +12,10 @@ class SiraAuthRemoteDataSource {
   final Dio _dio;
   const SiraAuthRemoteDataSource(this._dio);
 
-  Future<void> login({required String username, required String password}) async {
+  Future<void> login({
+    required String username,
+    required String password,
+  }) async {
     if (username.isEmpty || password.isEmpty) {
       throw const AuthException(message: AuthStrings.missingCredentials);
     }
@@ -28,7 +31,8 @@ class SiraAuthRemoteDataSource {
         },
         options: Options(
           followRedirects: false,
-          validateStatus: (status) => status != null && status >= 200 && status < 400,
+          validateStatus: (status) =>
+              status != null && status >= 200 && status < 400,
         ),
       ),
     );
@@ -36,7 +40,9 @@ class SiraAuthRemoteDataSource {
     if (response.statusCode == 200) {
       final document = parse(latin1.decode(response.data as List<int>));
       final rawMessage = document.querySelector('.resaltar')?.text.trim() ?? '';
-      final message = rawMessage.replaceFirst(RegExp(r'^[A-Z]+\s*\d+\s*.*:\s'), '').trim();
+      final message = rawMessage
+          .replaceFirst(RegExp(r'^[A-Z]+\s*\d+\s*.*:\s'), '')
+          .trim();
       throw AuthException(
         message: message.isNotEmpty ? message : AuthStrings.invalidCredentials,
       );

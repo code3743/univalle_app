@@ -6,10 +6,11 @@ import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
-import '../../../../core/widgets/app_logo.dart';
 import '../../../../core/widgets/app_scaffold.dart';
+import '../../../../core/widgets/loading_filled_button.dart';
 import '../../auth_strings.dart';
 import '../utils/username_validator.dart';
+import '../widgets/auth_header.dart';
 import '../viewmodels/auth_view_model.dart';
 
 class LoginView extends ConsumerStatefulWidget {
@@ -73,20 +74,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Center(child: AppLogo(size: 72)),
-              const SizedBox(height: 24),
-              Text(
-                AuthStrings.title,
-                style: Theme.of(context).textTheme.headlineSmall,
-                textAlign: TextAlign.center,
+              const AuthHeader(
+                title: AuthStrings.title,
+                subtitle: AuthStrings.subtitle,
               ),
-              const SizedBox(height: 8),
-              Text(
-                AuthStrings.subtitle,
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
               TextFormField(
                 controller: _usernameController,
                 enabled: !isLoading,
@@ -131,22 +122,11 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 ),
               ),
               const SizedBox(height: 8),
-              FilledButton(
+              LoadingFilledButton(
+                label: AuthStrings.submit,
+                loadingLabel: AuthStrings.loggingIn,
+                isLoading: isLoading,
                 onPressed: isLoading ? null : () => _submit(isLoading),
-                child: isLoading
-                    ? const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                          SizedBox(width: 12),
-                          Text(AuthStrings.loggingIn),
-                        ],
-                      )
-                    : const Text(AuthStrings.submit),
               ),
             ],
           ),

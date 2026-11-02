@@ -5,7 +5,7 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/router/app_routes.dart';
 import 'package:univalle_app/features/auth/auth_strings.dart';
-import 'package:univalle_app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:univalle_app/features/auth/di/auth_providers.dart';
 import 'package:univalle_app/features/auth/presentation/viewmodels/reset_password_cooldown_view_model.dart';
 import 'package:univalle_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:univalle_app/features/auth/presentation/widgets/reset_password_success_dialog.dart';
