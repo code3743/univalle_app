@@ -1,17 +1,17 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/network/restaurant_dio_provider.dart';
-import '../../../../core/network/restaurant_menu_dio_provider.dart';
-import '../../../../core/storage/local_storage_providers.dart';
-import '../../data/datasources/restaurant_remote_datasource.dart';
-import '../../data/datasources/restaurant_menu_remote_datasource.dart';
-import '../../data/repositories/restaurant_menu_repository_impl.dart';
-import '../../data/repositories/restaurant_repository_impl.dart';
-import '../../domain/repositories/restaurant_menu_repository.dart';
-import '../../domain/repositories/restaurant_repository.dart';
-import '../../domain/usecases/buy_lunches_usecase.dart';
-import '../../domain/usecases/get_restaurant_account_usecase.dart';
-import '../../domain/usecases/get_weekly_menu_usecase.dart';
+import '../../../core/network/restaurant_dio_provider.dart';
+import '../../../core/network/restaurant_menu_dio_provider.dart';
+import '../../../core/storage/local_storage_providers.dart';
+import '../data/datasources/restaurant_remote_datasource.dart';
+import '../data/datasources/restaurant_menu_remote_datasource.dart';
+import '../data/repositories/restaurant_menu_repository_impl.dart';
+import '../data/repositories/restaurant_repository_impl.dart';
+import '../domain/repositories/restaurant_menu_repository.dart';
+import '../domain/repositories/restaurant_repository.dart';
+import '../domain/usecases/buy_lunches_usecase.dart';
+import '../domain/usecases/get_restaurant_account_usecase.dart';
+import '../domain/usecases/get_weekly_menu_usecase.dart';
 
 part 'restaurant_providers.g.dart';
 

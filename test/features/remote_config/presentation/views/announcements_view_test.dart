@@ -7,7 +7,7 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/home/home_strings.dart';
 import 'package:univalle_app/features/remote_config/domain/entities/announcements_page.dart';
-import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
+import 'package:univalle_app/features/remote_config/di/remote_config_providers.dart';
 import 'package:univalle_app/features/remote_config/presentation/views/announcements_view.dart';
 import 'package:univalle_app/features/remote_config/presentation/widgets/announcement_card.dart';
 

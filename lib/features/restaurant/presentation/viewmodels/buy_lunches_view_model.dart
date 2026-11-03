@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../domain/entities/lunch_payment.dart';
-import '../providers/restaurant_providers.dart';
+import '../../di/restaurant_providers.dart';
 import 'restaurant_view_model.dart';
 
 part 'buy_lunches_view_model.g.dart';

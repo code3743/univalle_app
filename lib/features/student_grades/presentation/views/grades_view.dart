@@ -10,7 +10,7 @@ import '../viewmodels/grades_view_model.dart';
 import '../widgets/equivalences_shortcut.dart';
 import '../widgets/grades_skeleton.dart';
 import '../widgets/grades_summary.dart';
-import '../widgets/period_grades_section.dart';
+import '../widgets/period_grades_section/period_grades_section.dart';
 
 class GradesView extends ConsumerWidget {
   const GradesView({super.key});

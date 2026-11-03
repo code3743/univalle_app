@@ -28,7 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
         cachedPhotoUrl: null,
       );
       return Ok(AuthSession(username: username, photoUrl: photoUrl));
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }
@@ -37,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<void>> logout() async {
     try {
       await _remote.logout();
-    } on AppException {
+    } catch (_) {
       // no-op
     }
     await _local.clearCredentials();
@@ -65,7 +65,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } on AuthException {
       await _local.clearCredentials();
       return const Ok(null);
-    } on AppException {
+    } catch (_) {
       return const Ok(null);
     }
   }
@@ -89,7 +89,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final email = await _remote.resetPassword(username: username);
       return Ok(email);
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/constants/app_strings.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
-import 'package:univalle_app/features/restaurant/presentation/providers/restaurant_providers.dart';
+import 'package:univalle_app/features/restaurant/di/restaurant_providers.dart';
 import 'package:univalle_app/features/restaurant/presentation/utils/lunch_money_formatter.dart';
 import 'package:univalle_app/features/restaurant/presentation/viewmodels/restaurant_view_model.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/pending_payment_card.dart';

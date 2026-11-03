@@ -32,7 +32,10 @@ class InfoCard extends StatelessWidget {
           Container(
             width: 44,
             height: 44,
-            decoration: BoxDecoration(color: colorScheme.surface, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              shape: BoxShape.circle,
+            ),
             child: Center(
               child: SvgPicture.asset(
                 iconAsset,
@@ -49,9 +52,7 @@ class InfoCard extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
+                  style: Theme.of(context).textTheme.bodySmall
                       ?.copyWith(color: colorScheme.onSurfaceVariant),
                 ),
                 const SizedBox(height: 2),
@@ -59,9 +60,7 @@ class InfoCard extends StatelessWidget {
                   value,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
+                  style: Theme.of(context).textTheme.titleSmall
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ],

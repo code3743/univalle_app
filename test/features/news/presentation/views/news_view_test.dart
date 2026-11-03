@@ -7,7 +7,7 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/news/domain/entities/news_article.dart';
 import 'package:univalle_app/features/news/news_strings.dart';
-import 'package:univalle_app/features/news/presentation/providers/news_providers.dart';
+import 'package:univalle_app/features/news/di/news_providers.dart';
 import 'package:univalle_app/features/news/presentation/views/news_view.dart';
 import 'package:univalle_app/features/news/presentation/widgets/news_article_card.dart';
 

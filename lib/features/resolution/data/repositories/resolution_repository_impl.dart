@@ -1,5 +1,4 @@
 import '../../../../core/error/exception_mapper.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
 import '../../domain/entities/curriculum.dart';
 import '../../domain/repositories/resolution_repository.dart';
@@ -18,7 +17,7 @@ class ResolutionRepositoryImpl implements ResolutionRepository {
           subjects: subjects.map((subject) => subject.toEntity()).toList(),
         ),
       );
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

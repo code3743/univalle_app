@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:univalle_app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:univalle_app/features/auth/di/auth_providers.dart';
 import 'package:univalle_app/features/auth/presentation/viewmodels/reset_password_view_model.dart';
 
 import '../../../../helpers/container.dart';

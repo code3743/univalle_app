@@ -9,7 +9,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/domain/entities/app_config.dart';
 import 'package:univalle_app/core/domain/entities/welcome_banner.dart';
 import 'package:univalle_app/features/remote_config/domain/repositories/remote_config_repository.dart';
-import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
+import 'package:univalle_app/features/remote_config/di/remote_config_providers.dart';
 import 'package:univalle_app/features/remote_config/presentation/viewmodels/home_overlays_view_model.dart';
 
 import '../../../../helpers/container.dart';

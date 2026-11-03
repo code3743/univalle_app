@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/session/current_username_provider.dart';
 import '../../../../core/domain/entities/student.dart';
-import '../providers/profile_providers.dart';
+import '../../di/profile_providers.dart';
 
 part 'profile_view_model.g.dart';
 

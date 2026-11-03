@@ -1,17 +1,17 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/network/api_dio_provider.dart';
-import '../../../../core/storage/local_storage_providers.dart';
-import '../../data/datasources/remote_config_local_datasource.dart';
-import '../../data/datasources/remote_config_remote_datasource.dart';
-import '../../data/repositories/remote_config_repository_impl.dart';
-import '../../domain/repositories/remote_config_repository.dart';
-import '../../domain/usecases/dismiss_update_usecase.dart';
-import '../../domain/usecases/get_announcements_usecase.dart';
-import '../../domain/usecases/get_app_config_usecase.dart';
-import '../../domain/usecases/get_dismissed_update_usecase.dart';
-import '../../domain/usecases/get_seen_welcome_usecase.dart';
-import '../../domain/usecases/mark_welcome_seen_usecase.dart';
+import '../../../core/network/api_dio_provider.dart';
+import '../../../core/storage/local_storage_providers.dart';
+import '../data/datasources/remote_config_local_datasource.dart';
+import '../data/datasources/remote_config_remote_datasource.dart';
+import '../data/repositories/remote_config_repository_impl.dart';
+import '../domain/repositories/remote_config_repository.dart';
+import '../domain/usecases/dismiss_update_usecase.dart';
+import '../domain/usecases/get_announcements_usecase.dart';
+import '../domain/usecases/get_app_config_usecase.dart';
+import '../domain/usecases/get_dismissed_update_usecase.dart';
+import '../domain/usecases/get_seen_welcome_usecase.dart';
+import '../domain/usecases/mark_welcome_seen_usecase.dart';
 
 part 'remote_config_providers.g.dart';
 

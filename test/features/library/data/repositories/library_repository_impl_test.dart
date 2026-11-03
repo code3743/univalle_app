@@ -67,4 +67,16 @@ void main() {
 
     expect((result as Err<LibraryAccount>).failure, isA<ServerFailure>());
   });
+
+  test('maps an unexpected exception to an UnknownFailure', () async {
+    when(() => credentials.getCredentials()).thenAnswer(
+      (_) async => const StoredCredentials(username: 'jperez', password: 'x'),
+    );
+    when(() => remote.fetchAccount(username: 'jperez'))
+        .thenThrow(StateError('bad html'));
+
+    final result = await repository.getAccount();
+
+    expect((result as Err<LibraryAccount>).failure, isA<UnknownFailure>());
+  });
 }

@@ -9,7 +9,7 @@ import 'package:univalle_app/core/router/app_routes.dart';
 import 'package:univalle_app/core/widgets/shortcut_card.dart';
 import 'package:univalle_app/features/restaurant/domain/entities/weekly_menu.dart';
 import 'package:univalle_app/features/restaurant/domain/repositories/restaurant_menu_repository.dart';
-import 'package:univalle_app/features/restaurant/presentation/providers/restaurant_providers.dart';
+import 'package:univalle_app/features/restaurant/di/restaurant_providers.dart';
 import 'package:univalle_app/features/restaurant/presentation/views/restaurant_menu_view.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/weekly_menu/menu_skeleton.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/weekly_menu/weekly_menu_section.dart';

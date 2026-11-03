@@ -5,7 +5,7 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/restaurant/domain/entities/restaurant_account.dart';
 import 'package:univalle_app/features/restaurant/domain/repositories/restaurant_repository.dart';
-import 'package:univalle_app/features/restaurant/presentation/providers/restaurant_providers.dart';
+import 'package:univalle_app/features/restaurant/di/restaurant_providers.dart';
 import 'package:univalle_app/features/restaurant/presentation/viewmodels/restaurant_view_model.dart';
 
 import '../../../../helpers/container.dart';

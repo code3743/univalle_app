@@ -5,7 +5,7 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/news/domain/entities/news_article.dart';
 import 'package:univalle_app/features/news/domain/repositories/news_repository.dart';
-import 'package:univalle_app/features/news/presentation/providers/news_providers.dart';
+import 'package:univalle_app/features/news/di/news_providers.dart';
 import 'package:univalle_app/features/news/presentation/viewmodels/news_view_model.dart';
 
 import '../../../../helpers/container.dart';

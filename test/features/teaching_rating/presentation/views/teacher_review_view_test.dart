@@ -9,7 +9,7 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/teaching_rating/domain/entities/rating_option.dart';
 import 'package:univalle_app/features/teaching_rating/domain/entities/teacher_review.dart';
-import 'package:univalle_app/features/teaching_rating/presentation/providers/teaching_rating_providers.dart';
+import 'package:univalle_app/features/teaching_rating/di/teaching_rating_providers.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/views/teacher_review_view.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/widgets/teacher_review_skeleton.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/widgets/teacher_review_wizard.dart';

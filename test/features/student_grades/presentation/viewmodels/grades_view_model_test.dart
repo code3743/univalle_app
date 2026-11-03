@@ -7,7 +7,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
 import 'package:univalle_app/features/student_grades/domain/entities/grades.dart';
 import 'package:univalle_app/features/student_grades/domain/repositories/grades_repository.dart';
-import 'package:univalle_app/features/student_grades/presentation/providers/grades_providers.dart';
+import 'package:univalle_app/features/student_grades/di/grades_providers.dart';
 import 'package:univalle_app/features/student_grades/presentation/viewmodels/grades_view_model.dart';
 
 import '../../../../helpers/container.dart';

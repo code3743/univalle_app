@@ -7,7 +7,7 @@ import 'package:univalle_app/core/constants/app_strings.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/resolution/domain/entities/curriculum.dart';
-import 'package:univalle_app/features/resolution/presentation/providers/resolution_providers.dart';
+import 'package:univalle_app/features/resolution/di/resolution_providers.dart';
 import 'package:univalle_app/features/resolution/presentation/views/resolution_view.dart';
 import 'package:univalle_app/features/resolution/presentation/widgets/resolution_skeleton.dart';
 import 'package:univalle_app/features/resolution/presentation/widgets/subject_card.dart';

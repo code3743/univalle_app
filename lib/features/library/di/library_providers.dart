@@ -1,12 +1,12 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/network/library_dio_provider.dart';
-import '../../../../core/storage/local_storage_providers.dart';
-import '../../data/datasources/library_remote_datasource.dart';
-import '../../data/repositories/library_repository_impl.dart';
-import '../../domain/repositories/library_repository.dart';
-import '../../domain/usecases/get_library_account_usecase.dart';
-import '../../domain/usecases/renew_library_loan_usecase.dart';
+import '../../../core/network/library_dio_provider.dart';
+import '../../../core/storage/local_storage_providers.dart';
+import '../data/datasources/library_remote_datasource.dart';
+import '../data/repositories/library_repository_impl.dart';
+import '../domain/repositories/library_repository.dart';
+import '../domain/usecases/get_library_account_usecase.dart';
+import '../domain/usecases/renew_library_loan_usecase.dart';
 
 part 'library_providers.g.dart';
 

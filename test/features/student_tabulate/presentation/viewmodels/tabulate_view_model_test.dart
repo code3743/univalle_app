@@ -6,7 +6,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
 import 'package:univalle_app/features/student_tabulate/domain/entities/tabulate.dart';
 import 'package:univalle_app/features/student_tabulate/domain/repositories/tabulate_repository.dart';
-import 'package:univalle_app/features/student_tabulate/presentation/providers/tabulate_providers.dart';
+import 'package:univalle_app/features/student_tabulate/di/tabulate_providers.dart';
 import 'package:univalle_app/features/student_tabulate/presentation/viewmodels/tabulate_view_model.dart';
 
 import '../../../../helpers/container.dart';

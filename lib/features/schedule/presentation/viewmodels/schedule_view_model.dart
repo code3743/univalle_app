@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../student_grades/presentation/viewmodels/grades_view_model.dart';
 import '../../domain/entities/schedule_class.dart';
-import '../providers/schedule_providers.dart';
+import '../../di/schedule_providers.dart';
 import '../utils/schedule_subject_mapper.dart';
 
 part 'schedule_view_model.g.dart';

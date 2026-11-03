@@ -21,6 +21,7 @@ abstract final class HomeStrings {
   static const announcementsEmptyMessage = 'Todavía no hay novedades.';
   static const allFunctionalitiesTitle = 'Todas las funcionalidades';
   static const repositoryLabel = 'code3743/univalle_app';
+  static String versionLabel(String version) => 'v$version';
   static const repositoryUrl = 'https://github.com/code3743/univalle_app';
   static const cannotOpenRepositoryLink = 'No pudimos abrir el repositorio.';
 }

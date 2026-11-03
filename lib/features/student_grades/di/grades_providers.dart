@@ -1,10 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/network/sira_academic_record_client.dart';
-import '../../data/datasources/sira_grades_remote_datasource.dart';
-import '../../data/repositories/grades_repository_impl.dart';
-import '../../domain/repositories/grades_repository.dart';
-import '../../domain/usecases/get_grades_usecase.dart';
+import '../../../core/network/sira_academic_record_client.dart';
+import '../data/datasources/sira_grades_remote_datasource.dart';
+import '../data/repositories/grades_repository_impl.dart';
+import '../domain/repositories/grades_repository.dart';
+import '../domain/usecases/get_grades_usecase.dart';
 
 part 'grades_providers.g.dart';
 

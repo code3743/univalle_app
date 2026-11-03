@@ -22,7 +22,7 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
         password: credentials.password,
       );
       return Ok(account.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }
@@ -38,7 +38,7 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
         total: total,
       );
       return Ok(payment.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

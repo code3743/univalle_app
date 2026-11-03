@@ -17,9 +17,9 @@ import 'package:univalle_app/features/home/presentation/views/all_shortcuts_view
 import 'package:univalle_app/features/home/presentation/views/home_view.dart';
 import 'package:univalle_app/features/home/presentation/widgets/home_skeleton.dart';
 import 'package:univalle_app/features/profile/domain/repositories/profile_repository.dart';
-import 'package:univalle_app/features/profile/presentation/providers/profile_providers.dart';
-import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
-import 'package:univalle_app/features/student_grades/presentation/providers/grades_providers.dart';
+import 'package:univalle_app/features/profile/di/profile_providers.dart';
+import 'package:univalle_app/features/remote_config/di/remote_config_providers.dart';
+import 'package:univalle_app/features/student_grades/di/grades_providers.dart';
 
 import '../../../../helpers/fakes.dart';
 import '../../../../helpers/pump_app.dart';
