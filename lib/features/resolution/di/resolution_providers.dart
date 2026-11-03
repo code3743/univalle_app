@@ -1,10 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/network/sira_dio_provider.dart';
-import '../../data/datasources/sira_resolution_remote_datasource.dart';
-import '../../data/repositories/resolution_repository_impl.dart';
-import '../../domain/repositories/resolution_repository.dart';
-import '../../domain/usecases/get_curriculum_usecase.dart';
+import '../../../core/network/sira_dio_provider.dart';
+import '../data/datasources/sira_resolution_remote_datasource.dart';
+import '../data/repositories/resolution_repository_impl.dart';
+import '../domain/repositories/resolution_repository.dart';
+import '../domain/usecases/get_curriculum_usecase.dart';
 
 part 'resolution_providers.g.dart';
 

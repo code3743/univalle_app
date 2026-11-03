@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/session/current_username_provider.dart';
 import '../../domain/entities/curriculum.dart';
-import '../providers/resolution_providers.dart';
+import '../../di/resolution_providers.dart';
 
 part 'resolution_view_model.g.dart';
 

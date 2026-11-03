@@ -6,7 +6,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/session/current_username_provider.dart';
 import 'package:univalle_app/features/resolution/domain/entities/curriculum.dart';
 import 'package:univalle_app/features/resolution/domain/repositories/resolution_repository.dart';
-import 'package:univalle_app/features/resolution/presentation/providers/resolution_providers.dart';
+import 'package:univalle_app/features/resolution/di/resolution_providers.dart';
 import 'package:univalle_app/features/resolution/presentation/viewmodels/resolution_view_model.dart';
 
 import '../../../../helpers/container.dart';
