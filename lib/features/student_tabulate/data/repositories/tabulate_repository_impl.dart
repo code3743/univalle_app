@@ -1,6 +1,5 @@
 import '../../../../core/constants/sira_constants.dart';
 import '../../../../core/error/exception_mapper.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
 import '../../domain/entities/tabulate.dart';
 import '../../domain/repositories/tabulate_repository.dart';
@@ -17,7 +16,7 @@ class TabulateRepositoryImpl implements TabulateRepository {
       return Ok(
         Tabulate(html: html, baseUrl: Uri.parse(SiraConstants.baseUrl)),
       );
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

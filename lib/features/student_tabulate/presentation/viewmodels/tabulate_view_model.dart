@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/session/current_username_provider.dart';
 import '../../domain/entities/tabulate.dart';
-import '../providers/tabulate_providers.dart';
+import '../../di/tabulate_providers.dart';
 
 part 'tabulate_view_model.g.dart';
 
