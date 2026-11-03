@@ -23,7 +23,7 @@ class TeachingRatingRepositoryImpl implements TeachingRatingRepository {
         password: credentials.password,
       );
       return Ok(teachers.map((teacher) => teacher.toEntity()).toList());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }
@@ -35,7 +35,7 @@ class TeachingRatingRepositoryImpl implements TeachingRatingRepository {
     try {
       final review = await _remote.fetchTeacherReview(teacher: teacher);
       return Ok(review.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }
@@ -53,7 +53,7 @@ class TeachingRatingRepositoryImpl implements TeachingRatingRepository {
         feedback: feedback,
       );
       return const Ok(null);
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

@@ -8,7 +8,7 @@ import 'package:univalle_app/features/teaching_rating/domain/entities/rating_opt
 import 'package:univalle_app/features/teaching_rating/domain/entities/review_question.dart';
 import 'package:univalle_app/features/teaching_rating/domain/entities/teacher_review.dart';
 import 'package:univalle_app/features/teaching_rating/domain/repositories/teaching_rating_repository.dart';
-import 'package:univalle_app/features/teaching_rating/presentation/providers/teaching_rating_providers.dart';
+import 'package:univalle_app/features/teaching_rating/di/teaching_rating_providers.dart';
 import 'package:univalle_app/features/teaching_rating/presentation/viewmodels/submit_teacher_review_view_model.dart';
 import 'package:univalle_app/features/teaching_rating/teaching_rating_strings.dart';
 

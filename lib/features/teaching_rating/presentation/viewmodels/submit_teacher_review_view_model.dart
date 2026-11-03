@@ -4,7 +4,7 @@ import '../../../../core/error/failures.dart';
 import '../../domain/entities/rating_option.dart';
 import '../../domain/entities/teacher_review.dart';
 import '../../teaching_rating_strings.dart';
-import '../providers/teaching_rating_providers.dart';
+import '../../di/teaching_rating_providers.dart';
 
 part 'submit_teacher_review_view_model.g.dart';
 
