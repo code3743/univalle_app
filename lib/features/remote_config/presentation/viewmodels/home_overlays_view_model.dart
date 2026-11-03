@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/domain/entities/app_config.dart';
 import '../../../../core/domain/entities/welcome_banner.dart';
-import '../providers/remote_config_providers.dart';
+import '../../di/remote_config_providers.dart';
 
 part 'home_overlays_view_model.g.dart';
 

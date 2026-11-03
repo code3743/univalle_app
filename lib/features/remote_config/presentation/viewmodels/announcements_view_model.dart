@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../domain/entities/announcement.dart';
-import '../providers/remote_config_providers.dart';
+import '../../di/remote_config_providers.dart';
 
 part 'announcements_view_model.g.dart';
 

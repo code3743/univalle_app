@@ -3,7 +3,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/domain/entities/app_config.dart';
 import 'package:univalle_app/core/domain/entities/welcome_banner.dart';
 import 'package:univalle_app/core/error/result.dart';
-import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
+import 'package:univalle_app/features/remote_config/di/remote_config_providers.dart';
 import 'package:univalle_app/features/remote_config/presentation/widgets/home_overlays.dart';
 import 'package:univalle_app/features/remote_config/presentation/widgets/update_available_sheet.dart';
 import 'package:univalle_app/features/remote_config/presentation/widgets/welcome_banner_dialog.dart';

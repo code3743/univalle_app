@@ -8,7 +8,7 @@ import 'package:univalle_app/core/device/app_platform_provider.dart';
 import 'package:univalle_app/core/domain/entities/app_config.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
-import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
+import 'package:univalle_app/features/remote_config/di/remote_config_providers.dart';
 import 'package:univalle_app/features/remote_config/presentation/views/maintenance_view.dart';
 import 'package:univalle_app/features/remote_config/presentation/views/update_required_view.dart';
 import 'package:univalle_app/features/remote_config/presentation/widgets/remote_config_gate.dart';

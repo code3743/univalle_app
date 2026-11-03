@@ -1,5 +1,4 @@
 import '../../../../core/error/exception_mapper.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
 import '../../../../core/domain/entities/app_config.dart';
 import '../../domain/entities/announcements_page.dart';
@@ -24,7 +23,7 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
       );
       await _local.saveConfigSnapshot(model.toJson());
       return Ok(model.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       final cached = await _local.getConfigSnapshot();
       if (cached != null) return Ok(cached.toEntity());
       return Err(mapExceptionToFailure(e));
@@ -38,7 +37,7 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
     try {
       final model = await _remote.fetchAnnouncements(page: page);
       return Ok(model.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }
@@ -62,7 +61,7 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
   Future<Result<T>> _guard<T>(Future<T> Function() operation) async {
     try {
       return Ok(await operation());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

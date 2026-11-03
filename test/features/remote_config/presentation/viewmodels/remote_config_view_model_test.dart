@@ -10,7 +10,7 @@ import 'package:univalle_app/core/domain/entities/app_config.dart';
 import 'package:univalle_app/core/domain/entities/welcome_banner.dart'
     as domain;
 import 'package:univalle_app/features/remote_config/domain/repositories/remote_config_repository.dart';
-import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
+import 'package:univalle_app/features/remote_config/di/remote_config_providers.dart';
 import 'package:univalle_app/features/remote_config/presentation/viewmodels/remote_config_view_model.dart';
 
 import '../../../../helpers/container.dart';
