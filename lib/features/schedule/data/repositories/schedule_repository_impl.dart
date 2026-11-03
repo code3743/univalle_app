@@ -1,5 +1,4 @@
 import '../../../../core/error/exception_mapper.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
 import '../../domain/entities/schedule_class.dart';
 import '../../domain/entities/schedule_subject.dart';
@@ -17,7 +16,7 @@ class ScheduleRepositoryImpl implements ScheduleRepository {
     try {
       final classes = await _remote.fetchSchedule(subjects: subjects);
       return Ok(classes.map((classModel) => classModel.toEntity()).toList());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

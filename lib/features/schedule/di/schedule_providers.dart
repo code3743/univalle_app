@@ -1,10 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/network/schedule_dio_provider.dart';
-import '../../data/datasources/sira_schedule_remote_datasource.dart';
-import '../../data/repositories/schedule_repository_impl.dart';
-import '../../domain/repositories/schedule_repository.dart';
-import '../../domain/usecases/get_schedule_usecase.dart';
+import '../../../core/network/schedule_dio_provider.dart';
+import '../data/datasources/sira_schedule_remote_datasource.dart';
+import '../data/repositories/schedule_repository_impl.dart';
+import '../domain/repositories/schedule_repository.dart';
+import '../domain/usecases/get_schedule_usecase.dart';
 
 part 'schedule_providers.g.dart';
 

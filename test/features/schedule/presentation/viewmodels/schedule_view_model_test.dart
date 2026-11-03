@@ -9,12 +9,12 @@ import 'package:univalle_app/features/schedule/domain/entities/schedule_class.da
 import 'package:univalle_app/features/schedule/domain/entities/schedule_subject.dart';
 import 'package:univalle_app/features/schedule/domain/entities/weekday.dart';
 import 'package:univalle_app/features/schedule/domain/repositories/schedule_repository.dart';
-import 'package:univalle_app/features/schedule/presentation/providers/schedule_providers.dart';
+import 'package:univalle_app/features/schedule/di/schedule_providers.dart';
 import 'package:univalle_app/features/schedule/presentation/viewmodels/schedule_view_model.dart';
 import 'package:univalle_app/features/student_grades/domain/entities/grades.dart';
 import 'package:univalle_app/core/domain/entities/subject.dart';
 import 'package:univalle_app/features/student_grades/domain/repositories/grades_repository.dart';
-import 'package:univalle_app/features/student_grades/presentation/providers/grades_providers.dart';
+import 'package:univalle_app/features/student_grades/di/grades_providers.dart';
 
 import '../../../../helpers/container.dart';
 

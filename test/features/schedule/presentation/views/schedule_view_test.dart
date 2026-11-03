@@ -7,12 +7,12 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/features/schedule/domain/entities/schedule_class.dart';
 import 'package:univalle_app/features/schedule/domain/entities/weekday.dart';
-import 'package:univalle_app/features/schedule/presentation/providers/schedule_providers.dart';
+import 'package:univalle_app/features/schedule/di/schedule_providers.dart';
 import 'package:univalle_app/features/schedule/presentation/views/schedule_view.dart';
 import 'package:univalle_app/features/schedule/presentation/widgets/schedule_class_tile.dart';
 import 'package:univalle_app/features/schedule/presentation/widgets/schedule_skeleton.dart';
 import 'package:univalle_app/features/schedule/schedule_strings.dart';
-import 'package:univalle_app/features/student_grades/presentation/providers/grades_providers.dart';
+import 'package:univalle_app/features/student_grades/di/grades_providers.dart';
 
 import '../../../../helpers/pump_app.dart';
 import '../../../../helpers/session.dart';
