@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:univalle_app/core/storage/local_storage_providers.dart';
-import 'package:univalle_app/features/restaurant/presentation/providers/restaurant_providers.dart';
+import 'package:univalle_app/features/restaurant/di/restaurant_providers.dart';
 
-import '../../../../helpers/container.dart';
+import '../../../helpers/container.dart';
 
 void main() {
   test(

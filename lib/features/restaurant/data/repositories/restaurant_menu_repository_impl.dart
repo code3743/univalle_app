@@ -1,5 +1,4 @@
 import '../../../../core/error/exception_mapper.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/result.dart';
 import '../../domain/entities/weekly_menu.dart';
 import '../../domain/repositories/restaurant_menu_repository.dart';
@@ -14,7 +13,7 @@ class RestaurantMenuRepositoryImpl implements RestaurantMenuRepository {
     try {
       final menu = await _remote.fetchWeeklyMenu();
       return Ok(menu.toEntity());
-    } on AppException catch (e) {
+    } catch (e) {
       return Err(mapExceptionToFailure(e));
     }
   }

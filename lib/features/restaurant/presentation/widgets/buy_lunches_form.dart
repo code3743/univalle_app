@@ -7,6 +7,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/snackbar_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/loading_filled_button.dart';
 import '../../domain/entities/restaurant_account.dart';
 import '../../restaurant_strings.dart';
 import '../utils/lunch_money_formatter.dart';
@@ -123,15 +124,10 @@ class _BuyLunchesFormState extends ConsumerState<BuyLunchesForm> {
           const SizedBox(height: AppSpacing.md),
           SizedBox(
             width: double.infinity,
-            child: FilledButton(
+            child: LoadingFilledButton(
+              label: RestaurantStrings.buySubmit,
+              isLoading: isLoading,
               onPressed: isLoading ? null : () => _submit(isLoading),
-              child: isLoading
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Text(RestaurantStrings.buySubmit),
             ),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../domain/entities/weekly_menu.dart';
-import '../providers/restaurant_providers.dart';
+import '../../di/restaurant_providers.dart';
 
 part 'weekly_menu_view_model.g.dart';
 

@@ -5,7 +5,7 @@ import 'package:univalle_app/core/constants/app_strings.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/router/app_routes.dart';
-import 'package:univalle_app/features/restaurant/presentation/providers/restaurant_providers.dart';
+import 'package:univalle_app/features/restaurant/di/restaurant_providers.dart';
 import 'package:univalle_app/features/restaurant/presentation/utils/lunch_money_formatter.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/buy_lunches_form.dart';
 import 'package:univalle_app/features/restaurant/restaurant_strings.dart';

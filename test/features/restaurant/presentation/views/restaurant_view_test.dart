@@ -8,7 +8,7 @@ import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/router/app_routes.dart';
 import 'package:univalle_app/core/widgets/shortcut_card.dart';
 import 'package:univalle_app/features/restaurant/domain/entities/restaurant_account.dart';
-import 'package:univalle_app/features/restaurant/presentation/providers/restaurant_providers.dart';
+import 'package:univalle_app/features/restaurant/di/restaurant_providers.dart';
 import 'package:univalle_app/features/restaurant/presentation/views/restaurant_view.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/buy_lunches_form.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/lunch_ticket_card/lunch_ticket_card.dart';

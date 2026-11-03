@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/router/app_routes.dart';
-import 'package:univalle_app/features/restaurant/presentation/providers/restaurant_providers.dart';
+import 'package:univalle_app/features/restaurant/di/restaurant_providers.dart';
 import 'package:univalle_app/features/restaurant/presentation/views/pending_payment_view.dart';
 import 'package:univalle_app/features/restaurant/presentation/viewmodels/restaurant_view_model.dart';
 import 'package:univalle_app/features/restaurant/presentation/widgets/pending_payment_card.dart';
