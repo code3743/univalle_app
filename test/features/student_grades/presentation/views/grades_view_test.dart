@@ -8,12 +8,12 @@ import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
 import 'package:univalle_app/core/router/app_routes.dart';
 import 'package:univalle_app/features/student_grades/domain/entities/academic_history.dart';
-import 'package:univalle_app/features/student_grades/presentation/providers/grades_providers.dart';
+import 'package:univalle_app/features/student_grades/di/grades_providers.dart';
 import 'package:univalle_app/features/student_grades/presentation/views/equivalences_view.dart';
 import 'package:univalle_app/features/student_grades/presentation/views/grades_view.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/equivalence_tile.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/grades_skeleton.dart';
-import 'package:univalle_app/features/student_grades/presentation/widgets/period_grades_section.dart';
+import 'package:univalle_app/features/student_grades/presentation/widgets/period_grades_section/period_grades_section.dart';
 import 'package:univalle_app/features/student_grades/student_grades_strings.dart';
 
 import '../../../../helpers/pump_app.dart';

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:univalle_app/core/error/failures.dart';
 import 'package:univalle_app/core/error/result.dart';
-import 'package:univalle_app/features/student_grades/presentation/providers/grades_providers.dart';
+import 'package:univalle_app/features/student_grades/di/grades_providers.dart';
 import 'package:univalle_app/features/student_grades/presentation/providers/latest_semester_provider.dart';
 import 'package:univalle_app/features/student_grades/presentation/viewmodels/grades_view_model.dart';
 

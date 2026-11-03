@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/session/current_username_provider.dart';
 import '../../domain/entities/academic_history.dart';
-import '../providers/grades_providers.dart';
+import '../../di/grades_providers.dart';
 
 part 'grades_view_model.g.dart';
 

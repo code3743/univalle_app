@@ -4,7 +4,7 @@ import 'package:univalle_app/core/theme/app_colors.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/equivalence_tile.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/equivalences_summary.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/grades_summary.dart';
-import 'package:univalle_app/features/student_grades/presentation/widgets/period_grades_section.dart';
+import 'package:univalle_app/features/student_grades/presentation/widgets/period_grades_section/period_grades_section.dart';
 import 'package:univalle_app/features/student_grades/presentation/widgets/subject_tile.dart';
 import 'package:univalle_app/features/student_grades/student_grades_strings.dart';
 
