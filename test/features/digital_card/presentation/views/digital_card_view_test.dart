@@ -12,7 +12,7 @@ import 'package:univalle_app/features/digital_card/digital_card_strings.dart';
 import 'package:univalle_app/features/digital_card/presentation/views/digital_card_view.dart';
 import 'package:univalle_app/features/digital_card/presentation/widgets/student_id_card/student_id_card.dart';
 import 'package:univalle_app/features/profile/domain/repositories/profile_repository.dart';
-import 'package:univalle_app/features/profile/presentation/providers/profile_providers.dart';
+import 'package:univalle_app/features/profile/di/profile_providers.dart';
 
 import '../../../../helpers/fakes.dart';
 import '../../../../helpers/pump_app.dart';

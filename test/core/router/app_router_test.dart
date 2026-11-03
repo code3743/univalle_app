@@ -14,12 +14,12 @@ import 'package:univalle_app/core/theme/app_theme.dart';
 import 'package:univalle_app/features/auth/presentation/views/login_view.dart';
 import 'package:univalle_app/features/auth/domain/entities/auth_session.dart';
 import 'package:univalle_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:univalle_app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:univalle_app/features/auth/di/auth_providers.dart';
 import 'package:univalle_app/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:univalle_app/core/domain/entities/app_config.dart';
 import 'package:univalle_app/core/domain/entities/welcome_banner.dart';
 import 'package:univalle_app/features/remote_config/domain/repositories/remote_config_repository.dart';
-import 'package:univalle_app/features/remote_config/presentation/providers/remote_config_providers.dart';
+import 'package:univalle_app/features/remote_config/di/remote_config_providers.dart';
 
 import '../../helpers/container.dart';
 import '../../helpers/pump_app.dart' show stubbedRoutePaths;
