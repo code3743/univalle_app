@@ -97,7 +97,7 @@ void main() {
 
       expect(find.text('Juan 👋'), findsOneWidget);
       expect(find.text('Ingeniería de Sistemas'), findsOneWidget);
-      expect(find.text('4.1'), findsOneWidget);
+      expect(find.text('4.10'), findsOneWidget);
       expect(find.text('120'), findsOneWidget);
       expect(find.text('Notas'), findsOneWidget);
       expect(

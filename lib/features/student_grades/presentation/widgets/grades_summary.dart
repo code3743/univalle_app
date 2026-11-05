@@ -37,7 +37,7 @@ class GradesSummary extends StatelessWidget {
             label: StudentGradesStrings.bestPeriodLabel,
             value:
                 '${SiraPeriodFormatter.shortCode(bestPeriod.period).substring(2)} · '
-                '${bestPeriod.average.toStringAsFixed(1)}',
+                '${bestPeriod.average.toStringAsFixed(2)}',
             accent: AppColors.accentAmber,
           ),
         ),
