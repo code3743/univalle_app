@@ -67,7 +67,7 @@ class HomeView extends ConsumerWidget {
                 Expanded(
                   child: StatCard(
                     iconAsset: AssetPaths.iconGraduationCap,
-                    value: student.average.toStringAsFixed(1),
+                    value: student.average.toStringAsFixed(2),
                     label: HomeStrings.averageLabel,
                     accent: AppColors.accentGreen,
                   ),
